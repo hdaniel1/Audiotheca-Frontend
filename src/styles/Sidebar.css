@@ -1,0 +1,11 @@
+#sidebar {
+    height:100vh;
+}
+
+.ui.search {
+    margin-top:15px;
+}
+
+#artist-search {
+    width:35vh;
+}
