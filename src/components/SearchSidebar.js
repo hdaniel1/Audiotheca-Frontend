@@ -1,9 +1,21 @@
 import React from 'react'
 import {Menu, Sidebar, Divider} from 'semantic-ui-react'
 import Searchbar from './Searchbar'
+import {connect} from 'react-redux'
 import '../styles/Sidebar.css';
 
-export default class SearchSidebar extends React.Component {
+class SearchSidebar extends React.Component {
+    constructor() {
+        super() 
+        this.state = {
+            clickedArtist:null,
+            artistAlbums: null
+        }
+    }
+
+    handleChange = (text) => {
+        this.setState({searchText: text})
+    }
 
     render() {    
         return (
@@ -19,7 +31,7 @@ export default class SearchSidebar extends React.Component {
                         visible={this.props.visible}
                         width='wide'
                     >
-                        <Searchbar />
+                        <Searchbar handleChange={this.handleChange} token={this.props.token}/>
                         <Divider />
                     </Sidebar>
                     <Sidebar.Pusher dimmed={this.props.visible}>
@@ -29,3 +41,15 @@ export default class SearchSidebar extends React.Component {
         )
     }
 }
+
+const mapStateToProps = (store) => {
+    return {
+        token: store.token
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchSidebar)

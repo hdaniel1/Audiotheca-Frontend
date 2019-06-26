@@ -1,3 +1,9 @@
 .ui.menu:first-child {
     margin-bottom:0px;
 }
+
+ui.avatar.image img{
+    width:50px;
+    height:50px;
+    object-fit: cover;
+} 
