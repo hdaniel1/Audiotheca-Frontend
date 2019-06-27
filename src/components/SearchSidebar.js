@@ -9,11 +9,22 @@ import _ from "lodash";
 
 const spotifyApi = new SpotifyWebApi();
 
+//REVISIT CLEARING SEARCH RESULTS AT SOME POINT//
+
 class SearchSidebar extends React.Component {
     constructor() {
         super() 
         this.state = {
-            artistAlbums: []
+            artistAlbums: [],
+            clearSearch: false
+        }
+    }
+
+    //clear album list if sidebar is hidden, then set clearSearch to true so passed down to Searchbar
+    static getDerivedStateFromProps(props, state) {
+        if (props.visible === false && state.artistAlbums.length > 0) {
+            state.artistAlbums = []
+            state.clearSearch =  true
         }
     }
 
@@ -30,7 +41,7 @@ class SearchSidebar extends React.Component {
         this.setState({searchText: text})
     }
 
-    clearAlbums = () => this.setState({artistAlbums: []})
+    clearAlbums = () => this.setState({artistAlbums: [], clearSearch: false})
 
     render() {    
         return (
@@ -51,7 +62,7 @@ class SearchSidebar extends React.Component {
                             token={this.props.token} 
                             fetchAlbums={this.fetchArtistAlbums}
                             clearAlbums={this.clearAlbums}
-                            albums={this.state.artistAlbums}
+                            clearSearch={this.state.clearSearch}
                         />
                         <Divider />
                         <List inverted relaxed celled>

@@ -13,8 +13,12 @@ export default class Searchbar extends React.Component {
         value: ""
     };
 
-    componentWillMount() {
-        this.resetComponent();
+    //clear search if sidebar is hidden based on clearSearch props then invoke callback function to clear albums / set clear search prop back to false (to allow future searching)
+    static getDerivedStateFromProps(props, state) {
+        if (props.clearSearch === true) {
+            state.value = ""
+            props.clearAlbums()
+        }
     }
 
     resetComponent = () => this.setState({ isLoading: false, results: [], value: "" }, () => this.props.clearAlbums())
