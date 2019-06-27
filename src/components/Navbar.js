@@ -45,6 +45,7 @@ export default class Navbar extends React.Component {
 
                 <Menu id="menu-bar" size="large" >
                     <Menu.Item  
+                        borderless="false"
                         name='Search' 
                         active={this.state.activeItem} 
                         onClick={this.handleItemClick}
@@ -52,22 +53,52 @@ export default class Navbar extends React.Component {
                     >
                     {this.state.innerText}
                     </Menu.Item>
-                    <Menu.Item  
-                        fitted
+                    <Menu.Item 
                         name='add-playlist' 
                         active={this.state.activeItem} 
                         onClick={this.handleItemClick}
-                        position="right"
+
                     >
                     <Icon name='plus'></Icon> 
                     Add New Playlist
                     </Menu.Item>
-                    <Menu.Item  
-                        fitted
-                        name='Logout'
-                        position="right" 
-                    >   
-                    <Image 
+                    <Menu.Item 
+                        name='add-playlist' 
+                        active={this.state.activeItem} 
+                        onClick={this.handleItemClick}
+
+                    >
+                    History
+                    </Menu.Item>
+                    <Menu.Item 
+                        name='add-playlist' 
+                        active={this.state.activeItem} 
+                        onClick={this.handleItemClick}
+
+                    >
+                    Backlog
+                    </Menu.Item>
+                    <Menu.Item 
+                        name='add-playlist' 
+                        active={this.state.activeItem} 
+                        onClick={this.handleItemClick}
+
+                    >
+                    Stats
+                    </Menu.Item>
+                    <Menu.Item 
+                        name='add-playlist' 
+                        active={this.state.activeItem} 
+                        onClick={this.handleItemClick}
+
+                    >
+                    Home
+                    </Menu.Item>
+                    <Menu.Item
+                        borderless="false"
+                    >
+                        
+                        <Image 
                         href={this.props.currentUser.uri} 
                         id="profile-img" 
                         avatar 
