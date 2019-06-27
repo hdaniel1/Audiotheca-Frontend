@@ -8,6 +8,7 @@ export default class AlbumSlide extends React.Component {
             <React.Fragment>
                 <List.Item id ="album-slide">
                     <Image 
+                        href={this.props.albumInfo.uri}
                         id="album-image"
                         src={this.props.albumInfo.images[2] ? this.props.albumInfo.images[2].url : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Pictogram_voting_question.svg/220px-Pictogram_voting_question.svg.png"}
                         alt="album-screenshot"

@@ -22,7 +22,8 @@ export default class Searchbar extends React.Component {
     //callback for fetching albums
     handleResultSelect = (e, {result}) => {
         this.setState({
-            value: result.title
+            value: result.title,
+            results: []
         }, () => this.props.fetchAlbums(result.key))
         }
 

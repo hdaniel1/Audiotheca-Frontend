@@ -14,6 +14,11 @@
     width:35px;
     height:35px;
     object-fit: cover;
+    cursor: pointer;
+}
+
+.ui.search>.results .result:hover {
+    cursor: default;
 }
 
 #album-slide.item {
@@ -40,4 +45,14 @@
     float:left;
     margin-left:15px;
     margin-top:5px;
+    background-color:#29a84f;
+    color:white;
+    border: none;
+    border-radius:8px;
+    opacity:0.5;
+    transition: 0.3s;
+}
+
+#clear-button:hover {
+    opacity:1;
 }

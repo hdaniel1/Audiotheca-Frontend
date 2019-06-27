@@ -20,7 +20,10 @@ class SearchSidebar extends React.Component {
     //get unique albums by name since Spotify sometimes returns dupes
     fetchArtistAlbums = (artistID) => {
         spotifyApi.getArtistAlbums(artistID)
-        .then(albums => this.setState({artistAlbums: _.uniqBy(albums.items, 'name').filter(album => album.album_type === "album")}))
+        .then(albums => this.setState({
+            artistAlbums: _.uniqBy(albums.items, 'name')
+                           .filter(album => album.album_type === "album" && album.album_group === "album")
+        }))
     }
 
     handleChange = (text) => {
