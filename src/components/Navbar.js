@@ -1,5 +1,5 @@
 import React from 'react'
-import {Menu, Image, Dropdown} from 'semantic-ui-react'
+import {Menu, Image, Dropdown, Icon} from 'semantic-ui-react'
 import '../styles/Navbar.css';
 import {NavLink} from 'react-router-dom'
 
@@ -30,8 +30,8 @@ export default class Navbar extends React.Component {
         return (
             <React.Fragment>
                 {!this.props.currentUser ? 
-   
-                <Menu id="menu-bar" size="large" >
+
+                <Menu icon='labeled' id="menu-bar" size="large" >
                     <Menu.Item  
                         href='http://localhost:3000/api/v1/login'
                         name='Login'
@@ -48,11 +48,23 @@ export default class Navbar extends React.Component {
                         name='Search' 
                         active={this.state.activeItem} 
                         onClick={this.handleItemClick}
+                        position="left"
                     >
                     {this.state.innerText}
                     </Menu.Item>
                     <Menu.Item  
-                        name='Login'
+                        fitted
+                        name='add-playlist' 
+                        active={this.state.activeItem} 
+                        onClick={this.handleItemClick}
+                        position="right"
+                    >
+                    <Icon name='plus'></Icon> 
+                    Add New Playlist
+                    </Menu.Item>
+                    <Menu.Item  
+                        fitted
+                        name='Logout'
                         position="right" 
                     >   
                     <Image 
