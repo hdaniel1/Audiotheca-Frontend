@@ -56,48 +56,35 @@ export default class Navbar extends React.Component {
                     <Menu.Item 
                         name='add-playlist' 
                         active={this.state.activeItem} 
-                        onClick={this.handleItemClick}
-
                     >
                     <Icon name='plus'></Icon> 
                     Add New Playlist
                     </Menu.Item>
                     <Menu.Item 
-                        name='add-playlist' 
+                        name='history' 
                         active={this.state.activeItem} 
-                        onClick={this.handleItemClick}
-
                     >
                     History
                     </Menu.Item>
                     <Menu.Item 
-                        name='add-playlist' 
+                        name='backlog' 
                         active={this.state.activeItem} 
-                        onClick={this.handleItemClick}
-
                     >
                     Backlog
                     </Menu.Item>
                     <Menu.Item 
-                        name='add-playlist' 
+                        name='stats' 
                         active={this.state.activeItem} 
-                        onClick={this.handleItemClick}
-
                     >
                     Stats
                     </Menu.Item>
                     <Menu.Item 
-                        name='add-playlist' 
+                        name='home' 
                         active={this.state.activeItem} 
-                        onClick={this.handleItemClick}
-
                     >
                     Home
                     </Menu.Item>
-                    <Menu.Item
-                        borderless="false"
-                    >
-                        
+                    <Menu.Item>          
                         <Image 
                         href={this.props.currentUser.uri} 
                         id="profile-img" 
