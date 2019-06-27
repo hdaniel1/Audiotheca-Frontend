@@ -1,6 +1,3 @@
-import SpotifyWebApi from 'spotify-web-api-js'
-
-const spotifyApi = new SpotifyWebApi();
 
 function accessingToken(token){
     return {type: "ACCESS_TOKEN", token}

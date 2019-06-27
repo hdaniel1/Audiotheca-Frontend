@@ -9,3 +9,35 @@
 #artist-search {
     width:35vh;
 }
+
+#artist-image {
+    width:35px;
+    height:35px;
+    object-fit: cover;
+}
+
+#album-slide.item {
+     background-color:#696465;
+}
+
+#album-image {
+    float:left;
+    margin-left:25px;
+    padding-top: 5px;
+  padding-bottom: 5px;
+} 
+
+#album-name {
+    padding-top:15px;
+    display:block;
+}
+
+.ui.search>.results {
+    margin-left:15px;
+}
+
+#clear-button {
+    float:left;
+    margin-left:15px;
+    margin-top:5px;
+}

@@ -1,7 +1,8 @@
 import React from 'react'
-import {Search} from 'semantic-ui-react'
+import {Search, Image} from 'semantic-ui-react'
 import SpotifyWebApi from 'spotify-web-api-js';
 import _ from "lodash";
+import '../styles/Sidebar.css';
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -9,41 +10,72 @@ export default class Searchbar extends React.Component {
     state = {
         isLoading: false,
         results: [],
-        value: "",
-        spotifyArtists: []
+        value: ""
     };
 
     componentWillMount() {
         this.resetComponent();
     }
 
-    resetComponent = () => this.setState({ isLoading: false, results: [], value: "" });
+    resetComponent = () => this.setState({ isLoading: false, results: [], value: "" }, () => this.props.clearAlbums())
 
+    //callback for fetching albums
+    handleResultSelect = (e, {result}) => {
+        this.setState({
+            value: result.title
+        }, () => this.props.fetchAlbums(result.key))
+        }
+
+    //sets state for results
     handleSearchChange = (event) => {
         this.setState({ isLoading: true, value: event.target.value });
 
         setTimeout(() => {
-            if (this.state.value.length < 1) this.resetComponent();
-       
-            const re = new RegExp(_.escapeRegExp(this.state.value), "i");
-            const isMatch = result => re.test(result.name);
-            debugger
+            if (this.state.value.length < 1) {
+                this.resetComponent();}
+            else {
             this.setState({
-                isLoading: false,
-                results: _.filter(this.searchArtists(this.state.value).then(response => response), isMatch)
-            });
-        }, 500);
+                isLoading: false
+            }, () => this.searchArtists(this.state.value));}
+        }, 300)
     };
 
+    //api request to spotify search
     searchArtists = (searchText) => { 
-        return spotifyApi.searchArtists(searchText)   
+        spotifyApi.searchArtists(searchText, {limit: 10})   
+        .then(spotifyResponse => this.setState({
+            results: spotifyResponse.artists.items.map(artist => ({
+                key: artist.id, 
+                title:artist.name,
+                images: artist.images,
+                uri: artist.uri}))}))
     }
+
+    //how each artist is displayed
+    resultRenderer({key, images, title}) {
+        return (
+        <div key={key} title={title} className='artist-result'>
+            <Image 
+            id="artist-image"
+            avatar 
+            src={images[2] ? images[2].url : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Pictogram_voting_question.svg/220px-Pictogram_voting_question.svg.png"} 
+            alt="artist-screenshot"
+            />
+            {title}
+        </div>
+        )
+      }
+    
+    //clears search value and albums
+    clearResults = () => this.setState({value: ""}, () => this.props.clearAlbums())
+
 
     render() {
         spotifyApi.setAccessToken(this.props.token)
         return (
+            <React.Fragment>
             <Search 
-                onSearchChange={_.debounce(this.handleSearchChange, 500, {
+                onSearchChange={_.debounce(this.handleSearchChange, 200, {
                     leading: true,
                   })}
                 value={this.state.value}
@@ -51,7 +83,11 @@ export default class Searchbar extends React.Component {
                 placeholder="Search artist..."
                 showNoResults={false}
                 results={this.state.results}
+                resultRenderer={this.resultRenderer}
+                onResultSelect={this.handleResultSelect}
             />
+            <button id="clear-button" onClick={() => this.clearResults()}>Clear</button>
+            </React.Fragment>
         )
     }
 }
