@@ -1,8 +1,9 @@
 import React from 'react'
-import {Menu, Image, Dropdown, Icon} from 'semantic-ui-react'
+import {Menu, Image, Dropdown} from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+import NewPlaylistForm from './newPlaylistForm'
 import '../styles/Navbar.css';
 import {NavLink} from 'react-router-dom'
-
 
 export default class Navbar extends React.Component {
     constructor() {
@@ -30,7 +31,7 @@ export default class Navbar extends React.Component {
         return (
             <React.Fragment>
                 {!this.props.currentUser ? 
-
+                //login page menu
                 <Menu icon='labeled' id="menu-bar" size="large" >
                     <Menu.Item  
                         href='http://localhost:3000/api/v1/login'
@@ -42,7 +43,7 @@ export default class Navbar extends React.Component {
                 </Menu>
 
                 :
-
+                //normal menu
                 <Menu id="menu-bar" size="large" >
                     <Menu.Item  
                         borderless="false"
@@ -53,13 +54,7 @@ export default class Navbar extends React.Component {
                     >
                     {this.state.innerText}
                     </Menu.Item>
-                    <Menu.Item 
-                        name='add-playlist' 
-                        active={this.state.activeItem} 
-                    >
-                    <Icon name='plus'></Icon> 
-                    Add New Playlist
-                    </Menu.Item>
+                    <NewPlaylistForm createPlaylist={this.props.createPlaylist} user={this.props.currentUser}/>
                     <Menu.Item 
                         name='history' 
                         active={this.state.activeItem} 
@@ -79,6 +74,7 @@ export default class Navbar extends React.Component {
                     Stats
                     </Menu.Item>
                     <Menu.Item 
+                        as={Link} to="/Home"
                         name='home' 
                         active={this.state.activeItem} 
                     >

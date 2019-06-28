@@ -7,6 +7,14 @@ function setCurrentUser(user){
     return {type:"LOGIN_USER", user}
 }
 
+function fetchPlaylists(userId) {
+  return (dispatch) => {
+      fetch(`http://localhost:3000/api/v1/playlists?user=${userId}`)
+      .then(res => res.json())
+      .then(playlists => dispatch({type:"GET_PLAYLISTS", playlists: playlists}))
+  }
+}
+
 //gets user info from spotify
 function gettingUserInfo(token){
     return (dispatch) => {
@@ -19,12 +27,15 @@ function gettingUserInfo(token){
     })
     .then(res => res.json())
     .then(user => {
-      dispatch(setCurrentUser(user))})
+      dispatch(setCurrentUser(user))
+      dispatch(fetchPlaylists(user.id))
+    })
     }
   }
 
 export {
     accessingToken,
     gettingUserInfo,
-    setCurrentUser
+    setCurrentUser,
+    fetchPlaylists
 }

@@ -1,12 +1,19 @@
 import React from 'react'
 import {List, Image, Divider} from 'semantic-ui-react'
+import {withRouter} from 'react-router-dom'
 import '../styles/Sidebar.css';
 
-export default class AlbumSlide extends React.Component {
+class AlbumSlide extends React.Component {
+
+    showAlbumInfo = () => {
+        this.props.showAlbum(this.props.albumInfo)
+        this.props.history.push("/AlbumInfo")
+    }
+
     render() {
         return (
             <React.Fragment>
-                <List.Item id ="album-slide">
+                <List.Item id ="album-slide" onClick={this.showAlbumInfo}>
                     <Image 
                         href={this.props.albumInfo.uri}
                         id="album-image"
@@ -22,3 +29,5 @@ export default class AlbumSlide extends React.Component {
         )
     }
 }
+
+export default withRouter(AlbumSlide)

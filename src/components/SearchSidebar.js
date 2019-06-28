@@ -6,6 +6,7 @@ import '../styles/Sidebar.css';
 import SpotifyWebApi from 'spotify-web-api-js';
 import AlbumSlide from './AlbumSlide'
 import _ from "lodash";
+import {showAlbum} from '../redux/frontendactions'
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -66,7 +67,7 @@ class SearchSidebar extends React.Component {
                         />
                         <Divider />
                         <List inverted relaxed celled>
-                            {this.state.artistAlbums.map(album => <AlbumSlide key={album.id} albumInfo={album}/>)}
+                            {this.state.artistAlbums.map(album => <AlbumSlide key={album.id} albumInfo={album} showAlbum={this.props.showAlbum}/>)}
                         </List>     
                     </Sidebar>
                     <Sidebar.Pusher dimmed={this.props.visible}>
@@ -85,7 +86,7 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        test: "test"
+        showAlbum: (album) => {dispatch(showAlbum(album))}
     }
 }
 

@@ -2,11 +2,13 @@ import React from 'react';
 import Navbar from '../components/Navbar'
 import HomePage from './HomePage'
 import LoginPage from './LoginPage'
+import SearchSidebar from '../components/SearchSidebar'
 import '../styles/App.css';
-import { Route, Switch, Redirect, withRouter} from 'react-router-dom'
+import { Route, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {accessingToken, gettingUserInfo} from '../redux/spotifyactions'
+import {accessingToken, gettingUserInfo} from '../redux/useractions'
 import {logoutUser} from '../redux/frontendactions'
+import {createPlaylist} from '../redux/playlistactions'
 
 class App extends React.Component{
   constructor() {
@@ -16,9 +18,8 @@ class App extends React.Component{
     }
   }
 
-  componentDidMount(history) {
+  componentDidMount() {
     //get the token from the URL
-
     let hashParams = {}
     let e, r = /([^&;=]+)=?([^&;]*)/g,
        q = window.location.hash.substring(1)
@@ -38,20 +39,20 @@ class App extends React.Component{
   showSidebar = () => {
     this.setState({
       sidebarVisible: !this.state.sidebarVisible
-    })
+    }, () => this.props.history.push("/Search"))
   }
 
   render() {
     return (
       <React.Fragment>
           <Navbar 
+          createPlaylist={this.props.createPlaylist}
           showSidebar={this.showSidebar} 
           logoutUser={this.props.logoutUser} 
           currentUser = {this.props.currentUser}/>
-          <Route path="/Login" component={LoginPage} />
-          <Route path="/Home" 
-          render={() => <HomePage visible={this.state.sidebarVisible} 
-          token = {this.props.token} />}/>
+          <Route  path="/Login" component={LoginPage} />
+          <Route  path="/Home" render={() => <HomePage token = {this.props.token} playlists={this.props.playlists}/>}/>
+          <Route  path="/Search" render={() => <SearchSidebar visible={this.state.sidebarVisible} token={this.props.token}/>}/>
       </React.Fragment>
     )
   }
@@ -60,7 +61,9 @@ class App extends React.Component{
 const mapStateToProps = (store) => {
   return {
     token: store.token,
-    currentUser: store.currentUser
+    currentUser: store.currentUser,
+    showAlbum: store.showAlbum,
+    playlists: store.playlists
   }
 }
 
@@ -68,7 +71,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     accessingToken: (token) => {dispatch(accessingToken(token))},
     gettingUserInfo: (token) => {dispatch(gettingUserInfo(token))},
-    logoutUser: () => {dispatch(logoutUser())}
+    logoutUser: () => {dispatch(logoutUser())},
+    createPlaylist: (playlist) => {dispatch(createPlaylist(playlist))}
   }
 }
 
