@@ -1,4 +1,18 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Audiotheca
+
+Auditheca is an app that lets you manage playlists of albums you would like to listen to. However, there's a twist - you can only listen to an album once before it goes into your history. The idea is to constantly be listening to and discovering new music. 
+
+Using the Spotify API (https://developer.spotify.com/documentation/web-api/), users can search albums by artist, get album recommendations based on their recent listening history, manage their backlog of playlists, export a playlist to spotify, and listen to albums directly via spotify in the application. You can also track your listening stats over time, such as your most listened to artist / genres. 
+
+Audiotheca uses a Ruby on Rails backend API with active storage to keep track of your playlist and user information, as well as albums in your backlog / playlists. See it here:
+
+https://github.com/hdaniel1/Audiotheca-Backend
+
+The frontend is comprised of React.js, with redux for managing state / props and Semantic UI for styling. 
+
+Keep track of updates and upcoming features / bug fixes via the trello board located here:
+
+https://trello.com/b/08r9hfny
 
 ## Available Scripts
 
