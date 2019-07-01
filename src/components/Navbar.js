@@ -1,18 +1,23 @@
 import React from 'react'
-import {Menu, Image, Dropdown} from 'semantic-ui-react'
+import {Menu, Image, Dropdown, Icon} from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import PlaylistForm from './PlaylistForm'
+import PlaylistFormModal from './PlaylistFormModal'
 import '../styles/Navbar.css';
 import {NavLink} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 
-export default class Navbar extends React.Component {
-    constructor() {
-        super()
+class Navbar extends React.Component {
+    constructor(props) {
+        super(props)
         this.state = {
             activeItem: false, 
-            innerText: "Search"
+            innerText: "Search",
+            showModal: false
         }
     }
+
+    closeModal = () => this.setState({showModal:false})
+
     //callback for search sidebar showing
     handleItemClick = () => {
         this.state.innerText === "Search" ?
@@ -39,11 +44,12 @@ export default class Navbar extends React.Component {
                 :
                 //normal menu
                 <Menu id="menu-bar" size="large" >
-                    <Menu.Item  name='Search' onClick={this.handleItemClick}position="left">{this.state.innerText}</Menu.Item>
-                    <PlaylistForm createPlaylist={this.props.createPlaylist} user={this.props.currentUser}/>
-                    <Menu.Item name='history' >History</Menu.Item>
-                    <Menu.Item name='backlog'>Backlog</Menu.Item>
-                    <Menu.Item name='stats' >Stats</Menu.Item>
+                    {this.props.location.pathname.match("/Playlist") ? <Menu.Item  position="left" name='Search' onClick={this.handleItemClick}>{this.state.innerText}</Menu.Item> : null}
+                    <Menu.Item onClick={() => this.setState({showModal: true})} name='add-playlist' position="right"><Icon name='plus'></Icon> Add New Playlist</Menu.Item>
+                    <PlaylistFormModal closeModal={this.closeModal} open={this.state.showModal} createPlaylist={this.props.createPlaylist} user={this.props.currentUser}/>
+                    <Menu.Item as={Link} to="/History" name='history' >History</Menu.Item>
+                    <Menu.Item as={Link} to="/Backlog" name='backlog'>Backlog</Menu.Item>
+                    <Menu.Item as={Link} to="/Stats" name='stats' >Stats</Menu.Item>
                     <Menu.Item as={Link} to="/Home" name='home'>Home</Menu.Item>
                     <Menu.Item><Image href={this.props.currentUser.uri} id="profile-img" avatar src={this.props.currentUser.images[0].url} /></Menu.Item>
                     <Dropdown closeOnEscape item simple text={this.props.currentUser.display_name.split(" ")[0]}>
@@ -56,5 +62,7 @@ export default class Navbar extends React.Component {
         )
     }
 }
+
+export default withRouter(Navbar)
 
 

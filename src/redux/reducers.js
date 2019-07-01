@@ -2,12 +2,33 @@ import {combineReducers} from 'redux'
 
 const playlistReducer = (state = [], action) => {
   switch(action.type) {
-    case "ADD_PLAYLIST":
-      return [...state, action.playlist]
     case "GET_PLAYLISTS":
       return action.playlists
+    case "ADD_PLAYLIST":
+      return [...state, action.playlist]
+    case "UPDATE_PLAYLIST":
+      return state.map(playlist => {
+        if (playlist.id === action.playlist.id) {
+          return {
+            ...playlist,
+            name: action.playlist.name,
+            description: action.playlist.name, 
+            image: action.playlist.image
+        }
+      }})
+    case "DELETE_PLAYLIST":
+      return [...state.filter(playlist => playlist.id !== action.playlist.id)]
     default:
       return state
+  }
+}
+
+const selectPlaylistReducer = (state = null, action) => {
+  switch(action.type) {
+    case "SELECT_PLAYLIST":
+      return action.playlist
+    default:
+      return state 
   }
 }
 
@@ -46,7 +67,8 @@ const rootReducer = combineReducers({
     token: authReducer,
     currentUser: currentUserReducer,
     showAlbum: showAlbumReducer, 
-    playlists: playlistReducer
+    playlists: playlistReducer,
+    currentPlaylist: selectPlaylistReducer
 })
 
 export default rootReducer

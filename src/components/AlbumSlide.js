@@ -7,7 +7,6 @@ class AlbumSlide extends React.Component {
     //handles album information component rendering
     showAlbumInfo = () => {
         this.props.showAlbum(this.props.albumInfo)
-        this.props.history.push("/AlbumInfo")
     }
 
     render() {

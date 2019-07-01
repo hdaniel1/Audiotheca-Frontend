@@ -1,8 +1,5 @@
 #playlist-container {
-  position: absolute;
-  top: 40%;
-  left: 25%;
-  background-color:grey;
+  margin-top:15px;
 }
 
 .playlist-item {
@@ -10,3 +7,29 @@
     height:45px;
     background-color:#bbb;
 }
+
+#playlist-info {
+  background-color:white;
+  border-radius:10px;
+  border:solid;
+  border-width:2px;
+  border-color:#aaa;
+  height:150px;
+  width:1250px;
+  margin-left:15%;
+  margin-top:15px;
+}
+
+#playlist-info-image {
+  margin-top:15px;
+  margin-left:5px;
+}
+
+#playlist-info-content {
+  margin-top:15px;
+}
+
+#playlist-info-button {
+  margin-top:15px;
+}
+

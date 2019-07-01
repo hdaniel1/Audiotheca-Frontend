@@ -1,79 +1,36 @@
 import React from 'react'
-import {Grid, Item, Image, Container} from 'semantic-ui-react'
-import Playlist from '../components/Playlist'
+import {Card} from 'semantic-ui-react'
+import PlaylistCard from '../components/PlaylistCard'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
+import {selectPlaylist} from '../redux/playlistactions'
+
 import '../styles/Playlists.css';
 
-const paragraph = <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
+class PlaylistContainer extends React.Component {
 
-export default class PlaylistContainer extends React.Component {
-    //render a dynamic 3x3 grid for playlists
+    takeToPlaylistPage = (playlist) => {
+        this.props.history.push(`/Playlist/${playlist.id}`)
+        this.props.selectPlaylist(playlist)
+    }
+
     render() {
         return (
-            <Container id="playlist-container">
-                {this.props.playlists.map(playlist => <Playlist key={playlist.id} playlist={playlist}/>)}
-            </Container>
+            <Card.Group centered itemsPerRow="2" id="playlist-container">
+                {this.props.playlists.map(playlist => <PlaylistCard 
+                                                        key={playlist.id} 
+                                                        playlist={playlist} 
+                                                        currentUser={this.props.currentUser}
+                                                        selectPlaylist={this.takeToPlaylistPage}/>)}
+            </Card.Group>
         )
     }
 }
 
- // <Grid columns={3} divided id="playlist-container">
-            //     {this.props.playlists ? 
-            //         this.props.playlists.map((playlist, i) => {
-            //             if (i % 3 === 0) {
-            //                 return (
-            //                     <Grid.Row>
-            //                         <Grid.Column classname="playlist-item">
-            //                             <Item.Group>
-            //                                 <Item >
-            //                                     <Item.Image size='tiny' src={this.props.playlists[i].image} />
-            //                                     <Item.Content>
-            //                                         <Item.Header>{this.props.playlists[i].name}</Item.Header>
-            //                                         <Item.Description>{this.props.playlists[i].description}</Item.Description>
-            //                                     </Item.Content>
-            //                                 </Item>
-            //                             </Item.Group>
-            //                         </Grid.Column>
-            //                         <Grid.Column className="playlist-item">
-            //                             <Item.Group>
-            //                                 {this.props.playlists[i+1] ?
-            //                                 <Item>
-            //                                     <Item.Image size='small' src={this.props.playlists[i+1].image} />
-            //                                         <Item.Content>
-            //                                             <Item.Header>{this.props.playlists[i+1] ? this.props.playlists[i+1].name : null}</Item.Header>
-            //                                             <Item.Description>{this.props.playlists[i+1] ? this.props.playlists[i+1].name : null}</Item.Description>
-            //                                         </Item.Content>
-            //                                 </Item>
-            //                                 :
-            //                                 <Item className="playlist-item">
-            //                                     <Item.Image size='small' src='https://react.semantic-ui.com/images/wireframe/image.png' />
-            //                                     <Item.Content>{paragraph} <br/> {paragraph}}</Item.Content>
-            //                                 </Item>}
-            //                             </Item.Group>
-            //                         </Grid.Column>
-            //                         <Grid.Column className="playlist-item">
-            //                             <Item.Group>
-            //                                 {this.props.playlists[i+2] ? 
-            //                                 <Item>
-            //                                     <Item.Image size='small' src={this.props.playlists[i+2].image} />
-            //                                         <Item.Content>
-            //                                             <Item.Header>{this.props.playlists[i+2] ? this.props.playlists[i+2].name : null}</Item.Header>
-            //                                             <Item.Description>{this.props.playlists[i+2] ? this.props.playlists[i+2].name : null}</Item.Description>
-            //                                         </Item.Content>
-            //                                 </Item>
-            //                             :
-            //                                 <Item>
-            //                                     <Item.Image size='small' src='https://react.semantic-ui.com/images/wireframe/image.png' />
-            //                                     <Item.Content>{paragraph} <br/> {paragraph}</Item.Content>
-            //                                 </Item>}
-            //                             </Item.Group>
-            //                         </Grid.Column>
-            //                     </Grid.Row>
-            //                 )
-            //             }
-            //         })
-            //     :      
-            //     <div>
-            //         Placeholder text goes here for users without playlists
-            //     </div>
-            //     }
-            // </Grid>
+const mapDispatchToProps = (dispatch) => {
+    return {
+        selectPlaylist: (playlist) => dispatch(selectPlaylist(playlist))
+    }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(PlaylistContainer))
