@@ -2,8 +2,11 @@ import React from 'react'
 import {Image, Modal, Button, Form} from 'semantic-ui-react'
 
 export default class PlaylistFormModal extends React.Component { 
-    
+
+
+
     state = {
+        previewImage: "",
         image: "", 
         name: "", 
         description: "",
@@ -14,7 +17,7 @@ export default class PlaylistFormModal extends React.Component {
     checkUpdate = () => {
         if (this.props.updatePlaylist) { 
             this.setState({
-                image: this.props.playlist.image,
+                image: this.props.playlist.playlist_image,
                 name: this.props.playlist.name, 
                 description: this.props.playlist.description,
                 header: "Update Playlist"
@@ -28,7 +31,9 @@ export default class PlaylistFormModal extends React.Component {
             this.setState({[event.target.name]: event.target.value})
         }
         else if (event.target.name === "image") {
-            this.setState({ image: URL.createObjectURL(event.target.files[0])})
+            this.setState({
+                previewImage: URL.createObjectURL(event.target.files[0]), 
+                image: event.target.files[0]})
         }
     }
 
@@ -43,11 +48,12 @@ export default class PlaylistFormModal extends React.Component {
     })
 
     //submission of playlist form
-    handleSubmit = () => {
+    handleSubmit = (event) => {
+        event.preventDefault()
         const {image, name, description} = this.state
 
         let newPlaylist = {
-            image: image,
+            playlist_image: image,
             name: name, 
             description: description,
             user_id: this.props.user.id
@@ -57,7 +63,20 @@ export default class PlaylistFormModal extends React.Component {
         this.props.closeModal()
     }
 
+    checkUploadResult = (result) => {
+        if (result.event === "success") {
+            this.setState({image: result.info.secure_url})
+        }
+    }
+    
     render() {
+        //upload widget
+        let imageUploadWidget = window.cloudinary.createUploadWidget({
+            cloudName: "dpdhd8sbg",
+            uploadPreset: "u9gezupm"},
+            (error, result) => {this.checkUploadResult(result)}
+        )
+
         return (
             <Modal onMount={this.checkUpdate} onUnmount = {this.resetState} open = {this.props.open}>
                 <Modal.Header>{this.state.header}<Button onClick={() => this.handleClose()} floated="right">Close</Button></Modal.Header>
@@ -69,7 +88,8 @@ export default class PlaylistFormModal extends React.Component {
                         <Form.TextArea label='Description' value={this.state.description}placeholder='Description' name="description" onChange={(event) => this.handleChange(event)}/>
                         <Form.Field >
                             <label>Image</label>
-                            <input id="upload" type="file" name="image" onChange={(event) => this.handleChange(event)}/>
+                            <Button onClick={() => imageUploadWidget.open()}>Upload Photo</Button>
+                            {/* <input id="upload" type="file" name="image" onChange={(event) => this.handleChange(event)}/> */}
                         </Form.Field>
                         <Button type='submit'>Submit</Button>
                     </Form>

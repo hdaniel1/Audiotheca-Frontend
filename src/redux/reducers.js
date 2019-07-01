@@ -13,7 +13,7 @@ const playlistReducer = (state = [], action) => {
             ...playlist,
             name: action.playlist.name,
             description: action.playlist.name, 
-            image: action.playlist.image
+            playlist_image: action.playlist.playlist_image
         }
       }})
     case "DELETE_PLAYLIST":
