@@ -38,10 +38,7 @@ class SearchSidebar extends React.Component {
         }))
     }
 
-    handleChange = (text) => {
-        this.setState({searchText: text})
-    }
-
+    //clears album list
     clearAlbums = () => this.setState({artistAlbums: [], clearSearch: false})
 
     render() {    
@@ -65,11 +62,13 @@ class SearchSidebar extends React.Component {
                             clearAlbums={this.clearAlbums}
                             clearSearch={this.state.clearSearch}
                         />
-                        <Divider />
+                        <Divider id="searchbar-divider"/>
+                        {/* List of selected artist's albums */}
                         <List inverted relaxed celled>
                             {this.state.artistAlbums.map(album => <AlbumSlide key={album.id} albumInfo={album} showAlbum={this.props.showAlbum}/>)}
                         </List>     
                     </Sidebar>
+                    {/* components that get pushed to the side*/}
                     <Sidebar.Pusher dimmed={this.props.visible}>
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>

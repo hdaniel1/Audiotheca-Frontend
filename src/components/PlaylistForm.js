@@ -1,7 +1,7 @@
 import React from 'react'
 import { Menu, Icon, Image, Modal, Button, Form} from 'semantic-ui-react'
 
-export default class NewPlaylistForm extends React.Component { 
+export default class PlaylistForm extends React.Component { 
     state = {
         image: null, 
         name: null, 
@@ -26,6 +26,7 @@ export default class NewPlaylistForm extends React.Component {
         showModal: false
     })
 
+    //submission of playlist form
     handleSubmit = () => {
         let newPlaylist = {
             image: this.state.image,
@@ -39,13 +40,10 @@ export default class NewPlaylistForm extends React.Component {
 
     render() {
         return (
-            <Modal open = {this.state.showModal} onClose={this.resetState} trigger={<Menu.Item onClick={() => this.setState({showModal: true})} name='add-playlist' ><Icon name='plus'></Icon> Add New Playlist</Menu.Item>}>
+            <Modal closeIcon open = {this.state.showModal} onClose={this.resetState} /* Trigger for modal is a menu item in the parent component (Navbar) */ trigger={<Menu.Item onClick={() => this.setState({showModal: true})} name='add-playlist' ><Icon name='plus'></Icon> Add New Playlist</Menu.Item>}>
                 <Modal.Header>New Playlist</Modal.Header>
                 <Modal.Content image>
-                    <Image 
-                    wrapped 
-                    size='medium' 
-                    src={this.state.image ? this.state.image : 'https://www.templaza.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png'} />
+                    <Image wrapped size='medium' src={this.state.image ? this.state.image : 'https://www.templaza.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png'} />
                 <Modal.Description>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Input label='Name' placeholder="Name" name="name" onChange={(event) => this.handleChange(event)}></Form.Input>

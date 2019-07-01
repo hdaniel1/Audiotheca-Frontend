@@ -20,7 +20,8 @@ export default class Searchbar extends React.Component {
             props.clearAlbums()
         }
     }
-
+    
+    //helper for resetting state
     resetComponent = () => this.setState({ isLoading: false, results: [], value: "" }, () => this.props.clearAlbums())
 
     //callback for fetching albums
@@ -29,7 +30,7 @@ export default class Searchbar extends React.Component {
             value: result.title,
             results: []
         }, () => this.props.fetchAlbums(result.key))
-        }
+    }
 
     //sets state for results
     handleSearchChange = (event) => {

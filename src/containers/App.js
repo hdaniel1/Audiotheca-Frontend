@@ -18,6 +18,7 @@ class App extends React.Component{
     }
   }
 
+  //check url for token, then get the user's info / albums / playlists / etc.
   componentDidMount() {
     //get the token from the URL
     let hashParams = {}
@@ -36,6 +37,7 @@ class App extends React.Component{
     }
   }
 
+  //callback for showing sidebar
   showSidebar = () => {
     this.setState({
       sidebarVisible: !this.state.sidebarVisible
@@ -45,11 +47,8 @@ class App extends React.Component{
   render() {
     return (
       <React.Fragment>
-          <Navbar 
-          createPlaylist={this.props.createPlaylist}
-          showSidebar={this.showSidebar} 
-          logoutUser={this.props.logoutUser} 
-          currentUser = {this.props.currentUser}/>
+          <Navbar createPlaylist={this.props.createPlaylist}showSidebar={this.showSidebar} logoutUser={this.props.logoutUser} currentUser = {this.props.currentUser}
+          />
           <Route  path="/Login" component={LoginPage} />
           <Route  path="/Home" render={() => <HomePage token = {this.props.token} playlists={this.props.playlists}/>}/>
           <Route  path="/Search" render={() => <SearchSidebar visible={this.state.sidebarVisible} token={this.props.token}/>}/>
