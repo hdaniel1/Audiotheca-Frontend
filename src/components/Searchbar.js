@@ -61,13 +61,13 @@ export default class Searchbar extends React.Component {
     resultRenderer({key, images, title}) {
         return (
         <div key={key} title={title} className='artist-result'>
+            {title}
             <Image 
             id="artist-image"
             avatar 
             src={images[2] ? images[2].url : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Pictogram_voting_question.svg/220px-Pictogram_voting_question.svg.png"} 
             alt="artist-screenshot"
             />
-            {title}
         </div>
         )
       }

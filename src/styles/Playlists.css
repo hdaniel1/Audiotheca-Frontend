@@ -1,5 +1,12 @@
-#playlist-grid {
-    margin: 0 auto;
-    margin-top:23%;
-    background-color:green;
+#playlist-container {
+  position: absolute;
+  top: 40%;
+  left: 25%;
+  background-color:grey;
+}
+
+.playlist-item {
+    width:450px;
+    height:45px;
+    background-color:#bbb;
 }
