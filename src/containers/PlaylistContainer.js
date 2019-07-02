@@ -10,7 +10,7 @@ import '../styles/Playlists.css';
 class PlaylistContainer extends React.Component {
 
     takeToPlaylistPage = (playlist) => {
-        this.props.history.push(`/Playlist/${playlist.id}`)
+        this.props.history.push(`/playlist/${playlist.id}`)
         this.props.selectPlaylist(playlist)
     }
 

@@ -14,8 +14,12 @@ const playlistReducer = (state = [], action) => {
             name: action.playlist.name,
             description: action.playlist.name, 
             playlist_image: action.playlist.playlist_image
+          }
         }
-      }})
+        else {
+          return playlist
+        }
+      })
     case "DELETE_PLAYLIST":
       return [...state.filter(playlist => playlist.id !== action.playlist.id)]
     default:

@@ -4,15 +4,11 @@ import {withRouter} from 'react-router-dom'
 import '../styles/Sidebar.css';
 
 class AlbumSlide extends React.Component {
-    //handles album information component rendering
-    showAlbumInfo = () => {
-        this.props.showAlbum(this.props.albumInfo)
-    }
-
+    
     render() {
         return (
             <React.Fragment>
-                <List.Item id ="album-slide" onClick={this.showAlbumInfo}>
+                <List.Item id ="album-slide" onClick={() => this.props.showAlbum(this.props.albumInfo)}>
                     <Image 
                         href={this.props.albumInfo.uri}
                         id="album-image"

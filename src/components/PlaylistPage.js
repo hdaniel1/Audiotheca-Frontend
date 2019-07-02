@@ -16,7 +16,7 @@ class PlaylistPage extends React.Component {
     closeModal = () => this.setState({showModal:false})
 
     handleDelete = () => {
-        this.props.history.push("/Home")
+        this.props.history.push("/home")
         this.props.deletePlaylist(this.props.playlist)
     }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Image, Button} from 'semantic-ui-react'
+import {Card, Image} from 'semantic-ui-react'
 
 export default class PlaylistCard extends React.Component {
     render() {

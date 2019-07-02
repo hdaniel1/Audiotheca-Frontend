@@ -31,6 +31,7 @@ class Navbar extends React.Component {
             innerText: "Search"
         }, () => this.props.showSidebar())
     }
+    
     //revisit this logic to render items based on url path
     render() {
         return (
@@ -44,17 +45,17 @@ class Navbar extends React.Component {
                 :
                 //normal menu
                 <Menu id="menu-bar" size="large" >
-                    {this.props.location.pathname.match("/Playlist") ? <Menu.Item  position="left" name='Search' onClick={this.handleItemClick}>{this.state.innerText}</Menu.Item> : null}
+                    {this.props.location.pathname.match("/playlist") ? <Menu.Item  position="left" name='Search' onClick={this.handleItemClick}>{this.state.innerText}</Menu.Item> : null}
                     <Menu.Item onClick={() => this.setState({showModal: true})} name='add-playlist' position="right"><Icon name='plus'></Icon> Add New Playlist</Menu.Item>
                     <PlaylistFormModal closeModal={this.closeModal} open={this.state.showModal} createPlaylist={this.props.createPlaylist} user={this.props.currentUser}/>
-                    <Menu.Item as={Link} to="/History" name='history' >History</Menu.Item>
-                    <Menu.Item as={Link} to="/Backlog" name='backlog'>Backlog</Menu.Item>
-                    <Menu.Item as={Link} to="/Stats" name='stats' >Stats</Menu.Item>
-                    <Menu.Item as={Link} to="/Home" name='home'>Home</Menu.Item>
+                    <Menu.Item as={Link} to="/history" name='history' >History</Menu.Item>
+                    <Menu.Item as={Link} to="/backlog" name='backlog'>Backlog</Menu.Item>
+                    <Menu.Item as={Link} to="/stats" name='stats' >Stats</Menu.Item>
+                    <Menu.Item as={Link} to="/home" name='home'>Home</Menu.Item>
                     <Menu.Item><Image href={this.props.currentUser.uri} id="profile-img" avatar src={this.props.currentUser.images[0].url} /></Menu.Item>
                     <Dropdown closeOnEscape item simple text={this.props.currentUser.display_name.split(" ")[0]}>
                         <Dropdown.Menu>
-                            <Dropdown.Item><NavLink onClick={this.props.logoutUser} to="/Login">Logout</NavLink></Dropdown.Item>
+                            <Dropdown.Item><NavLink onClick={this.props.logoutUser} to="/login">Logout</NavLink></Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Menu>}

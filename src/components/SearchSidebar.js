@@ -1,12 +1,15 @@
 import React from 'react'
 import {Menu, Sidebar, Divider, List} from 'semantic-ui-react'
+import PlaylistPage from './PlaylistPage'
+import AlbumPreview from './AlbumPreview'
 import Searchbar from './Searchbar'
 import {connect} from 'react-redux'
 import '../styles/Sidebar.css';
 import SpotifyWebApi from 'spotify-web-api-js';
 import AlbumSlide from './AlbumSlide'
 import _ from "lodash";
-import {showAlbum} from '../redux/frontendactions'
+import {deletePlaylist, updatePlaylist} from '../redux/playlistactions'
+
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -17,7 +20,8 @@ class SearchSidebar extends React.Component {
         super() 
         this.state = {
             artistAlbums: [],
-            clearSearch: false
+            clearSearch: false,
+            albumPreview: null
         }
     }
 
@@ -39,7 +43,10 @@ class SearchSidebar extends React.Component {
     }
 
     //clears album list
-    clearAlbums = () => this.setState({artistAlbums: [], clearSearch: false})
+    clearAlbums = () => this.setState({artistAlbums: [], clearSearch: false, albumPreview: null})
+
+    //callback for albumpreview
+    showAlbumInfo = (album) => {debugger;this.setState({albumPreview: album})}
 
     render() {    
         return (
@@ -65,11 +72,13 @@ class SearchSidebar extends React.Component {
                         <Divider id="searchbar-divider"/>
                         {/* List of selected artist's albums */}
                         <List inverted relaxed celled>
-                            {this.state.artistAlbums.map(album => <AlbumSlide key={album.id} albumInfo={album} showAlbum={this.props.showAlbum}/>)}
+                            {this.state.artistAlbums.map(album => <AlbumSlide key={album.id} albumInfo={album} showAlbum={this.showAlbumInfo}/>)}
                         </List>     
                     </Sidebar>
                     {/* components that get pushed to the side*/}
-                    <Sidebar.Pusher dimmed={this.props.visible}>
+                    <Sidebar.Pusher >
+                        <PlaylistPage playlist={this.props.playlist} deletePlaylist={this.props.deletePlaylist} user={this.props.user} updatePlaylist={this.props.updatePlaylist}/>
+                        {this.state.albumPreview ? <AlbumPreview albumInfo={this.state.albumPreview}/> : null}
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>
             </div>
@@ -85,7 +94,8 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        showAlbum: (album) => {dispatch(showAlbum(album))}
+        deletePlaylist: (playlist) => dispatch(deletePlaylist(playlist)),
+        updatePlaylist: (playlist) => dispatch(updatePlaylist(playlist))
     }
 }
 
