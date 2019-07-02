@@ -9,6 +9,7 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import AlbumSlide from './AlbumSlide'
 import _ from "lodash";
 import {deletePlaylist, updatePlaylist} from '../redux/playlistactions'
+import {addAlbum} from '../redux/albumactions'
 
 
 const spotifyApi = new SpotifyWebApi();
@@ -43,7 +44,7 @@ class SearchSidebar extends React.Component {
     }
 
     //clears album list
-    clearAlbums = () => this.setState({artistAlbums: [], clearSearch: false, albumPreview: null})
+    clearAlbums = () => this.setState({artistAlbums: [], clearSearch: false, albumPreview:null})
 
     //callback for albumpreview
     showAlbumInfo = (album) => {debugger;this.setState({albumPreview: album})}
@@ -77,8 +78,8 @@ class SearchSidebar extends React.Component {
                     </Sidebar>
                     {/* components that get pushed to the side*/}
                     <Sidebar.Pusher >
-                        <PlaylistPage playlist={this.props.playlist} deletePlaylist={this.props.deletePlaylist} user={this.props.user} updatePlaylist={this.props.updatePlaylist}/>
-                        {this.state.albumPreview ? <AlbumPreview albumInfo={this.state.albumPreview}/> : null}
+                        <PlaylistPage dimmed={this.props.visible} playlist={this.props.playlist} deletePlaylist={this.props.deletePlaylist} user={this.props.user} updatePlaylist={this.props.updatePlaylist}/>
+                        {this.state.albumPreview ? <AlbumPreview playlist={this.props.playlist} albumInfo={this.state.albumPreview} addAlbum={this.props.addAlbum}/> : null}
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>
             </div>
@@ -95,7 +96,8 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         deletePlaylist: (playlist) => dispatch(deletePlaylist(playlist)),
-        updatePlaylist: (playlist) => dispatch(updatePlaylist(playlist))
+        updatePlaylist: (playlist) => dispatch(updatePlaylist(playlist)),
+        addAlbum: (album) => dispatch(addAlbum(album))
     }
 }
 
