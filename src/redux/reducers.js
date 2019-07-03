@@ -5,7 +5,7 @@ const playlistAlbumReducer = (state = [], action) => {
     case "GET_PLAYLIST_ALBUMS":
         return action.playlistAlbums
     case "ADD_PLAYLIST_ALBUM":
-      return [...state, action.playlistAbum];
+      return [...state, action.playlistAlbum];
     case "DELETE_PLAYLIST_ALBUM":
       return [...state.filter(playlistAlbum => playlistAlbum.id !== action.playlistAlbum.id)]
     default:
@@ -18,7 +18,7 @@ const userAlbumReducer = (state = [], action) => {
     case "GET_USER_ALBUMS":
         return action.userAlbums
     case "ADD_USER_ALBUM":
-      return [...state, action.userAbum];
+      return [...state, action.userAlbum];
     case "DELETE_USER_ALBUM":
       return [...state.filter(userAlbum => userAlbum.id !== action.userAlbum.id)]
     default:
@@ -84,19 +84,9 @@ const authReducer = (state = null, action) => {
     }
 }
 
-const showAlbumReducer = (state = null, action) => {
-  switch(action.type) {
-    case "SHOW_ALBUM":
-      return action.album
-    default:
-      return state
-  }
-}
-
 const rootReducer = combineReducers({
     token: authReducer,
     currentUser: currentUserReducer,
-    showAlbum: showAlbumReducer, 
     playlists: playlistReducer,
     currentPlaylist: selectPlaylistReducer,
     playlistAlbums: playlistAlbumReducer,

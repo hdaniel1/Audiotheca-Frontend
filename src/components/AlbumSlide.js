@@ -1,8 +1,21 @@
 import React from 'react'
-import {List, Image, Divider} from 'semantic-ui-react'
+import {List, Image, Divider, Button, Modal} from 'semantic-ui-react'
+import AlbumPreview from './AlbumPreview'
+import _ from "lodash";
 import '../styles/Sidebar.css';
 
-const AlbumSlide = ({ key, albumInfo, showAlbum, ...rest }) => {
+const AlbumSlide = ({ key, albumInfo, showAlbum, playlist, addAlbum, playlistAlbums, userAlbums, ...rest }) => {
+
+        function handleAdd () {
+            let newAlbum = {
+                playlist_id: playlist.id,
+                user_id: playlist.user.id,
+                spotify_id: albumInfo.id
+            }
+            debugger
+            addAlbum(newAlbum)
+        }
+
         return (
             <React.Fragment>
                 <List.Item key={albumInfo.id} {...rest}  id ="album-slide">
@@ -14,6 +27,17 @@ const AlbumSlide = ({ key, albumInfo, showAlbum, ...rest }) => {
                     />
                     <List.Content>
                         <List.Header id="album-name">{albumInfo.name}</List.Header>
+                        <div id="slide-buttons">
+                        {_.some(playlistAlbums, {"spotify_id": albumInfo.id, playlist_id: playlist.id}) ? <Button icon="check" disabled></Button> :  <Button color="green" icon="check" onClick={handleAdd} ></Button>}
+                            <Modal id="preview-modal" trigger={<Button color='blue'> Info</Button>}>
+                                <AlbumPreview key={albumInfo.id} 
+                                            userAlbums={userAlbums} 
+                                            albumInfo={albumInfo}
+                                            playlistAlbums={playlistAlbums} 
+                                            addAlbum={addAlbum} 
+                                            playlist={playlist}/>
+                            </Modal>
+                        </div>
                     </List.Content>
                 </List.Item>
                 <Divider inverted/>

@@ -9,7 +9,13 @@ function addAlbum(album) {
             body: JSON.stringify(album)
         })
         .then(res => res.json())
-        .then(playlistAlbum => dispatch({type:"ADD_PLAYLIST_ALBUM", playlistAlbum: playlistAlbum}))  
+        .then(response => {
+            if (response.error) {
+                console.log(response.error)
+            }
+            else {
+                dispatch({type:"ADD_PLAYLIST_ALBUM", playlistAlbum: response.playlist_album})
+                dispatch({type:"ADD_USER_ALBUM", userAlbum: response.user_album})}})
     }
 }
 

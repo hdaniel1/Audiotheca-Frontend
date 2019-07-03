@@ -12,7 +12,6 @@ import {createPlaylist, updatePlaylist, deletePlaylist} from '../redux/playlista
 
 class App extends React.Component{
 
-  state
   //check url for token, then get the user's info / albums / playlists / etc.
   componentDidMount() {
     //get the token from the URL

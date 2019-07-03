@@ -1,7 +1,6 @@
 import React, { createRef } from 'react'
 import {Menu, Sidebar, Divider, List, Ref, Modal} from 'semantic-ui-react'
 import App from '../containers/App'
-import AlbumPreview from './AlbumPreview'
 import Searchbar from './Searchbar'
 import {connect} from 'react-redux'
 import '../styles/Sidebar.css';
@@ -17,6 +16,7 @@ const spotifyApi = new SpotifyWebApi();
 //REVISIT CLEARING SEARCH RESULTS AT SOME POINT//
 
 class SearchSidebar extends React.Component {
+
     constructor() {
         super() 
         this.state = {
@@ -74,6 +74,8 @@ class SearchSidebar extends React.Component {
     clearAlbums = () => this.setState({artistAlbums: [], clearSearch: false, albumPreview:null})
 
     render() {    
+        const {token, playlist, userAlbums, playlistAlbums, addAlbum} = this.props
+        const {artistAlbums, clearSearch, visible} = this.state
         return (
             <React.Fragment>
                 <div id="sidebar">
@@ -86,26 +88,33 @@ class SearchSidebar extends React.Component {
                             inverted
                             vertical
                             target={this.segmentRef}
-                            visible={this.state.visible}
+                            visible={visible}
                             width='wide'
                         >
                             <Searchbar 
                                 handleChange={this.handleChange} 
-                                token={this.props.token} 
+                                token={token} 
                                 fetchAlbums={this.fetchArtistAlbums}
                                 clearAlbums={this.clearAlbums}
-                                clearSearch={this.state.clearSearch}
+                                clearSearch={clearSearch}
                             />
                             <Divider id="searchbar-divider"/>
                             {/* List of selected artist's albums */}
                             <List inverted relaxed celled>
-                                {this.state.artistAlbums.map(album => <Modal id="preview-modal" onActionClick={this.showAlbumInfo} trigger={<AlbumSlide key={album.id} albumInfo={album} playlist={this.props.playlist}/>}><AlbumPreview albumInfo={album} playlist={this.props.playlist}/></Modal>)}
+                                {artistAlbums.map(album => <AlbumSlide 
+                                                                key={album.id} 
+                                                                userAlbums={userAlbums} 
+                                                                albumInfo={album}
+                                                                playlistAlbums={playlistAlbums} 
+                                                                addAlbum={addAlbum} 
+                                                                playlist={playlist}/>
+                                )}
                             </List>     
                         </Sidebar>
                         {/*entire app is pushable content*/}
                         <Ref innerRef={this.segmentRef}>
-                            <Sidebar.Pusher dimmed={this.state.visible}>
-                                <App sidebarVisible={this.state.visible} showSideBar={this.showSideBar}/>
+                            <Sidebar.Pusher dimmed={visible}>
+                                <App sidebarVisible={visible} showSideBar={this.showSideBar}/>
                             </Sidebar.Pusher>
                         </Ref>
                     </Sidebar.Pushable>
@@ -118,7 +127,9 @@ class SearchSidebar extends React.Component {
 const mapStateToProps = (store) => {
     return {
         token: store.token,
-        playlist: store.currentPlaylist
+        playlist: store.currentPlaylist,
+        userAlbums: store.userAlbums,
+        playlistAlbums: store.playlistAlbums
     }
 }
 

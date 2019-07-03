@@ -1,5 +1,5 @@
 import React from 'react'
-import {Item, Button, Confirm, Dimmer} from 'semantic-ui-react'
+import {Item, Button, Confirm, Transition} from 'semantic-ui-react'
 import '../styles/Playlists.css';
 import PlaylistFormModal from './PlaylistFormModal'
 import {withRouter} from 'react-router-dom'
@@ -22,7 +22,7 @@ class PlaylistPage extends React.Component {
 
     render() {
         return (
-            <Dimmer.Dimmable dimmed={this.props.dimmed ? true : false}>
+            <Transition.Group animation='drop' duration={500}>
                 <div id="playlist-info">
                     <Item.Group>
                         <Item>
@@ -40,9 +40,8 @@ class PlaylistPage extends React.Component {
                         </Item>
                         <PlaylistFormModal closeModal={this.closeModal} open={this.state.showModal} playlist={this.props.playlist} user={this.props.user} updatePlaylist={this.props.updatePlaylist}/>
                     </Item.Group>
-                    <Dimmer active={this.props.dimmed ? true : false}/>         
                 </div>
-            </Dimmer.Dimmable>
+            </Transition.Group>
         )
     }
 }
