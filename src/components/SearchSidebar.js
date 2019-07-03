@@ -1,14 +1,14 @@
-import React from 'react'
-import {Menu, Sidebar, Divider, List} from 'semantic-ui-react'
-import PlaylistPage from './PlaylistPage'
+import React, { createRef } from 'react'
+import {Menu, Sidebar, Divider, List, Ref, Modal} from 'semantic-ui-react'
+import App from '../containers/App'
 import AlbumPreview from './AlbumPreview'
 import Searchbar from './Searchbar'
 import {connect} from 'react-redux'
 import '../styles/Sidebar.css';
 import SpotifyWebApi from 'spotify-web-api-js';
 import AlbumSlide from './AlbumSlide'
+import {withRouter} from 'react-router-dom'
 import _ from "lodash";
-import {deletePlaylist, updatePlaylist} from '../redux/playlistactions'
 import {addAlbum} from '../redux/albumactions'
 
 
@@ -22,15 +22,31 @@ class SearchSidebar extends React.Component {
         this.state = {
             artistAlbums: [],
             clearSearch: false,
-            albumPreview: null
+            visible: false
         }
     }
 
-    //clear album list if sidebar is hidden, then set clearSearch to true so passed down to Searchbar
-    static getDerivedStateFromProps(props, state) {
-        if (props.visible === false && state.artistAlbums.length > 0) {
-            state.artistAlbums = []
-            state.clearSearch =  true
+    segmentRef = createRef()
+    //callback for route and visibility via navbar
+    showSideBar = () => {
+        !this.state.visible ?
+            this.setState({visible: true}, (() => this.props.history.push(`/playlist/${this.props.playlist.id}/search`)))  
+            :
+            this.setState({visible: false}, (() => this.props.history.push(`/playlist/${this.props.playlist.id}`)))
+    } 
+
+    //hide on ESC -FIGURE OUT HOW TO MAKE THIS WORK
+    handleKeyPress = (event) => {
+        debugger
+        if (event.keyCode === 27 && this.state.visible) {
+          this.setState({ visible: false })
+        }
+    }  
+
+    //clear album list if sidebar is hidden, then set clearSearch to true so passed down to Searchbar. If not hidden, add event listener to close on ESC
+    componentWillMount() {
+        if (this.state.artistAlbums.length > 0) {
+            this.setState({artistAlbums: [] })
         }
     }
 
@@ -43,62 +59,66 @@ class SearchSidebar extends React.Component {
         }))
     }
 
+    //for closing on click in pushable content
+    handleSidebarHide = () => this.setState({ visible: false, clearSearch: true }, () => this.clearAlbums())
+
     //clears album list
     clearAlbums = () => this.setState({artistAlbums: [], clearSearch: false, albumPreview:null})
 
-    //callback for albumpreview
-    showAlbumInfo = (album) => {debugger;this.setState({albumPreview: album})}
-
     render() {    
         return (
-            <div id="sidebar">
-                <Sidebar.Pushable>
-                    <Sidebar
-                        as={Menu}
-                        animation='push'
-                        icon='labeled'
-                        inverted
-                        vertical
-                        target={this.segmentRef}
-                        visible={this.props.visible}
-                        width='wide'
-                    >
-                        <Searchbar 
-                            handleChange={this.handleChange} 
-                            token={this.props.token} 
-                            fetchAlbums={this.fetchArtistAlbums}
-                            clearAlbums={this.clearAlbums}
-                            clearSearch={this.state.clearSearch}
-                        />
-                        <Divider id="searchbar-divider"/>
-                        {/* List of selected artist's albums */}
-                        <List inverted relaxed celled>
-                            {this.state.artistAlbums.map(album => <AlbumSlide key={album.id} albumInfo={album} showAlbum={this.showAlbumInfo}/>)}
-                        </List>     
-                    </Sidebar>
-                    {/* components that get pushed to the side*/}
-                    <Sidebar.Pusher >
-                        <PlaylistPage dimmed={this.props.visible} playlist={this.props.playlist} deletePlaylist={this.props.deletePlaylist} user={this.props.user} updatePlaylist={this.props.updatePlaylist}/>
-                        {this.state.albumPreview ? <AlbumPreview playlist={this.props.playlist} albumInfo={this.state.albumPreview} addAlbum={this.props.addAlbum}/> : null}
-                    </Sidebar.Pusher>
-                </Sidebar.Pushable>
-            </div>
+            <React.Fragment>
+                <div id="sidebar">
+                    <Sidebar.Pushable>
+                        <Sidebar
+                            as={Menu}
+                            animation='overlay'
+                            icon='labeled'
+                            onHide={this.handleSidebarHide}
+                            inverted
+                            vertical
+                            target={this.segmentRef}
+                            visible={this.state.visible}
+                            width='wide'
+                            onKeyPress
+                        >
+                            <Searchbar 
+                                handleChange={this.handleChange} 
+                                token={this.props.token} 
+                                fetchAlbums={this.fetchArtistAlbums}
+                                clearAlbums={this.clearAlbums}
+                                clearSearch={this.state.clearSearch}
+                            />
+                            <Divider id="searchbar-divider"/>
+                            {/* List of selected artist's albums */}
+                            <List inverted relaxed celled>
+                                {this.state.artistAlbums.map(album => <Modal id="preview-modal" onActionClick={this.showAlbumInfo} trigger={<AlbumSlide key={album.id} albumInfo={album}/>}><AlbumPreview albumInfo={album}/></Modal>)}
+                            </List>     
+                        </Sidebar>
+                        {/*entire app is pushable content*/}
+                        <Ref innerRef={this.segmentRef}>
+                            <Sidebar.Pusher dimmed={this.state.visible}>
+                                <App sidebarVisible={this.state.visible} showSideBar={this.showSideBar}/>
+                            </Sidebar.Pusher>
+                        </Ref>
+                    </Sidebar.Pushable>
+                </div>
+            </React.Fragment>
         )
     }
 }
 
 const mapStateToProps = (store) => {
     return {
-        token: store.token
+        token: store.token,
+        playlist: store.currentPlaylist
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deletePlaylist: (playlist) => dispatch(deletePlaylist(playlist)),
-        updatePlaylist: (playlist) => dispatch(updatePlaylist(playlist)),
         addAlbum: (album) => dispatch(addAlbum(album))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchSidebar)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchSidebar))

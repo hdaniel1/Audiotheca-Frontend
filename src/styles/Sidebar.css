@@ -60,3 +60,11 @@
 #searchbar-divider {
     margin-top:30px;
 }
+
+#preview-modal {
+    width:400px;
+}
+
+#preview-card {
+    width:400px;
+}

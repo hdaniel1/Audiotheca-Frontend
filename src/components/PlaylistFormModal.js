@@ -36,9 +36,6 @@ export default class PlaylistFormModal extends React.Component {
         })}
     }
 
-    //handle close button
-    handleClose = () => this.props.closeModal()
-
     //reset state
     resetState = () => this.setState({
         image: null, 
@@ -79,7 +76,7 @@ export default class PlaylistFormModal extends React.Component {
 
         return (
             <Modal onMount={this.checkUpdate} onUnmount = {this.resetState} open = {this.props.open}>
-                <Modal.Header>{this.state.header}<Button onClick={() => this.handleClose()} floated="right">Close</Button></Modal.Header>
+                <Modal.Header>{this.state.header}<Button onClick={() => this.props.closeModal()} floated="right">Close</Button></Modal.Header>
                 <Modal.Content image>
                     <Image wrapped size='medium' src={this.state.image ? this.state.image : 'https://www.templaza.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png'} />
                 <Modal.Description>

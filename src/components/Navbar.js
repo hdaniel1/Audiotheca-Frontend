@@ -10,28 +10,13 @@ class Navbar extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            activeItem: false, 
-            innerText: "Search",
+            activeItem: false,
             showModal: false
         }
     }
 
     closeModal = () => this.setState({showModal:false})
 
-    //callback for search sidebar showing
-    handleItemClick = () => {
-        this.state.innerText === "Search" ?
-        this.setState({ 
-            activeItem: true,
-            innerText: "Hide Search"
-        }, () => this.props.showSidebar())
-        :
-        this.setState({ 
-            activeItem: false,
-            innerText: "Search"
-        }, () => this.props.showSidebar())
-    }
-    
     //revisit this logic to render items based on url path
     render() {
         return (
@@ -45,7 +30,7 @@ class Navbar extends React.Component {
                 :
                 //normal menu
                 <Menu id="menu-bar" size="large" >
-                    {this.props.location.pathname.match("/playlist") ? <Menu.Item  position="left" name='Search' onClick={this.handleItemClick}>{this.state.innerText}</Menu.Item> : null}
+                    {this.props.location.pathname.match("/playlist") ? <Menu.Item  position="left" name='Search' onClick={this.props.showSideBar}>Search Albums</Menu.Item> : null}
                     <Menu.Item onClick={() => this.setState({showModal: true})} name='add-playlist' position="right"><Icon name='plus'></Icon> Add New Playlist</Menu.Item>
                     <PlaylistFormModal closeModal={this.closeModal} open={this.state.showModal} createPlaylist={this.props.createPlaylist} user={this.props.currentUser}/>
                     <Menu.Item as={Link} to="/history" name='history' >History</Menu.Item>

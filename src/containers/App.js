@@ -2,22 +2,17 @@ import React from 'react';
 import Navbar from '../components/Navbar'
 import HomePage from './HomePage'
 import LoginPage from './LoginPage'
-import SearchSidebar from '../components/SearchSidebar'
+import PlaylistPage from '../components/PlaylistPage'
 import '../styles/App.css';
 import { Route, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {accessingToken, gettingUserInfo} from '../redux/useractions'
 import {logoutUser} from '../redux/frontendactions'
-import {createPlaylist} from '../redux/playlistactions'
+import {createPlaylist, updatePlaylist, deletePlaylist} from '../redux/playlistactions'
 
 class App extends React.Component{
-  constructor() {
-    super()
-    this.state = {
-      sidebarVisible: false
-    }
-  }
 
+  state
   //check url for token, then get the user's info / albums / playlists / etc.
   componentDidMount() {
     //get the token from the URL
@@ -37,25 +32,13 @@ class App extends React.Component{
     }
   }
 
-  //callback for albumpreview
-  showAlbumInfo = (album) => {debugger;this.setState({albumPreview: album})}
-
-  //callback for showing sidebar
-  showSidebar = () => {
-    this.state.sidebarVisible ?
-     this.setState({sidebarVisible: false}, (() => this.props.history.push(`/playlist/${this.props.currentPlaylist.id}`)))
-     :
-     this.setState({sidebarVisible: true}, (() => this.props.history.push(`/playlist/${this.props.currentPlaylist.id}/search`)))
-  } 
-
   render() {
     return (
       <React.Fragment>
-          <Navbar createPlaylist={this.props.createPlaylist} showSidebar={this.showSidebar} logoutUser={this.props.logoutUser} currentUser = {this.props.currentUser}
-          />
+          <Navbar createPlaylist={this.props.createPlaylist} showSideBar={this.props.showSideBar} logoutUser={this.props.logoutUser} currentUser = {this.props.currentUser}/>
           <Route  path="/login" component={LoginPage} />
           <Route  path="/home" render={() => <HomePage token = {this.props.token} playlists={this.props.playlists} deletePlaylist={this.props.deletePlaylist}/>}/>
-          <Route  path="/playlist" render={() => <SearchSidebar user={this.props.currentUser} visible={this.state.sidebarVisible} token={this.props.token} playlist={this.props.currentPlaylist}/>}/>
+          <Route  path="/playlist" render={() => <PlaylistPage user={this.props.currentUser} updatePlaylist={this.props.updatePlaylist} deletePlaylist={this.props.deletePlaylist} token={this.props.token} playlist={this.props.currentPlaylist}/>}/>
       </React.Fragment>
     )
   }
@@ -76,7 +59,9 @@ const mapDispatchToProps = (dispatch) => {
     accessingToken: (token) => dispatch(accessingToken(token)),
     gettingUserInfo: (token) => dispatch(gettingUserInfo(token)),
     logoutUser: () => dispatch(logoutUser()),
-    createPlaylist: (playlist) => dispatch(createPlaylist(playlist))
+    createPlaylist: (playlist) => dispatch(createPlaylist(playlist)),
+    deletePlaylist: (playlist) => dispatch(deletePlaylist(playlist)),
+    updatePlaylist: (playlist) => dispatch(updatePlaylist(playlist))
   }
 }
 
