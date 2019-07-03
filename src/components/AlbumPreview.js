@@ -15,7 +15,7 @@ export default class AlbumPreview extends React.Component {
 
     render() {
         return (
-                <Card textAlign="center" id="preview-card">
+                <Card id="preview-card">
                     <Image src={this.props.albumInfo.images[1].url} />
                     <Card.Content textAlign="center">
                         <Card.Header >{this.props.albumInfo.name}</Card.Header>

@@ -3,7 +3,6 @@ import {List, Image, Divider} from 'semantic-ui-react'
 import '../styles/Sidebar.css';
 
 const AlbumSlide = ({ key, albumInfo, showAlbum, ...rest }) => {
-    debugger
         return (
             <React.Fragment>
                 <List.Item key={albumInfo.id} {...rest}  id ="album-slide">

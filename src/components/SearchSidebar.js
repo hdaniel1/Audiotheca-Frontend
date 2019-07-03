@@ -31,20 +31,21 @@ class SearchSidebar extends React.Component {
     showSideBar = () => {
         if (!this.state.visible) {
             this.setState({visible: true}, (() => this.props.history.push(`/playlist/${this.props.playlist.id}/search`)))  
-            document.addEventListener("keydown", this.handleKeyPress)
         }
         else {
-            this.setState({visible: false}, (() => this.props.history.push(`/playlist/${this.props.playlist.id}`)))
+            this.setState({
+                visible: false
+            }, (() => this.props.history.push(`/playlist/${this.props.playlist.id}`)))
         }
     } 
 
-    //hide on ESC -FIGURE OUT HOW TO MAKE THIS WORK
-    handleKeyPress = (event) => {
-        debugger
-        if (event.keyCode === 27 && this.state.visible) {
-          this.setState({ visible: false })
-        }
-    }  
+    // hide on Esc
+    // handleKeyPress = (event) => {
+    //     if (event.keyCode === 27 && this.state.visible) {
+    //         this.showSideBar()
+    //         document.removeEventListener("keydown", this.handleKeyPress)
+    //     }
+    // }  
 
     //clear album list if sidebar is hidden, then set clearSearch to true so passed down to Searchbar. If not hidden, add event listener to close on ESC
     componentWillMount() {
@@ -63,9 +64,13 @@ class SearchSidebar extends React.Component {
     }
 
     //for closing on click in pushable content
-    handleSidebarHide = () => this.setState({ visible: false, clearSearch: true }, () => this.clearAlbums())
+    handleSidebarHide = () => this.setState({ 
+        visible: false, clearSearch: true }, 
+        () => this.clearAlbums(),
+        this.props.history.push(`/playlist/${this.props.playlist.id}`)
+        )
 
-    //clears album list
+    //clear button in search
     clearAlbums = () => this.setState({artistAlbums: [], clearSearch: false, albumPreview:null})
 
     render() {    
@@ -83,7 +88,6 @@ class SearchSidebar extends React.Component {
                             target={this.segmentRef}
                             visible={this.state.visible}
                             width='wide'
-                            onKeyPress
                         >
                             <Searchbar 
                                 handleChange={this.handleChange} 
@@ -95,7 +99,7 @@ class SearchSidebar extends React.Component {
                             <Divider id="searchbar-divider"/>
                             {/* List of selected artist's albums */}
                             <List inverted relaxed celled>
-                                {this.state.artistAlbums.map(album => <Modal id="preview-modal" onActionClick={this.showAlbumInfo} trigger={<AlbumSlide key={album.id} albumInfo={album}/>}><AlbumPreview albumInfo={album}/></Modal>)}
+                                {this.state.artistAlbums.map(album => <Modal id="preview-modal" onActionClick={this.showAlbumInfo} trigger={<AlbumSlide key={album.id} albumInfo={album} playlist={this.props.playlist}/>}><AlbumPreview albumInfo={album} playlist={this.props.playlist}/></Modal>)}
                             </List>     
                         </Sidebar>
                         {/*entire app is pushable content*/}
