@@ -1,8 +1,5 @@
 import React from 'react'
 import {Image, Modal, Button, Form} from 'semantic-ui-react'
-import uuid from 'uuid';
-
-const uuidv1 = require('uuid/v1');
 
 export default class PlaylistFormModal extends React.Component { 
 
@@ -52,8 +49,7 @@ export default class PlaylistFormModal extends React.Component {
             playlist_image: image,
             name: name, 
             description: description,
-            user_id: this.props.user.id,
-            id: uuidv1()
+            user_id: this.props.user.id
         }
 
         this.props.updatePlaylist ? this.props.updatePlaylist({...this.props.playlist, name: name, description: description, image: image}) : this.props.createPlaylist(newPlaylist)

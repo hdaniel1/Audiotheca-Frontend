@@ -29,10 +29,13 @@ class SearchSidebar extends React.Component {
     segmentRef = createRef()
     //callback for route and visibility via navbar
     showSideBar = () => {
-        !this.state.visible ?
+        if (!this.state.visible) {
             this.setState({visible: true}, (() => this.props.history.push(`/playlist/${this.props.playlist.id}/search`)))  
-            :
+            document.addEventListener("keydown", this.handleKeyPress)
+        }
+        else {
             this.setState({visible: false}, (() => this.props.history.push(`/playlist/${this.props.playlist.id}`)))
+        }
     } 
 
     //hide on ESC -FIGURE OUT HOW TO MAKE THIS WORK
@@ -72,7 +75,7 @@ class SearchSidebar extends React.Component {
                     <Sidebar.Pushable>
                         <Sidebar
                             as={Menu}
-                            animation='overlay'
+                            animation='push'
                             icon='labeled'
                             onHide={this.handleSidebarHide}
                             inverted

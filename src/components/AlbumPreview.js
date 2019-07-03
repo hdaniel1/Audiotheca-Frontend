@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Image, Button, Modal} from 'semantic-ui-react'
+import {Card, Image, Button} from 'semantic-ui-react'
 import '../styles/Sidebar.css';
 
 export default class AlbumPreview extends React.Component {
