@@ -66,6 +66,7 @@ export default class PlaylistFormModal extends React.Component {
         // //upload widget
         // let imageUploadWidget = window.cloudinary.createUploadWidget({
         //     cloudName: "dpdhd8sbg",
+        //     cropping:true,
         //     uploadPreset: "u9gezupm"},
         //     (error, result) => {this.checkUploadResult(result)}
         // )
@@ -81,7 +82,7 @@ export default class PlaylistFormModal extends React.Component {
                         <Form.TextArea label='Description' value={this.state.description}placeholder='Description' name="description" onChange={(event) => this.handleChange(event)}/>
                         <Form.Field >
                             <label>Image</label>
-                            {/* <Button onClick={() => imageUploadWidget.open()}>Upload Photo</Button> */}
+                            {/* <Button onClick={() => this.openWidget()}>Upload Photo</Button> */}
                             <input id="upload" type="file" name="image" onChange={(event) => this.handleChange(event)}/>
                         </Form.Field>
                         <Button type='submit'>Submit</Button>

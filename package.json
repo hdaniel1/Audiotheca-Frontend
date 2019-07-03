@@ -3,8 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@app-masters/react-cloudinary-uploader": "^0.1.41",
+    "blueimp-file-upload": "^9.32.0",
+    "cloudinary-jquery-file-upload": "^2.6.3",
+    "jquery": "^3.4.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-dropzone": "^10.1.5",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
@@ -14,6 +19,7 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.2",
     "spotify-web-api-js": "^1.2.0",
+    "superagent": "^5.1.0",
     "ui": "^0.2.4",
     "uuid": "^3.3.2"
   },
