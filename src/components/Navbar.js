@@ -32,7 +32,7 @@ class Navbar extends React.Component {
                 <Menu id="menu-bar" size="large" >
                     {this.props.location.pathname.match("/playlist") ? <Menu.Item  position="left" name='Search' onClick={this.props.showSideBar}>Search Albums</Menu.Item> : null}
                     <Menu.Item onClick={() => this.setState({showModal: true})} name='add-playlist' position="right"><Icon name='plus'></Icon> Add New Playlist</Menu.Item>
-                    <PlaylistFormModal closeModal={this.closeModal} open={this.state.showModal} createPlaylist={this.props.createPlaylist} user={this.props.currentUser}/>
+                    <PlaylistFormModal closeModal={this.closeModal} open={this.state.showModal} createPlaylist={this.props.createPlaylist} user={this.props.currentUser} currentPlaylist={this.props.currentPlaylist}/>
                     <Menu.Item as={Link} to="/history" name='history' >History</Menu.Item>
                     <Menu.Item as={Link} to="/backlog" name='backlog'>Backlog</Menu.Item>
                     <Menu.Item as={Link} to="/stats" name='stats' >Stats</Menu.Item>

@@ -7,7 +7,10 @@ import store from './redux/store'
 import { Provider } from 'react-redux';
 import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter } from "react-router-dom";
+import createBrowserHistory from 'history/createBrowserHistory'
 
-ReactDOM.render( <BrowserRouter><Provider store={store}><ContentSideBar /></Provider></BrowserRouter>, document.getElementById('root'));
+export const history = createBrowserHistory()
+
+ReactDOM.render( <BrowserRouter history={history}><Provider store={store}><ContentSideBar /></Provider></BrowserRouter>, document.getElementById('root'));
 
 serviceWorker.unregister();

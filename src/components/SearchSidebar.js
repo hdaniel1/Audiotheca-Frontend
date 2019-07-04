@@ -114,7 +114,7 @@ class SearchSidebar extends React.Component {
                         {/*entire app is pushable content*/}
                         <Ref innerRef={this.segmentRef}>
                             <Sidebar.Pusher dimmed={visible}>
-                                <App sidebarVisible={visible} showSideBar={this.showSideBar}/>
+                                <App currentPlaylist={playlist} sidebarVisible={visible} showSideBar={this.showSideBar}/>
                             </Sidebar.Pusher>
                         </Ref>
                     </Sidebar.Pushable>

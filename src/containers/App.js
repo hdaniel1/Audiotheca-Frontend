@@ -4,7 +4,7 @@ import HomePage from './HomePage'
 import LoginPage from './LoginPage'
 import PlaylistPage from '../components/PlaylistPage'
 import '../styles/App.css';
-import { Route, withRouter} from 'react-router-dom'
+import { Route, withRouter, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {accessingToken, gettingUserInfo} from '../redux/useractions'
 import {logoutUser} from '../redux/frontendactions'
@@ -13,6 +13,14 @@ import {createPlaylist, updatePlaylist, deletePlaylist} from '../redux/playlista
 class App extends React.Component{
 
   //check url for token, then get the user's info / albums / playlists / etc.
+
+  componentWillReceiveProps(nextProps) {
+    debugger
+    if (this.props.currentPlaylist !== nextProps.currentPlaylist) {
+      this.props.history.push(`/playlist/${nextProps.currentPlaylist.id}`)
+    }
+  }
+
   componentDidMount() {
     //get the token from the URL
     let hashParams = {}
@@ -34,7 +42,7 @@ class App extends React.Component{
   render() {
     return (
       <React.Fragment>
-          <Navbar createPlaylist={this.props.createPlaylist} showSideBar={this.props.showSideBar} logoutUser={this.props.logoutUser} currentUser = {this.props.currentUser}/>
+          <Navbar currentPlaylist={this.props.currentPlaylist} createPlaylist={this.props.createPlaylist} showSideBar={this.props.showSideBar} logoutUser={this.props.logoutUser} currentUser = {this.props.currentUser}/>
           <Route  path="/login" component={LoginPage} />
           <Route  path="/home" render={() => <HomePage token = {this.props.token} playlists={this.props.playlists} deletePlaylist={this.props.deletePlaylist}/>}/>
           <Route  path="/playlist" render={() => <PlaylistPage user={this.props.currentUser} updatePlaylist={this.props.updatePlaylist} deletePlaylist={this.props.deletePlaylist} token={this.props.token} playlist={this.props.currentPlaylist}/>}/>
@@ -48,8 +56,7 @@ const mapStateToProps = (store) => {
     token: store.token,
     currentUser: store.currentUser,
     showAlbum: store.showAlbum,
-    playlists: store.playlists,
-    currentPlaylist: store.currentPlaylist
+    playlists: store.playlists
   }
 }
 

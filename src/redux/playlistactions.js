@@ -1,3 +1,5 @@
+import { history } from '../index';
+
 function createPlaylist(playlist){
     return (dispatch) => {
         fetch("http://localhost:3000/api/v1/playlists", {
@@ -9,7 +11,10 @@ function createPlaylist(playlist){
         body: JSON.stringify({playlist})
     })
     .then(res => res.json())
-    .then(playlist => dispatch({type:"ADD_PLAYLIST", playlist: playlist}))
+    .then(playlist => {
+        dispatch({type:"ADD_PLAYLIST", playlist: playlist})
+        dispatch({type: "SELECT_PLAYLIST", playlist: playlist})
+    })
     }
 }
 
