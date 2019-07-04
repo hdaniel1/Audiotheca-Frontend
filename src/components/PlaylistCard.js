@@ -9,7 +9,7 @@ export default class PlaylistCard extends React.Component {
                     <Image floated='right' size='small' src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
                     <Card.Header>{this.props.playlist.name}</Card.Header>
                     <Card.Meta>Playlist</Card.Meta>
-                    <Card.Description>{this.props.playlist.description}</Card.Description>
+                    <Card.Description><b><u>Description:</u></b> {this.props.playlist.description}</Card.Description>
                 </Card.Content>
             </Card>
         )
