@@ -8,11 +8,11 @@ const AlbumSlide = ({ key, albumInfo, showAlbum, playlist, addAlbum, playlistAlb
 
         function handleAdd () {
             let newAlbum = {
+                spotify_info: albumInfo,
                 playlist_id: playlist.id,
                 user_id: playlist.user.id,
                 spotify_id: albumInfo.id
             }
-            debugger
             addAlbum(newAlbum)
         }
 

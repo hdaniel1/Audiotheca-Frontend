@@ -7,6 +7,7 @@ export default class AlbumPreview extends React.Component {
 
     handleAdd = () => {
         let newAlbum = {
+            spotify_info: this.props.albumInfo,
             playlist_id: this.props.playlist.id,
             user_id: this.props.playlist.user.id,
             spotify_id: this.props.albumInfo.id

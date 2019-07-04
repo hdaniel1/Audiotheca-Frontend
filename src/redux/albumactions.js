@@ -13,9 +13,14 @@ function addAlbum(album) {
             if (response.error) {
                 console.log(response.error)
             }
+            else if (response.user_album) {
+                dispatch({type:"ADD_PLAYLIST_ALBUM", playlistAlbum: response.playlist_album})
+                dispatch({type:"ADD_USER_ALBUM", userAlbum: {...response.user_album, ...response.spotify_info}})
+            }
             else {
                 dispatch({type:"ADD_PLAYLIST_ALBUM", playlistAlbum: response.playlist_album})
-                dispatch({type:"ADD_USER_ALBUM", userAlbum: response.user_album})}})
+            }
+        })
     }
 }
 

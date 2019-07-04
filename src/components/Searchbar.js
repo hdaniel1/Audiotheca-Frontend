@@ -58,9 +58,9 @@ export default class Searchbar extends React.Component {
     }
 
     //how each artist is displayed
-    resultRenderer({key, images, title}) {
+    resultRenderer({images, title}) {
         return (
-        <div key={key} title={title} className='artist-result'>
+        <div title={title} className='artist-result'>
             {title}
             <Image 
             id="artist-image"

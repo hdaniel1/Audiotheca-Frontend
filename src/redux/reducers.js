@@ -1,13 +1,14 @@
 import {combineReducers} from 'redux'
+import _ from "lodash";
 
 const playlistAlbumReducer = (state = [], action) => {
   switch(action.type) {
     case "GET_PLAYLIST_ALBUMS":
-        return action.playlistAlbums
+        return action.playlistAlbums;
     case "ADD_PLAYLIST_ALBUM":
       return [...state, action.playlistAlbum];
     case "DELETE_PLAYLIST_ALBUM":
-      return [...state.filter(playlistAlbum => playlistAlbum.id !== action.playlistAlbum.id)]
+      return [...state.filter(playlistAlbum => playlistAlbum.id !== action.playlistAlbum.id)];
     default:
       return state;
   }
@@ -16,11 +17,15 @@ const playlistAlbumReducer = (state = [], action) => {
 const userAlbumReducer = (state = [], action) => {
   switch(action.type) {
     case "GET_USER_ALBUMS":
-        return action.userAlbums
+          return action.userAlbums
     case "ADD_USER_ALBUM":
       return [...state, action.userAlbum];
     case "DELETE_USER_ALBUM":
-      return [...state.filter(userAlbum => userAlbum.id !== action.userAlbum.id)]
+      return [...state.filter(userAlbum => userAlbum.id !== action.userAlbum.id)];
+    case "MERGE_SPOTIFY_INFO_ALL":
+      return _.map(state, function(album){
+        return _.extend(album, _.find(action.spotifyAlbums, {id: album.spotify_id}));
+    });
     default:
       return state;
   }
@@ -29,9 +34,9 @@ const userAlbumReducer = (state = [], action) => {
 const playlistReducer = (state = [], action) => {
   switch(action.type) {
     case "GET_PLAYLISTS":
-      return action.playlists
+      return action.playlists;
     case "ADD_PLAYLIST":
-      return [...state, action.playlist]
+      return [...state, action.playlist];
     case "UPDATE_PLAYLIST":
       return state.map(playlist => {
         if (playlist.id === action.playlist.id) {
@@ -43,13 +48,13 @@ const playlistReducer = (state = [], action) => {
           }
         }
         else {
-          return playlist
+          return playlist;
         }
       })
     case "DELETE_PLAYLIST":
-      return [...state.filter(playlist => playlist.id !== action.playlist.id)]
+      return [...state.filter(playlist => playlist.id !== action.playlist.id)];
     default:
-      return state
+      return state;
   }
 }
 
