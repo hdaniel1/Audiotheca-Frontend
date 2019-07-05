@@ -33,12 +33,16 @@
   margin-top:15px;
 }
 
-#playlist-album-container {
-    margin-top:25px;      
-    height: 100%; 
-    overflow: scroll; /* adds scrollbar */
+#album-header {
+  font-size:0.8vw;
 }
 
+#playlist-album-container {
+  margin-top:10px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
 
 .close {
   position: absolute;
@@ -48,3 +52,6 @@
   background-color:white;
 }
 
+#album-card {
+  display:inline-block;
+}

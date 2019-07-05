@@ -44,9 +44,9 @@ class PlaylistPage extends React.Component {
                             </Item.Content>
                         </Item>
                         <PlaylistFormModal closeModal={this.closeModal} open={this.state.showModal} playlist={this.props.playlist} user={this.props.user} updatePlaylist={this.props.updatePlaylist}/>
-                        <Card.Group itemsPerRow="3" id="playlist-album-container">
+                        <div id="playlist-album-container">
                             {this.props.playlistAlbums.map(playlistAlbum => <Album key={playlistAlbum.id} id={playlistAlbum.id} albumInfo={this.props.userAlbums.find(userAlbum => userAlbum.spotify_id === playlistAlbum.spotify_id)} deletePlaylistAlbum={this.props.deletePlaylistAlbum}/>)}
-                        </Card.Group>
+                        </div>
                     </Item.Group>
                 </div>
             </Transition.Group>
