@@ -25,6 +25,22 @@ function addAlbum(album) {
     }
 }
 
+function deleteUserAlbum (userAlbum) {
+    return (dispatch) => {
+        fetch(`http://localhost:3000/api/v1/user_albums/${userAlbum.id}`, {
+            method: "DELETE",
+            headers: {
+                "content-type": "application/json"
+            }
+        })
+        .then(() => {
+            dispatch({type:"DELETE_USER_ALBUM", userAlbum: userAlbum})
+            dispatch({type:"DELETE_PLAYLIST_ALBUMS", userAlbum: userAlbum})
+        })
+    }
+}
+
 export {
-    addAlbum
+    addAlbum,
+    deleteUserAlbum
 }

@@ -50,9 +50,21 @@ function selectPlaylist(playlist) {
     return {type: "SELECT_PLAYLIST", playlist: playlist}
 }
 
+function deletePlaylistAlbum(playlistAlbumId) {
+    return (dispatch) => {
+        fetch(`http://localhost:3000/api/v1/playlist_albums/${playlistAlbumId}`, {
+            method: "DELETE",
+            headers: {
+                "content-type": "application/json"
+            }
+        })
+        .then(() => dispatch({type:"DELETE_PLAYLIST_ALBUM", playlistAlbumId: playlistAlbumId}))
+    }
+}
 export {
     createPlaylist,
     selectPlaylist,
     deletePlaylist,
-    updatePlaylist
+    updatePlaylist,
+    deletePlaylistAlbum
 }

@@ -5,7 +5,7 @@ import Album from './Album'
 import PlaylistFormModal from './PlaylistFormModal'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {updatePlaylist, deletePlaylist} from '../redux/playlistactions'
+import {updatePlaylist, deletePlaylist, deletePlaylistAlbum} from '../redux/playlistactions'
 
 
 class PlaylistPage extends React.Component {
@@ -45,7 +45,7 @@ class PlaylistPage extends React.Component {
                         </Item>
                         <PlaylistFormModal closeModal={this.closeModal} open={this.state.showModal} playlist={this.props.playlist} user={this.props.user} updatePlaylist={this.props.updatePlaylist}/>
                         <Card.Group itemsPerRow="3" id="playlist-album-container">
-                            {this.props.playlistAlbums.map(playlistAlbum => <Album key={playlistAlbum.id} albumInfo={this.props.userAlbums.find(userAlbum => userAlbum.spotify_id === playlistAlbum.spotify_id)}/>)}
+                            {this.props.playlistAlbums.map(playlistAlbum => <Album key={playlistAlbum.id} id={playlistAlbum.id} albumInfo={this.props.userAlbums.find(userAlbum => userAlbum.spotify_id === playlistAlbum.spotify_id)} deletePlaylistAlbum={this.props.deletePlaylistAlbum}/>)}
                         </Card.Group>
                     </Item.Group>
                 </div>
@@ -57,7 +57,8 @@ class PlaylistPage extends React.Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         deletePlaylist: (playlist) => dispatch(deletePlaylist(playlist)),
-        updatePlaylist: (playlist) => dispatch(updatePlaylist(playlist))
+        updatePlaylist: (playlist) => dispatch(updatePlaylist(playlist)),
+        deletePlaylistAlbum: (playlistAlbum) => dispatch(deletePlaylistAlbum(playlistAlbum))
     }
 }
 

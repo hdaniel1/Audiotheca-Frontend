@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar'
 import HomePage from './HomePage'
 import LoginPage from './LoginPage'
+import BacklogPage from './BacklogPage'
 import PlaylistPage from '../components/PlaylistPage'
 import '../styles/App.css';
 import { Route, withRouter} from 'react-router-dom'
@@ -44,6 +45,7 @@ class App extends React.Component{
           <Route  path="/login" component={LoginPage} />
           <Route  path="/home" render={() => <HomePage token = {this.props.token} playlists={this.props.playlists} />}/>
           <Route  path="/playlist" render={() => <PlaylistPage user={this.props.currentUser} playlistAlbums={this.props.playlistAlbums.filter(playlistAlbum => playlistAlbum.playlist_id === this.props.currentPlaylist.id)} userAlbums={this.props.userAlbums} playlist={this.props.currentPlaylist}/>}/>
+          <Route  path="/backlog" render={() => <BacklogPage albums={this.props.userAlbums.filter(album => album.listened_to === false)} />}/>
       </React.Fragment>
     )
   }

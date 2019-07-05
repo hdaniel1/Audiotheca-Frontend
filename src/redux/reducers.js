@@ -8,7 +8,9 @@ const playlistAlbumReducer = (state = [], action) => {
     case "ADD_PLAYLIST_ALBUM":
       return [...state, action.playlistAlbum];
     case "DELETE_PLAYLIST_ALBUM":
-      return [...state.filter(playlistAlbum => playlistAlbum.id !== action.playlistAlbum.id)];
+      return [...state.filter(playlistAlbum => playlistAlbum.id !== action.playlistAlbumId)];
+    case "DELETE_PLAYLIST_ALBUMS":
+      return state.filter(playlistAlbums => playlistAlbums.spotify_id !== action.userAlbum.spotify_id);
     default:
       return state;
   }
@@ -23,9 +25,9 @@ const userAlbumReducer = (state = [], action) => {
     case "DELETE_USER_ALBUM":
       return [...state.filter(userAlbum => userAlbum.id !== action.userAlbum.id)];
     case "MERGE_SPOTIFY_INFO_ALL_UA":
-      return [...state, ...state.map(album => {
+      return state.map(album => {
         return _.extend(album, _.omit(_.find(action.spotifyAlbums, {id: album.spotify_id}), "id"))
-      })]
+      })
     default:
       return state;
   }
