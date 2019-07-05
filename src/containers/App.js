@@ -12,10 +12,8 @@ import {createPlaylist, updatePlaylist, deletePlaylist} from '../redux/playlista
 
 class App extends React.Component{
 
-  //check url for token, then get the user's info / albums / playlists / etc.
-
+  //for redirecting to playlist page after creation 
   componentWillReceiveProps(nextProps) {
-    debugger
     if (this.props.currentPlaylist !== nextProps.currentPlaylist) {
       this.props.history.push(`/playlist/${nextProps.currentPlaylist.id}`)
     }
