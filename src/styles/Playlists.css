@@ -15,8 +15,8 @@
   border-width:2px;
   border-color:#aaa;
   height:150px;
-  width:1250px;
-  margin-left:25%;
+  width:1210px;
+  margin-left:15%;
   margin-top:15px;
 }
 
@@ -30,6 +30,10 @@
 }
 
 #playlist-info-button {
+  margin-top:15px;
+}
+
+#playlist-album-container {
   margin-top:15px;
 }
 

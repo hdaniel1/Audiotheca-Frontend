@@ -4,11 +4,11 @@ import HomePage from './HomePage'
 import LoginPage from './LoginPage'
 import PlaylistPage from '../components/PlaylistPage'
 import '../styles/App.css';
-import { Route, withRouter, Redirect} from 'react-router-dom'
+import { Route, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {accessingToken, gettingUserInfo} from '../redux/useractions'
 import {logoutUser} from '../redux/frontendactions'
-import {createPlaylist, updatePlaylist, deletePlaylist} from '../redux/playlistactions'
+import {createPlaylist} from '../redux/playlistactions'
 
 class App extends React.Component{
 
@@ -42,8 +42,8 @@ class App extends React.Component{
       <React.Fragment>
           <Navbar currentPlaylist={this.props.currentPlaylist} createPlaylist={this.props.createPlaylist} showSideBar={this.props.showSideBar} logoutUser={this.props.logoutUser} currentUser = {this.props.currentUser}/>
           <Route  path="/login" component={LoginPage} />
-          <Route  path="/home" render={() => <HomePage token = {this.props.token} playlists={this.props.playlists} deletePlaylist={this.props.deletePlaylist}/>}/>
-          <Route  path="/playlist" render={() => <PlaylistPage user={this.props.currentUser} updatePlaylist={this.props.updatePlaylist} deletePlaylist={this.props.deletePlaylist} token={this.props.token} playlist={this.props.currentPlaylist}/>}/>
+          <Route  path="/home" render={() => <HomePage token = {this.props.token} playlists={this.props.playlists} />}/>
+          <Route  path="/playlist" render={() => <PlaylistPage user={this.props.currentUser} playlistAlbums={this.props.playlistAlbums.filter(playlistAlbum => playlistAlbum.playlist_id === this.props.currentPlaylist.id)} userAlbums={this.props.userAlbums} playlist={this.props.currentPlaylist}/>}/>
       </React.Fragment>
     )
   }
@@ -63,9 +63,7 @@ const mapDispatchToProps = (dispatch) => {
     accessingToken: (token) => dispatch(accessingToken(token)),
     gettingUserInfo: (token) => dispatch(gettingUserInfo(token)),
     logoutUser: () => dispatch(logoutUser()),
-    createPlaylist: (playlist) => dispatch(createPlaylist(playlist)),
-    deletePlaylist: (playlist) => dispatch(deletePlaylist(playlist)),
-    updatePlaylist: (playlist) => dispatch(updatePlaylist(playlist))
+    createPlaylist: (playlist) => dispatch(createPlaylist(playlist))
   }
 }
 

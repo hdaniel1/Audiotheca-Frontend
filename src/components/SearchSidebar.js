@@ -1,5 +1,5 @@
 import React, { createRef } from 'react'
-import {Menu, Sidebar, Divider, List, Ref, Modal} from 'semantic-ui-react'
+import {Menu, Sidebar, Divider, List, Ref} from 'semantic-ui-react'
 import App from '../containers/App'
 import Searchbar from './Searchbar'
 import {connect} from 'react-redux'
@@ -114,7 +114,7 @@ class SearchSidebar extends React.Component {
                         {/*entire app is pushable content*/}
                         <Ref innerRef={this.segmentRef}>
                             <Sidebar.Pusher dimmed={visible}>
-                                <App currentPlaylist={playlist} sidebarVisible={visible} showSideBar={this.showSideBar}/>
+                                <App userAlbums={userAlbums} playlistAlbums={playlistAlbums} currentPlaylist={playlist} sidebarVisible={visible} showSideBar={this.showSideBar}/>
                             </Sidebar.Pusher>
                         </Ref>
                     </Sidebar.Pushable>

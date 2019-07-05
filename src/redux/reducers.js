@@ -22,12 +22,10 @@ const userAlbumReducer = (state = [], action) => {
       return [...state, action.userAlbum];
     case "DELETE_USER_ALBUM":
       return [...state.filter(userAlbum => userAlbum.id !== action.userAlbum.id)];
-    case "MERGE_SPOTIFY_INFO_ALL":
-      return state.map(album => {
-        debugger
+    case "MERGE_SPOTIFY_INFO_ALL_UA":
+      return [...state, ...state.map(album => {
         return _.extend(album, _.omit(_.find(action.spotifyAlbums, {id: album.spotify_id}), "id"))
-      })
-
+      })]
     default:
       return state;
   }

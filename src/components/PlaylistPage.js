@@ -1,8 +1,12 @@
 import React from 'react'
-import {Item, Button, Confirm, Transition} from 'semantic-ui-react'
+import {Item, Button, Confirm, Transition, Card} from 'semantic-ui-react'
 import '../styles/Playlists.css';
+import Album from './Album'
 import PlaylistFormModal from './PlaylistFormModal'
 import {withRouter} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {updatePlaylist, deletePlaylist} from '../redux/playlistactions'
+
 
 class PlaylistPage extends React.Component {
     state = {
@@ -21,6 +25,7 @@ class PlaylistPage extends React.Component {
     }
 
     render() {
+        debugger
         return (
             <Transition.Group animation='drop' duration={500}>
                 <div id="playlist-info">
@@ -39,6 +44,9 @@ class PlaylistPage extends React.Component {
                             </Item.Content>
                         </Item>
                         <PlaylistFormModal closeModal={this.closeModal} open={this.state.showModal} playlist={this.props.playlist} user={this.props.user} updatePlaylist={this.props.updatePlaylist}/>
+                        <Card.Group itemsPerRow="3" id="playlist-album-container">
+                            {this.props.playlistAlbums.map(playlistAlbum => <Album key={playlistAlbum.id} albumInfo={this.props.userAlbums.find(userAlbum => userAlbum.spotify_id === playlistAlbum.spotify_id)}/>)}
+                        </Card.Group>
                     </Item.Group>
                 </div>
             </Transition.Group>
@@ -46,4 +54,11 @@ class PlaylistPage extends React.Component {
     }
 }
 
-export default withRouter(PlaylistPage)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deletePlaylist: (playlist) => dispatch(deletePlaylist(playlist)),
+        updatePlaylist: (playlist) => dispatch(updatePlaylist(playlist))
+    }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(PlaylistPage))

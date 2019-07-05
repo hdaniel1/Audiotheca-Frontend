@@ -1,6 +1,5 @@
 
 import SpotifyWebApi from 'spotify-web-api-js';
-import _ from "lodash";
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -18,7 +17,10 @@ function fetchUserAlbumInfo(token, albumsToFetch) {
     let spotifyIDs = albumsToFetch.map(album => album.spotify_id)
     return (dispatch) => {
       spotifyApi.getAlbums(spotifyIDs)
-      .then(albums => dispatch({type:"MERGE_SPOTIFY_INFO_ALL", spotifyAlbums: albums.albums}))
+      .then(albums => {
+        dispatch({type:"MERGE_SPOTIFY_INFO_ALL_UA", spotifyAlbums: albums.albums})
+        dispatch({type:"MERGE_SPOTIFY_INFO_ALL_PA", spotifyAlbums: albums.albums})
+      })
     }
 }
 
