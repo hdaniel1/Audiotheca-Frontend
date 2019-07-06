@@ -1,11 +1,12 @@
 import React from 'react'
 import Album from '../components/Album'
-import {Item, Button, Confirm, Transition, Card} from 'semantic-ui-react'
+import {Card} from 'semantic-ui-react'
 
-export default class HistoryPage extends React.Component {
+export default class BacklogPage extends React.Component {
+
     render() {
         return (
-            <Card.Group id="playlist-albums-grid">
+            <Card.Group >
                 {this.props.albums.map(album => {
                     return (
                         <Album key={album.id} albumInfo={album}/>

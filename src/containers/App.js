@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import HomePage from './HomePage'
 import LoginPage from './LoginPage'
 import BacklogPage from './BacklogPage'
+import HistoryPage from './HistoryPage'
 import PlaylistPage from '../components/PlaylistPage'
 import '../styles/App.css';
 import { Route, withRouter} from 'react-router-dom'
@@ -47,6 +48,7 @@ class App extends React.Component{
           <Route  path="/home" render={() => <HomePage token = {this.props.token} playlists={this.props.playlists} />}/>
           <Route  path="/playlist" render={() => <PlaylistPage user={this.props.currentUser} updateUserAlbum={this.props.updateUserAlbum} playlistAlbums={this.props.playlistAlbums.filter(playlistAlbum => playlistAlbum.playlist_id === this.props.currentPlaylist.id)} userAlbums={this.props.userAlbums} playlist={this.props.currentPlaylist}/>}/>
           <Route  path="/backlog" render={() => <BacklogPage updateUserAlbum={this.props.updateUserAlbum} albums={this.props.userAlbums.filter(album => album.listened_to === false)} />}/>
+          <Route  path="/history" render={() => <HistoryPage albums={this.props.userAlbums.filter(album => album.listened_to === true)} />}/>
       </React.Fragment>
     )
   }

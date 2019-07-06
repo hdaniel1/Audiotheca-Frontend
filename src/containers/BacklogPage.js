@@ -8,7 +8,7 @@ class BacklogPage extends React.Component {
 
     render() {
         return (
-            <Card.Group id="playlist-albums-grid">
+            <Card.Group>
                 {this.props.albums.map(album => {
                     return (
                         <Album key={album.id} updateUserAlbum={this.props.updateUserAlbum} albumInfo={album} deleteUserAlbum={this.props.deleteUserAlbum}/>

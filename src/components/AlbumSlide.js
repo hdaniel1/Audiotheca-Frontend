@@ -28,7 +28,12 @@ const AlbumSlide = ({ key, albumInfo, showAlbum, playlist, addAlbum, playlistAlb
                     <List.Content>
                         <List.Header id="album-name">{albumInfo.name}</List.Header>
                         <div id="slide-buttons">
-                        {_.some(playlistAlbums, {"spotify_id": albumInfo.id, playlist_id: playlist.id}) ? <Button icon="check" disabled></Button> :  <Button color="green" icon="check" onClick={handleAdd} ></Button>}
+                            {/*If already listened to buttons*/}
+                            {_.some(userAlbums, {"spotify_id": albumInfo.id, "listened_to": true}) ? 
+                                <Button color="orange" disabled >Listened!</Button>
+                                : 
+                            /*Otherwise, check if in playlist*/
+                                _.some(playlistAlbums, {"spotify_id": albumInfo.id, playlist_id: playlist.id}) ? <Button icon="check" disabled></Button> :  <Button color="green" icon="check" onClick={handleAdd} ></Button>}
                             <Modal id="preview-modal" trigger={<Button color='blue'> Info</Button>}>
                                 <AlbumPreview key={albumInfo.id} 
                                             userAlbums={userAlbums} 
