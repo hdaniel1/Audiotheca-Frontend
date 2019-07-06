@@ -25,6 +25,24 @@ function addAlbum(album) {
     }
 }
 
+function updateUserAlbum (userAlbum) {
+    return (dispatch) => {
+        fetch(`http://localhost:3000/api/v1/user_albums/${userAlbum.id}`, {
+            method: "PATCH",
+            headers: {
+                "content-type": "application/json",
+                "accepts": "application/json"
+            },
+            body: JSON.stringify(userAlbum)
+        })
+        .then(res => res.json())
+        .then(userAlbum => {
+            dispatch({type:"UPDATE_USER_ALBUM", userAlbum: userAlbum})
+            dispatch({type:"DELETE_PLAYLIST_ALBUMS", userAlbum: userAlbum})
+        })
+    }
+}
+
 function deleteUserAlbum (userAlbum) {
     return (dispatch) => {
         fetch(`http://localhost:3000/api/v1/user_albums/${userAlbum.id}`, {
@@ -42,5 +60,6 @@ function deleteUserAlbum (userAlbum) {
 
 export {
     addAlbum,
-    deleteUserAlbum
+    deleteUserAlbum,
+    updateUserAlbum
 }

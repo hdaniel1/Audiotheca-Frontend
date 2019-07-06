@@ -12,6 +12,11 @@ export default class Album extends React.Component {
         }
     }
 
+    handleListen = (userAlbum) => {
+       let updatedAlbum = {...userAlbum, listened_to: true}
+       this.props.updateUserAlbum(updatedAlbum)
+    }
+
     render() {
         return(
             <Card id="album-card">
@@ -23,7 +28,7 @@ export default class Album extends React.Component {
                     <Card.Description>Release Date: {this.props.albumInfo.release_date}</Card.Description>
                     <Card.Content extra><br />
                         <Button color="green">Listen</Button>
-                        <Button color="orange">Done Listening?</Button>
+                        <Button color="orange" onClick={() => this.handleListen(this.props.albumInfo)}>Done Listening?</Button>
                     </Card.Content>                     
                 </Card.Content>
             </Card>

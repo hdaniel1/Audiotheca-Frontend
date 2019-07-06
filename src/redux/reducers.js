@@ -22,6 +22,19 @@ const userAlbumReducer = (state = [], action) => {
           return action.userAlbums
     case "ADD_USER_ALBUM":
       return [...state, action.userAlbum];
+    case "UPDATE_USER_ALBUM":
+      debugger
+      return state.map(userAlbum => {
+        if (userAlbum.id === action.userAlbum.id) {
+          return {
+            ...userAlbum,
+            ...action.userAlbum
+          }
+        }
+        else {
+          return userAlbum
+        }
+      })
     case "DELETE_USER_ALBUM":
       return [...state.filter(userAlbum => userAlbum.id !== action.userAlbum.id)];
     case "MERGE_SPOTIFY_INFO_ALL_UA":

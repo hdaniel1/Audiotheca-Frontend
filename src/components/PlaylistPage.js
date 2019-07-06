@@ -25,7 +25,6 @@ class PlaylistPage extends React.Component {
     }
 
     render() {
-        debugger
         return (
             <Transition.Group animation='drop' duration={500}>
                 <div id="playlist-info">
@@ -45,7 +44,7 @@ class PlaylistPage extends React.Component {
                         </Item>
                         <PlaylistFormModal closeModal={this.closeModal} open={this.state.showModal} playlist={this.props.playlist} user={this.props.user} updatePlaylist={this.props.updatePlaylist}/>
                         <div id="playlist-album-container">
-                            {this.props.playlistAlbums.map(playlistAlbum => <Album key={playlistAlbum.id} id={playlistAlbum.id} albumInfo={this.props.userAlbums.find(userAlbum => userAlbum.spotify_id === playlistAlbum.spotify_id)} deletePlaylistAlbum={this.props.deletePlaylistAlbum}/>)}
+                            {this.props.playlistAlbums.map(playlistAlbum => <Album key={playlistAlbum.id} id={playlistAlbum.id} updateUserAlbum={this.props.updateUserAlbum} albumInfo={this.props.userAlbums.find(userAlbum => userAlbum.spotify_id === playlistAlbum.spotify_id)} deletePlaylistAlbum={this.props.deletePlaylistAlbum}/>)}
                         </div>
                     </Item.Group>
                 </div>
