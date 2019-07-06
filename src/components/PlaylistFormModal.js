@@ -4,6 +4,7 @@ import {Image, Modal, Button, Form} from 'semantic-ui-react'
 export default class PlaylistFormModal extends React.Component { 
 
     state = {
+        previewImage: null,
         image: "", 
         name: "", 
         description: "",
@@ -29,12 +30,14 @@ export default class PlaylistFormModal extends React.Component {
         }
         else if (event.target.name === "image") {
             this.setState({
-                image: URL.createObjectURL(event.target.files[0])
+                previewImage: URL.createObjectURL(event.target.files[0]),
+                image: event.target.files[0]
         })}
     }
 
     //reset state
     resetState = () => this.setState({
+        previewImage:null,
         image: null, 
         name: null, 
         description: null
@@ -43,17 +46,22 @@ export default class PlaylistFormModal extends React.Component {
     //submission of playlist form
     handleSubmit = (event) => {
         event.preventDefault()
+        
         const {image, name, description} = this.state
         
-        let newPlaylist = {
-            playlist_image: image,
-            name: name, 
-            description: description,
-            user_id: this.props.user.id
-        }
+        let reader = new FileReader();
+        reader.readAsDataURL(image);
 
-        this.props.updatePlaylist ? this.props.updatePlaylist({...this.props.playlist, name: name, description: description, image: image}) : this.props.createPlaylist(newPlaylist)
-        this.props.closeModal()
+        reader.onload = () => {
+            let newPlaylist = {
+                playlist_image: reader.result,
+                name: name, 
+                description: description,
+                user_id: this.props.user.id
+            }
+            this.props.updatePlaylist ? this.props.updatePlaylist({...this.props.playlist, name: name, description: description, image: image}) : this.props.createPlaylist(newPlaylist)
+            this.props.closeModal()
+        };
     }
 
     render() {
@@ -61,7 +69,9 @@ export default class PlaylistFormModal extends React.Component {
             <Modal onMount={this.checkUpdate} onUnmount = {this.resetState} open = {this.props.open}>
                 <Modal.Header>{this.state.header}<Button onClick={() => this.props.closeModal()} floated="right">Close</Button></Modal.Header>
                 <Modal.Content image>
-                    <Image wrapped size='medium' src={this.state.image ? this.state.image : 'https://www.templaza.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png'} />
+                    {this.state.previewImage ? <Image wrapped size='medium' src={this.state.previewImage ? this.state.previewImage : 'https://www.templaza.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png'} /> 
+                    :
+                    <Image wrapped size='medium' src={this.state.image} />}
                 <Modal.Description>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Field required><label>Name</label> <input placeholder='Name' value={this.state.name} name="name" onChange={(event) => this.handleChange(event)}/></Form.Field>

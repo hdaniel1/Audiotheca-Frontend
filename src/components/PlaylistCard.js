@@ -6,7 +6,7 @@ export default class PlaylistCard extends React.Component {
         return (
             <Card onClick={() => this.props.selectPlaylist(this.props.playlist)}>
                 <Card.Content >
-                    <Image floated='right' size='small' src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
+                    <Image floated='right' size='small' src={this.props.playlist.playlist_image ? this.props.playlist.playlist_image : 'https://react.semantic-ui.com/images/wireframe/short-paragraph.png'} />
                     <Card.Header>{this.props.playlist.name}</Card.Header>
                     <Card.Meta>Playlist</Card.Meta>
                     <Card.Description><b><u>Description:</u></b> {this.props.playlist.description}</Card.Description>

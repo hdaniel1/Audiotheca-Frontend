@@ -30,7 +30,7 @@ class PlaylistPage extends React.Component {
                 <div id="playlist-info">
                     <Item.Group>
                         <Item>
-                            <Item.Image id="playlist-info-image" size='small' circular src='http://www.independentmediators.co.uk/wp-content/uploads/2016/02/placeholder-image.jpg' />
+                            <Item.Image id="playlist-info-image" size='small' circular src= {this.props.playlist.playlist_image ? this.props.playlist.playlist_image : 'http://www.independentmediators.co.uk/wp-content/uploads/2016/02/placeholder-image.jpg'} />
                             <Item.Content id="playlist-info-content">
                                 <Item.Header id="playlist-info-header">Name: {this.props.playlist.name}</Item.Header>
                                 <Item.Meta>Description</Item.Meta>
