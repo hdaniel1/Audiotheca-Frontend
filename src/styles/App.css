@@ -33,8 +33,9 @@
 }
 
 #banner {
-  height:300px;
+  height:343px;
   background-color:black;
+  margin-top:0px;
 }
 
 #body {

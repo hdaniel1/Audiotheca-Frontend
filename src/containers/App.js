@@ -45,10 +45,10 @@ class App extends React.Component{
       <React.Fragment>
           <Navbar currentPlaylist={this.props.currentPlaylist} createPlaylist={this.props.createPlaylist} showSideBar={this.props.showSideBar} logoutUser={this.props.logoutUser} currentUser = {this.props.currentUser}/>
           <Route  path="/login" component={LoginPage} /> 
-          <Route  path="/home" render={() => <HomePage token = {this.props.token} playlists={this.props.playlists} />}/>
+          <Route  path="/home" render={() => <HomePage token = {this.props.token} bannerAlbums={this.props.userAlbums.filter(album => album.listened_to)} playlists={this.props.playlists} />}/>
           <Route  path="/playlist" render={() => <PlaylistPage user={this.props.currentUser} updateUserAlbum={this.props.updateUserAlbum} playlistAlbums={this.props.playlistAlbums.filter(playlistAlbum => playlistAlbum.playlist_id === this.props.currentPlaylist.id)} userAlbums={this.props.userAlbums} playlist={this.props.currentPlaylist}/>}/>
-          <Route  path="/backlog" render={() => <BacklogPage updateUserAlbum={this.props.updateUserAlbum} albums={this.props.userAlbums.filter(album => album.listened_to === false)} />}/>
-          <Route  path="/history" render={() => <HistoryPage albums={this.props.userAlbums.filter(album => album.listened_to === true)} />}/>
+          <Route  path="/backlog" render={() => <BacklogPage updateUserAlbum={this.props.updateUserAlbum} albums={this.props.userAlbums.filter(album => !album.listened_to)} />}/>
+          <Route  path="/history" render={() => <HistoryPage albums={this.props.userAlbums.filter(album => album.listened_to)} updateUserAlbum={this.props.updateUserAlbum} />}/>
       </React.Fragment>
     )
   }

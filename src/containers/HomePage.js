@@ -6,7 +6,7 @@ export default class HomePage extends React.Component {
     render() {
         return(
             <React.Fragment>
-                <Banner/>
+                <Banner bannerAlbums={this.props.bannerAlbums}/>
                 <PlaylistContainer playlists={this.props.playlists}/>
             </React.Fragment>
         )

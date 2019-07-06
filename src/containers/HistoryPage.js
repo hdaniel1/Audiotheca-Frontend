@@ -9,7 +9,7 @@ export default class BacklogPage extends React.Component {
             <Card.Group >
                 {this.props.albums.map(album => {
                     return (
-                        <Album key={album.id} albumInfo={album}/>
+                        <Album key={album.id} albumInfo={album} updateUserAlbum={this.props.updateUserAlbum}/>
                     )
                 })}
             </Card.Group>

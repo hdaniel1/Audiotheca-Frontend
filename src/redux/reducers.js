@@ -23,7 +23,6 @@ const userAlbumReducer = (state = [], action) => {
     case "ADD_USER_ALBUM":
       return [...state, action.userAlbum];
     case "UPDATE_USER_ALBUM":
-      debugger
       return state.map(userAlbum => {
         if (userAlbum.id === action.userAlbum.id) {
           return {

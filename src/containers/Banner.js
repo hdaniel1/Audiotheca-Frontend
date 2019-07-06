@@ -1,12 +1,16 @@
 import React from 'react'
 import '../styles/App.css';
+import {Grid, Image} from 'semantic-ui-react'
 
 export default class Banner extends React.Component {
     render() {
         return (
-            <div id="banner">
-
-            </div>
+            this.props.bannerAlbums ? 
+                <Grid columns="10" id="banner" >
+                    {this.props.bannerAlbums.map(album => album.images ?  <Grid.Column width="1"><Image size="small" src={album.images[1].url} /></Grid.Column> : null)}
+                </Grid>
+                :
+                    null
         )
     }
 }

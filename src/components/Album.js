@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Image, Button, Icon} from 'semantic-ui-react'
+import {Card, Image, Button, Icon, Rating} from 'semantic-ui-react'
 
 export default class Album extends React.Component {
 
@@ -17,6 +17,11 @@ export default class Album extends React.Component {
        this.props.updateUserAlbum(updatedAlbum)
     }
 
+    rateAlbum = (data, userAlbum) => {
+        let updatedAlbum = {...userAlbum, rating: data.rating}
+        this.props.updateUserAlbum(updatedAlbum)
+    }
+
     render() {
         return(
             <Card id="album-card">
@@ -32,7 +37,7 @@ export default class Album extends React.Component {
                         <Button color="orange" onClick={() => this.handleListen(this.props.albumInfo)}>Done Listening?</Button>
                     </Card.Content>       
                     : 
-                    null}              
+                    <Rating icon='star' maxRating={5} defaultRating={this.props.albumInfo.rating} onRate={(e, data)=> this.rateAlbum(data, this.props.albumInfo)}/>}              
                 </Card.Content>
             </Card>
         )

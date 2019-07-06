@@ -24,16 +24,12 @@ export default class AlbumPreview extends React.Component {
                         <Card.Header >{albumInfo.name}</Card.Header>
                         <Card.Meta >{albumInfo.artists[0].name}</Card.Meta>
                         <Card.Description>Release Date: {albumInfo.release_date}</Card.Description>
-                        <Card.Content extra><br />
-                            {_.some(playlistAlbums, {"spotify_id": albumInfo.id, playlist_id: playlist.id}) ? 
-                            <Button disabled>
-                                Already in this Playlist
-                            </Button>
-                            :
-                            <Button color='green' onClick={this.handleAdd}>
-                                Add to Backlog
-                            </Button>}
-                        </Card.Content>                     
+                            {/*If already listened to buttons*/}
+                            {_.some(userAlbums, {"spotify_id": albumInfo.id, "listened_to": true}) ? 
+                                <Button color="orange" disabled >Listened!</Button>
+                                : 
+                            /*Otherwise, check if in playlist*/
+                                _.some(playlistAlbums, {"spotify_id": albumInfo.id, playlist_id: playlist.id}) ? <Button color="green" disabled>Already in Playlist</Button> :  <Button color="green" onClick={this.handleAdd} >Add to Playlist</Button>}                  
                     </Card.Content>
                 </Card>
         )}
