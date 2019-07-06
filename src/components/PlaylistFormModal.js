@@ -56,21 +56,7 @@ export default class PlaylistFormModal extends React.Component {
         this.props.closeModal()
     }
 
-    // checkUploadResult = (result) => {
-    //     if (result.event === "success") {
-    //         this.setState({image: result.info.secure_url})
-    //     }
-    // }
-    
     render() {
-        // //upload widget
-        // let imageUploadWidget = window.cloudinary.createUploadWidget({
-        //     cloudName: "dpdhd8sbg",
-        //     cropping:true,
-        //     uploadPreset: "u9gezupm"},
-        //     (error, result) => {this.checkUploadResult(result)}
-        // )
-
         return (
             <Modal onMount={this.checkUpdate} onUnmount = {this.resetState} open = {this.props.open}>
                 <Modal.Header>{this.state.header}<Button onClick={() => this.props.closeModal()} floated="right">Close</Button></Modal.Header>
