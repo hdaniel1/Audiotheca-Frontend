@@ -1,5 +1,6 @@
 
 import SpotifyWebApi from 'spotify-web-api-js';
+import _ from "lodash";
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -11,15 +12,49 @@ function setCurrentUser(user){
     return {type:"LOGIN_USER", user}
 }
 
+function getArtistAlbumCount(token, artist) {
+  spotifyApi.setAccessToken(token)
+  return (dispatch) => {
+    spotifyApi.getArtistAlbums(artist)
+    .then(results => {
+      let info = {
+        count: results.items.filter(album => album.album_type === "album" && album.album_group === "album").length,
+        id: artist
+      }
+      dispatch({type: "GET_ALBUM_COUNT", info: info})
+    })
+  }
+}
+
+function fetchArtistInformation(token, artistsToFetch) {
+  spotifyApi.setAccessToken(token)
+  return (dispatch) => {
+    artistsToFetch.forEach(artist => {
+        spotifyApi.getArtist(artist)
+        .then(results => {
+          dispatch({type:"GET_ARTIST_INFO", artist: results})
+          dispatch(getArtistAlbumCount(token, results.id))
+          })
+      })
+  }
+}
+
 function fetchUserAlbumInfo(token, albumsToFetch) {
     spotifyApi.setAccessToken(token)
     //array of spotify IDs to fetch
     let spotifyIDs = albumsToFetch.map(album => album.spotify_id)
+
     return (dispatch) => {
       spotifyApi.getAlbums(spotifyIDs)
-      .then(albums => {
-        dispatch({type:"MERGE_SPOTIFY_INFO_ALL_UA", spotifyAlbums: albums.albums})
-        dispatch({type:"MERGE_SPOTIFY_INFO_ALL_PA", spotifyAlbums: albums.albums})
+      .then(results => {
+        let artistIds = _.uniq(results.albums.map(album => album.artists[0].id))
+
+        dispatch({type:"MERGE_SPOTIFY_INFO_ALL_UA", spotifyAlbums: results.albums})
+        dispatch({type:"MERGE_SPOTIFY_INFO_ALL_PA", spotifyAlbums: results.albums})
+        dispatch(fetchArtistInformation(token, artistIds))
+        //get distinct artists from results and fetch artist info for stats
+      
+        // dispatch(fetchArtistInformation(token, artistIds))
       })
     }
 }

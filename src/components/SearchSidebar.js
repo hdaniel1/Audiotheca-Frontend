@@ -64,7 +64,6 @@ class SearchSidebar extends React.Component {
                 //get the unique album recommendations from seed data that have yet to be listened to 
                 let userAlbumIds = this.props.userAlbums.filter(album => album.listened_to).map(album => album.spotify_id)
                 let recs = _.uniqBy(recommendations.tracks.map(track => track.album), "id").filter(album => !userAlbumIds.includes(album.id))
-                debugger
                 //set artistAlbums state to 20 random albums from recs, set state recommendations to all recommendations
                 this.setState({artistAlbums: recs.sort(() => 0.5 - Math.random()).slice(0, 20), recommendations: recs})
             })
@@ -90,10 +89,8 @@ class SearchSidebar extends React.Component {
     clearAlbums = () => this.setState({artistAlbums: [], clearSearch: false, albumPreview:null})
     
     //shuffle recommendations
-    shuffleRecs = () => {
-        debugger
-        this.setState({artistAlbums: this.state.recommendations.sort(() => 0.5 - Math.random()).slice(0, 20)})
-    }
+    shuffleRecs = () => this.setState({artistAlbums: this.state.recommendations.sort(() => 0.5 - Math.random()).slice(0, 20)})
+
 
     render() {    
         const {token, playlist, userAlbums, playlistAlbums, addAlbum} = this.props

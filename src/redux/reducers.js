@@ -1,6 +1,28 @@
 import {combineReducers} from 'redux'
 import _ from "lodash";
 
+const artistInfoReducer = (state = [], action) => {
+  switch(action.type) {
+    case "GET_ARTIST_INFO":
+      return  [...state, action.artist];
+    case "GET_ALBUM_COUNT":
+      return state.map(artist => {
+          if (artist.id === action.info.id) {
+            return {
+              ...artist,
+              ...action.info
+            }
+          }
+          else {
+            return artist
+          }
+        })
+    default:
+      return state;
+  }
+}
+
+
 const playlistAlbumReducer = (state = [], action) => {
   switch(action.type) {
     case "GET_PLAYLIST_ALBUMS":
@@ -109,7 +131,8 @@ const rootReducer = combineReducers({
     playlists: playlistReducer,
     currentPlaylist: selectPlaylistReducer,
     playlistAlbums: playlistAlbumReducer,
-    userAlbums: userAlbumReducer
+    userAlbums: userAlbumReducer,
+    artistInfo: artistInfoReducer
 })
 
 export default rootReducer
