@@ -7,7 +7,9 @@ const artistInfoReducer = (state = [], action) => {
       return  [...state, action.artist];
     case "GET_ALBUM_COUNT":
       return state.map(artist => {
+        debugger
           if (artist.id === action.info.id) {
+            debugger
             return {
               ...artist,
               ...action.info

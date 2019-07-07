@@ -18,7 +18,9 @@ function getArtistAlbumCount(token, artist) {
     spotifyApi.getArtistAlbums(artist)
     .then(results => {
       let info = {
-        count: results.items.filter(album => album.album_type === "album" && album.album_group === "album").length,
+        ...results,
+        count: _.uniqBy(results.items, 'name').filter(album => album.album_type === "album" && album.album_group === "album").length,
+        items: _.uniqBy(results.items, 'name').filter(album => album.album_type === "album" && album.album_group === "album"),
         id: artist
       }
       dispatch({type: "GET_ALBUM_COUNT", info: info})

@@ -34,6 +34,7 @@ export default class Album extends React.Component {
     }
 
     render() {
+        debugger
         return(
             <Card id="album-card">
                 {this.state.albumPlaying ? <iframe src={`https://open.spotify.com/embed/album/${this.state.albumPlaying}`} width="290" height="286" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe> :<Image src={this.props.albumInfo.images[1].url} />}

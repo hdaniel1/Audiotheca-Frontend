@@ -55,8 +55,8 @@ class SearchSidebar extends React.Component {
     }
 
     getRecommendations = (userAlbums) => {
-        if (userAlbums.filter(album => album.listened_to === true).length > 5) {
-            //get last 5 artists listened to 
+        if (userAlbums.filter(album => album.listened_to === true).length >= 5) {
+            //get least 5 artists listened to 
             let artistSeeds = _.uniq(_.sortBy(userAlbums, "date_listened_to").reverse().map(album => album.artists[0].id)).slice(0, 5).join()
             let seedObject = {limit: 100, seed_artists: artistSeeds}
             spotifyApi.getRecommendations(seedObject)

@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import HomePage from './HomePage'
 import LoginPage from './LoginPage'
 import BacklogPage from './BacklogPage'
+import StatsPage from './StatsPage'
 import HistoryPage from './HistoryPage'
 import PlaylistPage from '../components/PlaylistPage'
 import '../styles/App.css';
@@ -49,6 +50,7 @@ class App extends React.Component{
           <Route  path="/playlist" render={() => <PlaylistPage user={this.props.currentUser} updateUserAlbum={this.props.updateUserAlbum} playlistAlbums={this.props.playlistAlbums.filter(playlistAlbum => playlistAlbum.playlist_id === this.props.currentPlaylist.id)} userAlbums={this.props.userAlbums} playlist={this.props.currentPlaylist}/>}/>
           <Route  path="/backlog" render={() => <BacklogPage updateUserAlbum={this.props.updateUserAlbum} albums={this.props.userAlbums.filter(album => !album.listened_to)} />}/>
           <Route  path="/history" render={() => <HistoryPage albums={this.props.userAlbums.filter(album => album.listened_to)} updateUserAlbum={this.props.updateUserAlbum} />}/>
+          <Route  path="/stats" render={() => <StatsPage albums={this.props.userAlbums.filter(album => album.listened_to)} artists={this.props.artists} />}/>
       </React.Fragment>
     )
   }
@@ -59,7 +61,8 @@ const mapStateToProps = (store) => {
     token: store.token,
     currentUser: store.currentUser,
     showAlbum: store.showAlbum,
-    playlists: store.playlists
+    playlists: store.playlists,
+    artists: store.artistInfo
   }
 }
 

@@ -46,22 +46,25 @@ export default class PlaylistFormModal extends React.Component {
     //submission of playlist form
     handleSubmit = (event) => {
         event.preventDefault()
-        
         const {image, name, description} = this.state
         
-        let reader = new FileReader();
-        reader.readAsDataURL(image);
+        if (!name) {
+            alert("Playlist Name Required!")
+        }
+        else {
+            let reader = new FileReader();
+            reader.readAsDataURL(image);
 
-        reader.onload = () => {
-            let newPlaylist = {
-                playlist_image: reader.result,
-                name: name, 
-                description: description,
-                user_id: this.props.user.id
-            }
-            this.props.updatePlaylist ? this.props.updatePlaylist({...this.props.playlist, name: name, description: description, image: image}) : this.props.createPlaylist(newPlaylist)
-            this.props.closeModal()
-        };
+            reader.onload = () => {
+                let newPlaylist = {
+                    playlist_image: reader.result,
+                    name: name, 
+                    description: description,
+                    user_id: this.props.user.id
+                }
+                this.props.updatePlaylist ? this.props.updatePlaylist({...this.props.playlist, name: name, description: description, image: image}) : this.props.createPlaylist(newPlaylist)
+                this.props.closeModal()
+        };}
     }
 
     render() {
