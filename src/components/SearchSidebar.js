@@ -54,6 +54,22 @@ class SearchSidebar extends React.Component {
         }
     }
 
+    getRecommendations = (userAlbums) => {
+        if (userAlbums.filter(album => album.listened_to === true).length > 5) {
+            //get last 5 artists listened to 
+            let artistSeeds = _.uniq(_.sortBy(userAlbums, "date_listened_to").reverse().map(album => album.artists[0].id)).slice(0, 5).join()
+            let seedObject = {limit: 100, seed_artists: artistSeeds}
+            spotifyApi.getRecommendations(seedObject)
+            .then(recommendations => {  
+                //get the unique album recommendations from seed data that have yet to be listened to 
+                let userAlbumIds = this.props.userAlbums.filter(album => album.listened_to).map(album => album.spotify_id)
+                let recs = _.uniqBy(recommendations.tracks.map(track => track.album), "id").filter(album => !userAlbumIds.includes(album.id))
+                debugger
+                //set artistAlbums state to 20 random albums from recs, set state recommendations to all recommendations
+                this.setState({artistAlbums: recs.sort(() => 0.5 - Math.random()).slice(0, 20), recommendations: recs})
+            })
+    }}
+
     //get unique albums by name since Spotify sometimes returns dupes
     fetchArtistAlbums = (artistID) => {
         spotifyApi.getArtistAlbums(artistID)
@@ -72,6 +88,12 @@ class SearchSidebar extends React.Component {
 
     //clear button in search
     clearAlbums = () => this.setState({artistAlbums: [], clearSearch: false, albumPreview:null})
+    
+    //shuffle recommendations
+    shuffleRecs = () => {
+        debugger
+        this.setState({artistAlbums: this.state.recommendations.sort(() => 0.5 - Math.random()).slice(0, 20)})
+    }
 
     render() {    
         const {token, playlist, userAlbums, playlistAlbums, addAlbum} = this.props
@@ -84,6 +106,7 @@ class SearchSidebar extends React.Component {
                             as={Menu}
                             animation='push'
                             icon='labeled'
+                            onShow={() => this.getRecommendations(this.props.userAlbums)}
                             onHide={this.handleSidebarHide}
                             inverted
                             vertical
@@ -98,6 +121,7 @@ class SearchSidebar extends React.Component {
                                 clearAlbums={this.clearAlbums}
                                 clearSearch={clearSearch}
                             />
+                            {this.state.recommendations ? <button id="recs-button" onClick={() => this.shuffleRecs()}>Recommendations</button> : null}
                             <Divider id="searchbar-divider"/>
                             {/* List of selected artist's albums */}
                             <List inverted relaxed celled>

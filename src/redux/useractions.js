@@ -32,7 +32,6 @@ function fetchUserAlbums(token, userId) {
         dispatch({type:"GET_USER_ALBUMS", userAlbums: userAlbums})
         //fetch 20 albums from spotify at a time to append album info to store's user albums
         for (let i=0;i < userAlbums.length;i+=20) {
-          debugger
           if (userAlbums.slice(i, i+20).length > 1) {
             let albumsToFetch = userAlbums.slice(i, i+20)
             dispatch(fetchUserAlbumInfo(token, albumsToFetch))

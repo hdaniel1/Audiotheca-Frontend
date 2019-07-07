@@ -68,3 +68,13 @@
 #preview-card {
     width:400px;
 }
+
+#recs-button {
+    float:right;
+    margin-left:15px;
+    margin-top:5px;
+    background-color:orange;
+    color:white;
+    border: none;
+    border-radius:8px;
+}
