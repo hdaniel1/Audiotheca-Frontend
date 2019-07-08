@@ -16,7 +16,8 @@ import {createPlaylist} from '../redux/playlistactions'
 
 class App extends React.Component{
   state = {
-    sortCondition: ""
+    sortCondition: "", 
+    ascend: false
   }
 
   //for redirecting to playlist page after creation 
@@ -46,27 +47,53 @@ class App extends React.Component{
   //for sorting on history / backlog pages
   handleSort = (event) => {
     if (event.target.id === "album-name") {
-      this.setState({sortCondition: "album-name"})
+      this.setState({sortCondition: "album-name", ascend: !this.state.ascend})
     } 
     else if (event.target.id === "artist-name") {
-      this.setState({sortCondition: "artist-name"})
+      this.setState({sortCondition: "artist-name", ascend: !this.state.ascend})
     }
     else if (event.target.id === "rating") {
-      this.setState({sortCondition: "rating"})
+      this.setState({sortCondition: "rating", ascend: !this.state.ascend})
     }
     else if (event.target.id === "release-date") {
-      this.setState({sortCondition: "release-date"})
+      this.setState({sortCondition: "release-date", ascend: !this.state.ascend})
     }
   }
 
-  sort = (albums) => {
+  sortDescend = (albums) => {
     if (this.state.sortCondition === "album-name") {
       return albums.sort((a,b) => {
-        let x = a.name.toLowerCase() 
-        let y = b.name.toLowerCase()
+        if (a.name.toLowerCase()  < b.name.toLowerCase()) {return -1;}
+        else if (a.name.toLowerCase()  > b.name.toLowerCase()) {return 1;}
+        else {return 0}
+      }).reverse()
+    }
+    else if (this.state.sortCondition === "rating") {
+      return albums.sort((a,b) => a.rating - b.rating).reverse()
+    }
+    else if (this.state.sortCondition === "release-date") {
+      return albums.sort((a,b) => new Date(a.release_date) - new Date(b.release_date)).reverse()
+    }
+    else if (this.state.sortCondition === "artist-name") {
+      return albums.sort((a,b) => {
+        let x = a.artists[0].name.toLowerCase() 
+        let y = b.artists[0].name.toLowerCase()
         if (x < y) {return -1;}
         if (x > y) {return 1;}
         return 0;
+      }).reverse()
+    }
+    else {
+      return albums
+    }
+  }
+
+  sortAscend = (albums) => {
+    if (this.state.sortCondition === "album-name") {
+      return albums.sort((a,b) => {
+        if (a.name.toLowerCase()  < b.name.toLowerCase()) {return -1;}
+        else if (a.name.toLowerCase()  > b.name.toLowerCase()) {return 1;}
+        else {return 0}
       })
     }
     else if (this.state.sortCondition === "rating") {
@@ -90,15 +117,19 @@ class App extends React.Component{
   }
 
   render() {
+    let listenedTo = this.props.userAlbums.filter(album => album.listened_to)
+    let notListenedTo = this.props.userAlbums.filter(album => !album.listened_to)
+    const {ascend} = this.state
+
     return (
       <React.Fragment>
           <Navbar currentPlaylist={this.props.currentPlaylist} createPlaylist={this.props.createPlaylist} showSideBar={this.props.showSideBar} logoutUser={this.props.logoutUser} currentUser = {this.props.currentUser}/>
           <Route  path="/login" component={LoginPage} /> 
           <Route  path="/home" render={() => <HomePage token = {this.props.token} bannerAlbums={this.props.userAlbums.filter(album => album.listened_to)} playlists={this.props.playlists} />}/>
           <Route  path="/playlist" render={() => <PlaylistPage user={this.props.currentUser} updateUserAlbum={this.props.updateUserAlbum} playlistAlbums={this.props.playlistAlbums.filter(playlistAlbum => playlistAlbum.playlist_id === this.props.currentPlaylist.id)} userAlbums={this.props.userAlbums} playlist={this.props.currentPlaylist}/>}/>
-          <Route  path="/backlog" render={() => <BacklogPage handleSort={this.handleSort} updateUserAlbum={this.props.updateUserAlbum} albums={this.sort(this.props.userAlbums.filter(album => !album.listened_to))}/>}/>
-          <Route  path="/history" render={() => <HistoryPage handleSort={this.handleSort} albums={this.sort(this.props.userAlbums.filter(album => album.listened_to))} updateUserAlbum={this.props.updateUserAlbum} />}/>
-          <Route  path="/stats" render={() => <StatsPage albums={this.props.userAlbums.filter(album => album.listened_to)} artists={this.props.artists} />}/>
+          <Route  path="/backlog" render={() => <BacklogPage handleSort={this.handleSort} updateUserAlbum={this.props.updateUserAlbum} albums={ascend ? this.sortAscend(notListenedTo) : this.sortDescend(notListenedTo)}/>}/>
+          <Route  path="/history" render={() => <HistoryPage handleSort={this.handleSort} albums={ascend ? this.sortAscend(listenedTo) : this.sortDescend(listenedTo)} updateUserAlbum={this.props.updateUserAlbum} />}/>
+          <Route  path="/stats" render={() => <StatsPage albums={listenedTo} artists={this.props.artists} />}/>
       </React.Fragment>
     )
   }
