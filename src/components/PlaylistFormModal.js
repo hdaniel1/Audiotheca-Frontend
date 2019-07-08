@@ -62,7 +62,7 @@ export default class PlaylistFormModal extends React.Component {
                     description: description,
                     user_id: this.props.user.id
                 }
-                this.props.updatePlaylist ? this.props.updatePlaylist({...this.props.playlist, name: name, description: description, image: image}) : this.props.createPlaylist(newPlaylist)
+                this.props.updatePlaylist ? this.props.updatePlaylist({...this.props.playlist, name: name, description: description, playlist_image: reader.result}) : this.props.createPlaylist(newPlaylist)
                 this.props.closeModal()
         };}
     }

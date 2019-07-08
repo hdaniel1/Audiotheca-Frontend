@@ -45,3 +45,7 @@
 #user-album-container {
   margin-left:8%;
 }
+
+#album-filters {
+  float:left;
+}

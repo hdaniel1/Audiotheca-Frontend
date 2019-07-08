@@ -13,11 +13,12 @@ import {updateUserAlbum} from '../redux/albumactions'
 import {accessingToken, gettingUserInfo} from '../redux/useractions'
 import {logoutUser} from '../redux/frontendactions'
 import {createPlaylist} from '../redux/playlistactions'
+import _ from "lodash";
 
 class App extends React.Component{
   state = {
     sortCondition: "", 
-    ascend: false
+    ascend: true
   }
 
   //for redirecting to playlist page after creation 
@@ -117,19 +118,21 @@ class App extends React.Component{
   }
 
   render() {
-    let listenedTo = this.props.userAlbums.filter(album => album.listened_to)
-    let notListenedTo = this.props.userAlbums.filter(album => !album.listened_to)
     const {ascend} = this.state
+    const {artists, currentUser, playlists, createPlaylist, showSideBar, logoutUser, currentPlaylist, token, userAlbums, playlistAlbums, updateUserAlbum} = this.props
 
+    let listenedTo = userAlbums.filter(album => album.listened_to)
+    let notListenedTo = userAlbums.filter(album => !album.listened_to)
+    
     return (
       <React.Fragment>
-          <Navbar currentPlaylist={this.props.currentPlaylist} createPlaylist={this.props.createPlaylist} showSideBar={this.props.showSideBar} logoutUser={this.props.logoutUser} currentUser = {this.props.currentUser}/>
+          <Navbar currentPlaylist={currentPlaylist} createPlaylist={createPlaylist} showSideBar={showSideBar} logoutUser={logoutUser} currentUser = {currentUser}/>
           <Route  path="/login" component={LoginPage} /> 
-          <Route  path="/home" render={() => <HomePage token = {this.props.token} bannerAlbums={this.props.userAlbums.filter(album => album.listened_to)} playlists={this.props.playlists} />}/>
-          <Route  path="/playlist" render={() => <PlaylistPage user={this.props.currentUser} updateUserAlbum={this.props.updateUserAlbum} playlistAlbums={this.props.playlistAlbums.filter(playlistAlbum => playlistAlbum.playlist_id === this.props.currentPlaylist.id)} userAlbums={this.props.userAlbums} playlist={this.props.currentPlaylist}/>}/>
-          <Route  path="/backlog" render={() => <BacklogPage handleSort={this.handleSort} updateUserAlbum={this.props.updateUserAlbum} albums={ascend ? this.sortAscend(notListenedTo) : this.sortDescend(notListenedTo)}/>}/>
-          <Route  path="/history" render={() => <HistoryPage handleSort={this.handleSort} albums={ascend ? this.sortAscend(listenedTo) : this.sortDescend(listenedTo)} updateUserAlbum={this.props.updateUserAlbum} />}/>
-          <Route  path="/stats" render={() => <StatsPage albums={listenedTo} artists={this.props.artists} />}/>
+          <Route  path="/home" render={() => <HomePage token = {token} bannerAlbums={userAlbums.filter(album => album.listened_to)} playlists={playlists} />}/>
+          <Route  path="/playlist" render={() => <PlaylistPage user={currentUser} updateUserAlbum={updateUserAlbum} playlistAlbums={playlistAlbums.filter(playlistAlbum => playlistAlbum.playlist_id === currentPlaylist.id)} userAlbums={userAlbums} playlist={currentPlaylist}/>}/>
+          <Route  path="/backlog" render={() => <BacklogPage handleSort={this.handleSort} updateUserAlbum={updateUserAlbum} albums={ascend ? this.sortAscend(notListenedTo) : this.sortDescend(notListenedTo)}/>}/>
+          <Route  path="/history" render={() => <HistoryPage handleSort={this.handleSort} albums={ascend ? this.sortAscend(listenedTo) : this.sortDescend(listenedTo)} updateUserAlbum={updateUserAlbum} />}/>
+          <Route  path="/stats" render={() => <StatsPage albums={listenedTo} artists={_.sortBy(artists, "name")} />}/>
       </React.Fragment>
     )
   }

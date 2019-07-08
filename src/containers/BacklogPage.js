@@ -3,23 +3,26 @@ import Album from '../components/Album'
 import {Card} from 'semantic-ui-react'
 import {deleteUserAlbum} from '../redux/albumactions'
 import {connect} from 'react-redux'
-import Sorting from '../components/Sorting'
+import AlbumFilters from './AlbumFilters'
 import '../styles/App.css';
 
-
 class BacklogPage extends React.Component {
+    state = {
+        artistFilter: ""
+    }
+
+    handleFilter = (event, {value}) => this.setState({artistFilter: value})
 
     render() {
-        const {handleSort} = this.props
+        const {handleSort, albums, updateUserAlbum, deleteUserAlbum,} = this.props
+        const {artistFilter} = this.state
+        let artistOptions = albums.map(album => album.artists[0].name)
+        
         return (
             <React.Fragment>
-                <Sorting handleSort={handleSort} showRatingSort={false}/>
+                <AlbumFilters handleSort={handleSort} artistOptions={artistOptions} showRatingSort={false} handleFilter={this.handleFilter} />
                 <Card.Group id="user-album-container">
-                    {this.props.albums.map(album => {
-                        return (
-                            <Album key={album.id} updateUserAlbum={this.props.updateUserAlbum} albumInfo={album} deleteUserAlbum={this.props.deleteUserAlbum}/>
-                        )
-                    })}
+                    {albums.filter(album => album.artists[0].name.includes(artistFilter)).map(album => <Album key={album.id} updateUserAlbum={updateUserAlbum} albumInfo={album} deleteUserAlbum={deleteUserAlbum}/>)}
                 </Card.Group>
             </React.Fragment>
         )
