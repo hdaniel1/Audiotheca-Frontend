@@ -13,6 +13,7 @@ export default class AlbumFilters extends React.Component {
                 value: artist
             })
         })
+        artistDropDown.push({key: "All", text: "All", value: ""})
 
         return (
             <div id="album-filters">
