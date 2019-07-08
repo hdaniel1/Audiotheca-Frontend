@@ -4,12 +4,10 @@ import _ from "lodash";
 const artistInfoReducer = (state = [], action) => {
   switch(action.type) {
     case "GET_ARTIST_INFO":
-      return  [...state, action.artist];
+      return  _.uniqBy([...state, action.artist], "id");
     case "GET_ALBUM_COUNT":
       return state.map(artist => {
-        debugger
           if (artist.id === action.info.id) {
-            debugger
             return {
               ...artist,
               ...action.info

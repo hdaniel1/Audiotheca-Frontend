@@ -30,7 +30,6 @@ function getArtistAlbumCount(token, artist) {
 
 function fetchArtistInformation(token, artistsToFetch) {
   spotifyApi.setAccessToken(token)
-  debugger
   return (dispatch) => {
     artistsToFetch.forEach(artist => {
         spotifyApi.getArtist(artist)
@@ -51,13 +50,9 @@ function fetchUserAlbumInfo(token, albumsToFetch) {
       spotifyApi.getAlbums(spotifyIDs)
       .then(results => {
         let artistIds = _.uniq(results.albums.map(album => album.artists[0].id))
-
         dispatch({type:"MERGE_SPOTIFY_INFO_ALL_UA", spotifyAlbums: results.albums})
         dispatch({type:"MERGE_SPOTIFY_INFO_ALL_PA", spotifyAlbums: results.albums})
         dispatch(fetchArtistInformation(token, artistIds))
-        //get distinct artists from results and fetch artist info for stats
-      
-        // dispatch(fetchArtistInformation(token, artistIds))
       })
     }
 }

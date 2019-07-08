@@ -43,6 +43,7 @@ const AlbumSlide = ({ key, albumInfo, token, showAlbum, playlist, addAlbum, play
                                             playlistAlbums={playlistAlbums} 
                                             addAlbum={addAlbum} 
                                             playlist={playlist}
+                                            token={token}
                                             fetchArtistInformation={fetchArtistInformation}/>
                             </Modal>
                         </div>
