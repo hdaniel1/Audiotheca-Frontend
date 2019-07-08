@@ -15,6 +15,9 @@ import {logoutUser} from '../redux/frontendactions'
 import {createPlaylist} from '../redux/playlistactions'
 
 class App extends React.Component{
+  state = {
+    sortCondition: ""
+  }
 
   //for redirecting to playlist page after creation 
   componentWillReceiveProps(nextProps) {
@@ -40,6 +43,51 @@ class App extends React.Component{
       this.props.history.push("/home")
     }
   }
+  //for sorting on history / backlog pages
+  handleSort = (event) => {
+    if (event.target.id === "album-name") {
+      this.setState({sortCondition: "album-name"})
+    } 
+    else if (event.target.id === "artist-name") {
+      this.setState({sortCondition: "artist-name"})
+    }
+    else if (event.target.id === "rating") {
+      this.setState({sortCondition: "rating"})
+    }
+    else if (event.target.id === "release-date") {
+      this.setState({sortCondition: "release-date"})
+    }
+  }
+
+  sort = (albums) => {
+    if (this.state.sortCondition === "album-name") {
+      return albums.sort((a,b) => {
+        let x = a.name.toLowerCase() 
+        let y = b.name.toLowerCase()
+        if (x < y) {return -1;}
+        if (x > y) {return 1;}
+        return 0;
+      })
+    }
+    else if (this.state.sortCondition === "rating") {
+      return albums.sort((a,b) => a.rating - b.rating)
+    }
+    else if (this.state.sortCondition === "release-date") {
+      return albums.sort((a,b) => new Date(a.release_date) - new Date(b.release_date))
+    }
+    else if (this.state.sortCondition === "artist-name") {
+      return albums.sort((a,b) => {
+        let x = a.artists[0].name.toLowerCase() 
+        let y = b.artists[0].name.toLowerCase()
+        if (x < y) {return -1;}
+        if (x > y) {return 1;}
+        return 0;
+      })
+    }
+    else {
+      return albums
+    }
+  }
 
   render() {
     return (
@@ -48,8 +96,8 @@ class App extends React.Component{
           <Route  path="/login" component={LoginPage} /> 
           <Route  path="/home" render={() => <HomePage token = {this.props.token} bannerAlbums={this.props.userAlbums.filter(album => album.listened_to)} playlists={this.props.playlists} />}/>
           <Route  path="/playlist" render={() => <PlaylistPage user={this.props.currentUser} updateUserAlbum={this.props.updateUserAlbum} playlistAlbums={this.props.playlistAlbums.filter(playlistAlbum => playlistAlbum.playlist_id === this.props.currentPlaylist.id)} userAlbums={this.props.userAlbums} playlist={this.props.currentPlaylist}/>}/>
-          <Route  path="/backlog" render={() => <BacklogPage updateUserAlbum={this.props.updateUserAlbum} albums={this.props.userAlbums.filter(album => !album.listened_to)} />}/>
-          <Route  path="/history" render={() => <HistoryPage albums={this.props.userAlbums.filter(album => album.listened_to)} updateUserAlbum={this.props.updateUserAlbum} />}/>
+          <Route  path="/backlog" render={() => <BacklogPage handleSort={this.handleSort} updateUserAlbum={this.props.updateUserAlbum} albums={this.sort(this.props.userAlbums.filter(album => !album.listened_to))}/>}/>
+          <Route  path="/history" render={() => <HistoryPage handleSort={this.handleSort} albums={this.sort(this.props.userAlbums.filter(album => album.listened_to))} updateUserAlbum={this.props.updateUserAlbum} />}/>
           <Route  path="/stats" render={() => <StatsPage albums={this.props.userAlbums.filter(album => album.listened_to)} artists={this.props.artists} />}/>
       </React.Fragment>
     )

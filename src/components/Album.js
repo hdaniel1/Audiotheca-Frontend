@@ -34,21 +34,27 @@ export default class Album extends React.Component {
     }
 
     render() {
+        const {deletePlaylistAlbum, deleteUserAlbum, albumInfo} = this.props
+        const {albumPlaying} = this.state
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+        let releaseDate = new Date(albumInfo.release_date)
         return(
             <Card id="album-card">
-                {this.state.albumPlaying ? <iframe src={`https://open.spotify.com/embed/album/${this.state.albumPlaying}`} width="290" height="286" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe> :<Image src={this.props.albumInfo.images[1].url} />}
-                {this.props.deletePlaylistAlbum || this.props.deleteUserAlbum ? <span className="close" onClick={() => this.handleDelete()}><Icon name="delete"/></span> : null}
+                {albumPlaying ? <iframe title="spotify-widget" src={`https://open.spotify.com/embed/album/${albumPlaying}`} width="290" height="286" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe> :<Image src={albumInfo.images[1].url} />}
+                {deletePlaylistAlbum || deleteUserAlbum ? <span className="close" onClick={() => this.handleDelete()}><Icon name="delete"/></span> : null}
                 <Card.Content textAlign="center">
-                    <Card.Header id="album-header">{this.props.albumInfo.name}</Card.Header>
-                    <Card.Meta>{this.props.albumInfo.artists[0].name}</Card.Meta>
-                    <Card.Description>Release Date: {this.props.albumInfo.release_date}</Card.Description>
-                    {this.props.deletePlaylistAlbum || this.props.deleteUserAlbum ? 
+                    <Card.Header id="album-header">{albumInfo.name}</Card.Header>
+                    <Card.Meta>{albumInfo.artists[0].name}</Card.Meta>
+                    <Card.Description>Release Date: {`${monthNames[releaseDate.getMonth()]} ${releaseDate.getDate()}, ${releaseDate.getFullYear()}`}</Card.Description>
+                    {deletePlaylistAlbum || deleteUserAlbum ? 
                     <Card.Content extra><br />
-                        <Button color="green" onClick={() => this.playAlbum(this.props.albumInfo)}>{this.state.albumPlaying ? "Album Art" : "Listen"}</Button>
-                        <Button color="orange" onClick={() => this.handleListen(this.props.albumInfo)}>Done Listening?</Button>
+                        <Button color="green" onClick={() => this.playAlbum(albumInfo)}>{this.state.albumPlaying ? "Album Art" : "Listen"}</Button>
+                        <Button color="orange" onClick={() => this.handleListen(albumInfo)}>Done Listening?</Button>
                     </Card.Content>       
                     : 
-                    <Rating icon='star' maxRating={5} defaultRating={this.props.albumInfo.rating} onRate={(e, data)=> this.rateAlbum(data, this.props.albumInfo)}/>}              
+                    <Rating icon='star' maxRating={5} defaultRating={albumInfo.rating} onRate={(e, data)=> this.rateAlbum(data, albumInfo)}/>}              
                 </Card.Content>
             </Card>
         )

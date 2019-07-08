@@ -11,7 +11,6 @@ export default class ArtistsStats extends React.Component {
                 {artists.map(artist => {
                 let listenedAlbums = albums.filter(album => album.artists[0].id === artist.id)
                 let unlistenedAlbums = artist.items.filter(album => !listenedAlbums.map(listenedAlbum => listenedAlbum.spotify_id).includes(album.id))
-                debugger
                 return (
                     <Card>
                         <Card.Content >

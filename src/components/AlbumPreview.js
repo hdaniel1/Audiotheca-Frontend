@@ -3,6 +3,10 @@ import _ from "lodash";
 import {Card, Image, Button} from 'semantic-ui-react'
 import '../styles/Sidebar.css';
 
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 export default class AlbumPreview extends React.Component {
 
     handleAdd = () => {
@@ -18,13 +22,17 @@ export default class AlbumPreview extends React.Component {
 
     render() {
         const {playlist, userAlbums, playlistAlbums, albumInfo} = this.props
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+        let releaseDate = new Date(albumInfo.release_date)
         return (
                 <Card id="preview-card">
                     <Image src={albumInfo.images[1].url} />
                     <Card.Content textAlign="center">
                         <Card.Header >{albumInfo.name}</Card.Header>
                         <Card.Meta >{albumInfo.artists[0].name}</Card.Meta>
-                        <Card.Description>Release Date: {albumInfo.release_date}</Card.Description>
+                        <Card.Description>Release Date: {`${monthNames[releaseDate.getMonth()]} ${releaseDate.getDate()}, ${releaseDate.getFullYear()}`}}</Card.Description>
                             {/*If already listened to buttons*/}
                             {_.some(userAlbums, {"spotify_id": albumInfo.id, "listened_to": true}) ? 
                                 <Button color="orange" disabled >Listened!</Button>
