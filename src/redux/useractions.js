@@ -30,6 +30,7 @@ function getArtistAlbumCount(token, artist) {
 
 function fetchArtistInformation(token, artistsToFetch) {
   spotifyApi.setAccessToken(token)
+  debugger
   return (dispatch) => {
     artistsToFetch.forEach(artist => {
         spotifyApi.getArtist(artist)
@@ -124,5 +125,6 @@ export {
     setCurrentUser,
     fetchPlaylists,
     fetchPlaylistAlbums,
-    fetchUserAlbums
+    fetchUserAlbums,
+    fetchArtistInformation
 }

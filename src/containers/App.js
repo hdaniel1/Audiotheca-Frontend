@@ -58,9 +58,7 @@ class App extends React.Component{
 
 const mapStateToProps = (store) => {
   return {
-    token: store.token,
     currentUser: store.currentUser,
-    showAlbum: store.showAlbum,
     playlists: store.playlists,
     artists: store.artistInfo
   }

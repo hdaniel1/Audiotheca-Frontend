@@ -2,9 +2,10 @@ import React from 'react'
 import {List, Image, Divider, Button, Modal} from 'semantic-ui-react'
 import AlbumPreview from './AlbumPreview'
 import _ from "lodash";
+
 import '../styles/Sidebar.css';
 
-const AlbumSlide = ({ key, albumInfo, showAlbum, playlist, addAlbum, playlistAlbums, userAlbums, ...rest }) => {
+const AlbumSlide = ({ key, albumInfo, token, showAlbum, playlist, addAlbum, playlistAlbums, userAlbums, fetchArtistInformation, ...rest }) => {
 
         function handleAdd () {
             let newAlbum = {
@@ -14,6 +15,7 @@ const AlbumSlide = ({ key, albumInfo, showAlbum, playlist, addAlbum, playlistAlb
                 spotify_id: albumInfo.id
             }
             addAlbum(newAlbum)
+            fetchArtistInformation(token, albumInfo.artists[0].id.split())
         }
 
         return (
@@ -40,7 +42,8 @@ const AlbumSlide = ({ key, albumInfo, showAlbum, playlist, addAlbum, playlistAlb
                                             albumInfo={albumInfo}
                                             playlistAlbums={playlistAlbums} 
                                             addAlbum={addAlbum} 
-                                            playlist={playlist}/>
+                                            playlist={playlist}
+                                            fetchArtistInformation={fetchArtistInformation}/>
                             </Modal>
                         </div>
                     </List.Content>

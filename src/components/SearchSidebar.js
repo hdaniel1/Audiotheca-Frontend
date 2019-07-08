@@ -8,6 +8,7 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import AlbumSlide from './AlbumSlide'
 import {withRouter} from 'react-router-dom'
 import _ from "lodash";
+import {fetchArtistInformation} from '../redux/useractions'
 import {addAlbum} from '../redux/albumactions'
 
 
@@ -71,12 +72,12 @@ class SearchSidebar extends React.Component {
 
     //get unique albums by name since Spotify sometimes returns dupes
     fetchArtistAlbums = (artistID) => {
-        spotifyApi.getArtistAlbums(artistID)
+        spotifyApi.getArtistAlbums(artistID, {limit: 50})
         .then(albums => this.setState({
             artistAlbums: _.uniqBy(albums.items, 'name')
                            .filter(album => album.album_type === "album" && album.album_group === "album")
         }))
-    }
+    } 
 
     //for closing on click in pushable content
     handleSidebarHide = () => this.setState({ 
@@ -93,7 +94,7 @@ class SearchSidebar extends React.Component {
 
 
     render() {    
-        const {token, playlist, userAlbums, playlistAlbums, addAlbum} = this.props
+        const {token, playlist, userAlbums, playlistAlbums, addAlbum, fetchArtistInformation} = this.props
         const {artistAlbums, clearSearch, visible} = this.state
         return (
             <React.Fragment>
@@ -128,14 +129,16 @@ class SearchSidebar extends React.Component {
                                                                 albumInfo={album}
                                                                 playlistAlbums={playlistAlbums} 
                                                                 addAlbum={addAlbum} 
-                                                                playlist={playlist}/>
+                                                                playlist={playlist}
+                                                                token={token}
+                                                                fetchArtistInformation={fetchArtistInformation}/>
                                 )}
                             </List>     
                         </Sidebar>
                         {/*entire app is pushable content*/}
                         <Ref innerRef={this.segmentRef}>
                             <Sidebar.Pusher dimmed={visible}>
-                                <App userAlbums={userAlbums} playlistAlbums={playlistAlbums} currentPlaylist={playlist} sidebarVisible={visible} showSideBar={this.showSideBar}/>
+                                <App userAlbums={userAlbums} token={token} playlistAlbums={playlistAlbums} currentPlaylist={playlist} sidebarVisible={visible} showSideBar={this.showSideBar}/>
                             </Sidebar.Pusher>
                         </Ref>
                     </Sidebar.Pushable>
@@ -156,7 +159,8 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addAlbum: (album) => dispatch(addAlbum(album))
+        addAlbum: (album) => dispatch(addAlbum(album)),
+        fetchArtistInformation: (token, artist) => dispatch(fetchArtistInformation(token, artist))
     }
 }
 

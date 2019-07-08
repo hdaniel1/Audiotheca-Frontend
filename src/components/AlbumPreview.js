@@ -13,6 +13,7 @@ export default class AlbumPreview extends React.Component {
             spotify_id: this.props.albumInfo.id
         }
         this.props.addAlbum(newAlbum)
+        this.props.fetchArtistInformation(this.props.token, this.props.albumInfo.artists[0].id.split())
     }
 
     render() {
