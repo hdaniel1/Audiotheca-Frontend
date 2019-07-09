@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Image, Progress, Popup} from 'semantic-ui-react'
+import {Card, Image, Progress, Popup, Rating} from 'semantic-ui-react'
 import '../styles/StatsPage.css';
 
 export default class ArtistsStats extends React.Component {
@@ -21,7 +21,16 @@ export default class ArtistsStats extends React.Component {
                                 <Card.Header><u>{artist.name}</u></Card.Header>
                                 <br/>
                                 <Card.Header>
-                                    {listenedAlbums.map(album => <Popup content={album.name} key={album.id} trigger={<Image size="tiny" src={album.images[1].url} />}/>)}
+                                    {listenedAlbums.map(album => {
+                                        return (
+                                        <Popup content={album.name} key={album.id} trigger={<Image size="tiny" src={album.images[1].url} />}>
+                                            <Popup.Content>
+                                                <Popup.Header>Rating</Popup.Header>
+                                                <Rating icon='star' defaultRating={album.rating} maxRating={5} />
+                                            </Popup.Content>
+                                        </Popup>
+                                        )
+                                    })}
                                     {unlistenedAlbums.map(album => <Popup content={album.name} key={album.id} trigger={<Image className="unlistened-album" size="tiny" src={album.images[1].url} />}/>)}
                                 </Card.Header>
                             </Card.Content>

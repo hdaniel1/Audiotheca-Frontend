@@ -55,3 +55,8 @@
 #album-card {
   display:inline-block;
 }
+
+#add-to-spotify {
+  background-color: #29a84f;
+  color:white;
+}

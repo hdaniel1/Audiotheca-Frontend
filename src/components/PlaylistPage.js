@@ -37,8 +37,9 @@ class PlaylistPage extends React.Component {
                                 <Item.Description id="playlist-info-description">
                                     {this.props.playlist.description}
                                 </Item.Description>
-                                <Button id="playlist-info-button" color='blue' onClick={() => this.setState({showModal:true})}>Update Playlist</Button>
-                                <Button id="playlist-info-button" color='red' onClick={this.open}>Delete Playlist</Button>
+                                <Button className="playlist-info-button" id="add-to-spotify">Add to Spotify</Button>
+                                <Button className="playlist-info-button" color='blue' onClick={() => this.setState({showModal:true})}>Update Playlist</Button>
+                                <Button className="playlist-info-button" color='red' onClick={this.open}>Delete Playlist</Button>
                                 <Confirm open={this.state.confirmMessage} onCancel={this.close} onConfirm={this.handleDelete} />
                             </Item.Content>
                         </Item>

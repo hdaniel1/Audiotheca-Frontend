@@ -36,7 +36,7 @@ class Navbar extends React.Component {
                     <Menu.Item as={Link} to="/history" name='history' >History</Menu.Item>
                     <Menu.Item as={Link} to="/backlog" name='backlog'>Backlog</Menu.Item>
                     <Menu.Item as={Link} to="/stats" name='stats' >Stats</Menu.Item>
-                    <Menu.Item as={Link} to="/home" name='home'>Home</Menu.Item>
+                    <Menu.Item as={Link} to="/home" name='home'>My Playlists</Menu.Item>
                     <Menu.Item><Image href={this.props.currentUser.uri} id="profile-img" avatar src={this.props.currentUser.images[0].url} /></Menu.Item>
                     <Dropdown closeOnEscape item simple text={this.props.currentUser.display_name.split(" ")[0]}>
                         <Dropdown.Menu>

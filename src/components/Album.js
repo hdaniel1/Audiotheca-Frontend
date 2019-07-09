@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Image, Button, Icon, Rating} from 'semantic-ui-react'
+import {Card, Image, Button, Icon, Rating, Modal, Header} from 'semantic-ui-react'
 
 export default class Album extends React.Component {
 
@@ -23,8 +23,8 @@ export default class Album extends React.Component {
         }
     }
 
-    handleListen = (userAlbum) => {
-       let updatedAlbum = {...userAlbum, listened_to: true}
+    handleListen = (data, userAlbum) => {
+       let updatedAlbum = {...userAlbum, listened_to: true, rating: data.rating}
        this.props.updateUserAlbum(updatedAlbum)
     }
 
@@ -51,7 +51,12 @@ export default class Album extends React.Component {
                     {deletePlaylistAlbum || deleteUserAlbum ? 
                     <Card.Content extra><br />
                         <Button color="green" onClick={() => this.playAlbum(albumInfo)}>{this.state.albumPlaying ? "Album Art" : "Listen"}</Button>
-                        <Button color="orange" onClick={() => this.handleListen(albumInfo)}>Done Listening?</Button>
+                        <Modal trigger={<Button color="orange">Done Listening?</Button>}>
+                        <Modal.Content image>
+                            <Header>Rate this Album?</Header>
+                            <Rating icon='star' maxRating={5} defaultRating={albumInfo.rating} onRate={(e, data)=> this.handleListen(data, albumInfo)}/>                
+                        </Modal.Content>
+                        </Modal>
                     </Card.Content>       
                     : 
                     <Rating icon='star' maxRating={5} defaultRating={albumInfo.rating} onRate={(e, data)=> this.rateAlbum(data, albumInfo)}/>}              
