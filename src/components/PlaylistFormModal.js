@@ -52,19 +52,33 @@ export default class PlaylistFormModal extends React.Component {
             alert("Playlist Name Required!")
         }
         else if (image) {
-            let reader = new FileReader();
-            reader.readAsDataURL(image);
-            
-            reader.onload = () => {
-                let newPlaylist = {
-                    playlist_image: reader.result,
-                    name: name, 
-                    description: description,
-                    user_id: this.props.user.id
+            debugger
+            if (typeof(image) === "object") {
+                let reader = new FileReader();
+                reader.readAsDataURL(image);
+
+                reader.onload = () => {
+                    let newPlaylist = {
+                        playlist_image: reader.result,
+                        name: name, 
+                        description: description,
+                        user_id: this.props.user.id
+                    }
+                    this.props.updatePlaylist ? this.props.updatePlaylist({...this.props.playlist, name: name, description: description, playlist_image: reader.result}) : this.props.createPlaylist(newPlaylist)
+                    this.props.closeModal()
                 }
-                this.props.updatePlaylist ? this.props.updatePlaylist({...this.props.playlist, name: name, description: description, playlist_image: reader.result}) : this.props.createPlaylist(newPlaylist)
-                this.props.closeModal()
-        };}
+            }
+                else {
+                    let newPlaylist = {
+                        playlist_image: image,
+                        name: name, 
+                        description: description,
+                        user_id: this.props.user.id
+                    }
+                    this.props.updatePlaylist ? this.props.updatePlaylist({...this.props.playlist, name: name, description: description, playlist_image: image}) : this.props.createPlaylist(newPlaylist)
+                    this.props.closeModal()
+                }
+        }
         else {
             let newPlaylist = {
                 name: name, 
