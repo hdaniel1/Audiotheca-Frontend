@@ -51,10 +51,10 @@ export default class PlaylistFormModal extends React.Component {
         if (!name) {
             alert("Playlist Name Required!")
         }
-        else {
+        else if (image) {
             let reader = new FileReader();
             reader.readAsDataURL(image);
-
+            
             reader.onload = () => {
                 let newPlaylist = {
                     playlist_image: reader.result,
@@ -65,6 +65,15 @@ export default class PlaylistFormModal extends React.Component {
                 this.props.updatePlaylist ? this.props.updatePlaylist({...this.props.playlist, name: name, description: description, playlist_image: reader.result}) : this.props.createPlaylist(newPlaylist)
                 this.props.closeModal()
         };}
+        else {
+            let newPlaylist = {
+                name: name, 
+                description: description,
+                user_id: this.props.user.id
+            }
+            this.props.updatePlaylist ? this.props.updatePlaylist({...this.props.playlist, name: name, description: description}) : this.props.createPlaylist(newPlaylist)
+                this.props.closeModal()
+        }
     }
 
     render() {
@@ -72,9 +81,9 @@ export default class PlaylistFormModal extends React.Component {
             <Modal onMount={this.checkUpdate} onUnmount = {this.resetState} open = {this.props.open}>
                 <Modal.Header>{this.state.header}<Button onClick={() => this.props.closeModal()} floated="right">Close</Button></Modal.Header>
                 <Modal.Content image>
-                    {this.state.previewImage ? <Image wrapped size='medium' src={this.state.previewImage ? this.state.previewImage : 'https://www.templaza.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png'} /> 
+                    {this.state.previewImage ? <Image wrapped size='medium' src={this.state.previewImage}/> 
                     :
-                    <Image wrapped size='medium' src={this.state.image} />}
+                    <Image wrapped size='medium' src={this.state.image ? this.state.image : 'https://www.templaza.com/blog/components/com_easyblog/themes/wireframe/images/placeholder-image.png'}/>}
                 <Modal.Description>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Field required><label>Name</label> <input placeholder='Name' value={this.state.name} name="name" onChange={(event) => this.handleChange(event)}/></Form.Field>
