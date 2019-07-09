@@ -42,6 +42,8 @@
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
+  margin-left:8%;
+  margin-right:8%;
 }
 
 .close {
@@ -59,4 +61,8 @@
 #add-to-spotify {
   background-color: #29a84f;
   color:white;
+}
+
+#playlist-description-header {
+  font-weight:normal;
 }

@@ -15,6 +15,12 @@
     height:35px;
     object-fit: cover;
     cursor: pointer;
+    
+}
+
+.ui.list .list>.item>.image img, .ui.list>.item>.image img {
+    border:solid;
+    border-color:#eeeeee;
 }
 
 .ui.search>.results .result:hover {
@@ -22,7 +28,7 @@
 }
 
 #album-slide.item {
-     background-color:#696465;
+     background-color:#1b1c1d;
 }
 
 #album-image {

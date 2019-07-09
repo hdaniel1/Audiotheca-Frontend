@@ -52,7 +52,6 @@ export default class PlaylistFormModal extends React.Component {
             alert("Playlist Name Required!")
         }
         else if (image) {
-            debugger
             if (typeof(image) === "object") {
                 let reader = new FileReader();
                 reader.readAsDataURL(image);

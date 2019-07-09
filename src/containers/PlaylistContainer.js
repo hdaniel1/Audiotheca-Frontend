@@ -4,7 +4,6 @@ import PlaylistCard from '../components/PlaylistCard'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {selectPlaylist} from '../redux/playlistactions'
-
 import '../styles/Playlists.css';
 
 class PlaylistContainer extends React.Component {

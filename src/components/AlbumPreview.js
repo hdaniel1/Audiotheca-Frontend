@@ -33,7 +33,7 @@ export default class AlbumPreview extends React.Component {
                         <Card.Header >{albumInfo.name}</Card.Header>
                         <Card.Meta >{albumInfo.artists[0].name}</Card.Meta>
                         <Card.Description>Release Date: {`${monthNames[releaseDate.getMonth()]} ${releaseDate.getDate()}, ${releaseDate.getFullYear()}`}}</Card.Description>
-                            {/*If already listened to buttons*/}
+                            {/*If already listened to buttons*/}<br/>
                             {_.some(userAlbums, {"spotify_id": albumInfo.id, "listened_to": true}) ? 
                                 <Button color="orange" disabled >Listened!</Button>
                                 : 

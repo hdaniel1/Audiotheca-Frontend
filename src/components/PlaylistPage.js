@@ -1,12 +1,11 @@
 import React from 'react'
-import {Item, Button, Confirm, Transition, Card} from 'semantic-ui-react'
+import {Image, Button, Confirm, Transition, Card} from 'semantic-ui-react'
 import '../styles/Playlists.css';
 import Album from './Album'
 import PlaylistFormModal from './PlaylistFormModal'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {updatePlaylist, deletePlaylist, deletePlaylistAlbum} from '../redux/playlistactions'
-
 
 class PlaylistPage extends React.Component {
     state = {
@@ -26,30 +25,28 @@ class PlaylistPage extends React.Component {
 
     render() {
         return (
-            <Transition.Group animation='drop' duration={500}>
-                <div id="playlist-info">
-                    <Item.Group>
-                        <Item>
-                            <Item.Image id="playlist-info-image" size='small' src= {this.props.playlist.playlist_image ? this.props.playlist.playlist_image : 'http://www.independentmediators.co.uk/wp-content/uploads/2016/02/placeholder-image.jpg'} />
-                            <Item.Content id="playlist-info-content">
-                                <Item.Header id="playlist-info-header">Name: {this.props.playlist.name}</Item.Header>
-                                <Item.Meta>Description</Item.Meta>
-                                <Item.Description id="playlist-info-description">
-                                    {this.props.playlist.description}
-                                </Item.Description>
-                                <Button className="playlist-info-button" id="add-to-spotify">Add to Spotify</Button>
-                                <Button className="playlist-info-button" color='blue' onClick={() => this.setState({showModal:true})}>Update Playlist</Button>
-                                <Button className="playlist-info-button" color='red' onClick={this.open}>Delete Playlist</Button>
-                                <Confirm open={this.state.confirmMessage} onCancel={this.close} onConfirm={this.handleDelete} />
-                            </Item.Content>
-                        </Item>
+            <React.Fragment>
+                <Card.Group centered itemsPerRow="2" id="playlist-container">
+                    <Card>
+                        <Card.Content>
+                            <Image floated='left' size='small' src={this.props.playlist.playlist_image ? this.props.playlist.playlist_image : 'https://react.semantic-ui.com/images/wireframe/short-paragraph.png'} />
+                            <Card.Header>{this.props.playlist.name}</Card.Header>
+                            <Card.Meta>Playlist</Card.Meta><br/>
+                            <Card.Header id="playlist-description-header"><b><u>Description:</u></b><br/>{this.props.playlist.description}</Card.Header>
+                        </Card.Content>
+                        <Card.Content extra>
+                            <Button className="playlist-info-button" id="add-to-spotify">Add to Spotify</Button>
+                            <Button className="playlist-info-button" color='blue' onClick={() => this.setState({showModal:true})}>Update Playlist</Button>
+                            <Button className="playlist-info-button" color='red' onClick={this.open}>Delete Playlist</Button>
+                            <Confirm open={this.state.confirmMessage} onCancel={this.close} onConfirm={this.handleDelete} />
+                        </Card.Content>
+                    </Card>
                         <PlaylistFormModal closeModal={this.closeModal} open={this.state.showModal} playlist={this.props.playlist} user={this.props.user} updatePlaylist={this.props.updatePlaylist}/>
+                    </Card.Group>
                         <div id="playlist-album-container">
                             {this.props.playlistAlbums.map(playlistAlbum => <Album key={playlistAlbum.id} id={playlistAlbum.id} updateUserAlbum={this.props.updateUserAlbum} albumInfo={this.props.userAlbums.find(userAlbum => userAlbum.spotify_id === playlistAlbum.spotify_id)} deletePlaylistAlbum={this.props.deletePlaylistAlbum}/>)}
                         </div>
-                    </Item.Group>
-                </div>
-            </Transition.Group>
+                </React.Fragment>      
         )
     }
 }

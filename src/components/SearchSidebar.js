@@ -66,7 +66,7 @@ class SearchSidebar extends React.Component {
                 let userAlbumIds = this.props.userAlbums.filter(album => album.listened_to).map(album => album.spotify_id)
                 let recs = _.uniqBy(recommendations.tracks.map(track => track.album), "id").filter(album => !userAlbumIds.includes(album.id))
                 //set artistAlbums state to 20 random albums from recs, set state recommendations to all recommendations
-                this.setState({artistAlbums: recs.sort(() => 0.5 - Math.random()).slice(0, 20), recommendations: recs})
+                this.setState({recommendations: recs})
             })
     }}
 
