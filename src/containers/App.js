@@ -128,8 +128,8 @@ class App extends React.Component{
       <React.Fragment>
           <Navbar currentPlaylist={currentPlaylist} createPlaylist={createPlaylist} showSideBar={showSideBar} logoutUser={logoutUser} currentUser = {currentUser}/>
           <Route  path="/login" component={LoginPage} /> 
-          <Route  path="/home" render={() => <HomePage token = {token} bannerAlbums={userAlbums.filter(album => album.listened_to)} playlists={playlists} />}/>
-          <Route  path="/playlist" render={() => <PlaylistPage user={currentUser} updateUserAlbum={updateUserAlbum} playlistAlbums={playlistAlbums.filter(playlistAlbum => playlistAlbum.playlist_id === currentPlaylist.id)} userAlbums={userAlbums} playlist={currentPlaylist}/>}/>
+          <Route  path="/home" render={() => <HomePage token={token} bannerAlbums={userAlbums.filter(album => album.listened_to)} playlists={playlists} />}/>
+          <Route  path="/playlist" render={() => <PlaylistPage token={token} user={currentUser} updateUserAlbum={updateUserAlbum} playlistAlbums={playlistAlbums.filter(playlistAlbum => playlistAlbum.playlist_id === currentPlaylist.id)} userAlbums={userAlbums} playlist={currentPlaylist}/>}/>
           <Route  path="/backlog" render={() => <BacklogPage handleSort={this.handleSort} updateUserAlbum={updateUserAlbum} albums={ascend ? this.sortAscend(notListenedTo) : this.sortDescend(notListenedTo)}/>}/>
           <Route  path="/history" render={() => <HistoryPage handleSort={this.handleSort} albums={ascend ? this.sortAscend(listenedTo) : this.sortDescend(listenedTo)} updateUserAlbum={updateUserAlbum} />}/>
           <Route  path="/stats" render={() => <StatsPage albums={listenedTo} artists={_.sortBy(artists, "name")} />}/>

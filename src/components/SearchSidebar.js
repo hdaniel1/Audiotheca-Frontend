@@ -11,7 +11,6 @@ import _ from "lodash";
 import {fetchArtistInformation} from '../redux/useractions'
 import {addAlbum} from '../redux/albumactions'
 
-
 const spotifyApi = new SpotifyWebApi();
 
 //REVISIT CLEARING SEARCH RESULTS AT SOME POINT//

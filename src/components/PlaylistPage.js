@@ -5,7 +5,10 @@ import Album from './Album'
 import PlaylistFormModal from './PlaylistFormModal'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
+import SpotifyWebApi from 'spotify-web-api-js';
 import {updatePlaylist, deletePlaylist, deletePlaylistAlbum} from '../redux/playlistactions'
+
+const spotifyApi = new SpotifyWebApi();
 
 class PlaylistPage extends React.Component {
     state = {
@@ -23,6 +26,16 @@ class PlaylistPage extends React.Component {
         this.props.deletePlaylist(this.props.playlist)
     }
 
+    addToSpotify = (token, user, playlist) => {
+        spotifyApi.setAccessToken(token)
+        let playlistInfo = {
+            name: playlist.name, 
+            description: playlist.description
+        }
+        spotifyApi.createPlaylist(user.id,playlistInfo)
+        alert("Check your spotify!")
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -35,7 +48,7 @@ class PlaylistPage extends React.Component {
                             <Card.Header id="playlist-description-header"><b><u>Description:</u></b><br/>{this.props.playlist.description}</Card.Header>
                         </Card.Content>
                         <Card.Content extra>
-                            <Button className="playlist-info-button" id="add-to-spotify">Add to Spotify</Button>
+                            <Button className="playlist-info-button" id="add-to-spotify" onClick={() => this.addToSpotify(this.props.token,this.props.user, this.props.playlist)}>Add to Spotify</Button>
                             <Button className="playlist-info-button" color='blue' onClick={() => this.setState({showModal:true})}>Update Playlist</Button>
                             <Button className="playlist-info-button" color='red' onClick={this.open}>Delete Playlist</Button>
                             <Confirm open={this.state.confirmMessage} onCancel={this.close} onConfirm={this.handleDelete} />
