@@ -23,13 +23,13 @@ export default class Album extends React.Component {
         }
     }
 
-    handleListen = (data, userAlbum) => {
-       let updatedAlbum = {...userAlbum, listened_to: true, rating: data.rating}
+    handleListen = (userAlbum, rating=0) => {
+       let updatedAlbum = {...userAlbum, listened_to: true, rating: rating}
        this.props.updateUserAlbum(updatedAlbum)
     }
 
-    rateAlbum = (data, userAlbum) => {
-        let updatedAlbum = {...userAlbum, rating: data.rating}
+    rateAlbum = (rating, userAlbum) => {
+        let updatedAlbum = {...userAlbum, rating: rating}
         this.props.updateUserAlbum(updatedAlbum)
     }
 
@@ -51,15 +51,15 @@ export default class Album extends React.Component {
                     {deletePlaylistAlbum || deleteUserAlbum ? 
                     <Card.Content extra><br />
                         <Button color="green" onClick={() => this.playAlbum(albumInfo)}>{this.state.albumPlaying ? "Album Art" : "Listen"}</Button>
-                        <Modal trigger={<Button color="orange">Done Listening?</Button>}>
+                        <Modal trigger={<Button color="orange">Done Listening?</Button>} onClose={() => this.handleListen(albumInfo)}>
                         <Modal.Content image>
                             <Header>Rate this Album?</Header>
-                            <Rating icon='star' maxRating={5} defaultRating={albumInfo.rating} onRate={(e, data)=> this.handleListen(data, albumInfo)}/>                
+                            <Rating icon='star' maxRating={5} defaultRating={albumInfo.rating} onRate={(e, data)=> this.handleListen(albumInfo,data.rating)}/>                
                         </Modal.Content>
                         </Modal>
                     </Card.Content>       
                     : 
-                    <Rating icon='star' maxRating={5} defaultRating={albumInfo.rating} onRate={(e, data)=> this.rateAlbum(data, albumInfo)}/>}              
+                    <Rating icon='star' maxRating={5} defaultRating={albumInfo.rating} onRate={(e, data)=> this.rateAlbum(data.rating, albumInfo)}/>}              
                 </Card.Content>
             </Card>
         )
