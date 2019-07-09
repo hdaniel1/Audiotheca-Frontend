@@ -38,7 +38,7 @@
 }
 
 #playlist-album-container {
-  margin-top:10px;
+  margin-top:1%;
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
