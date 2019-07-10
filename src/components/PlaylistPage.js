@@ -1,5 +1,5 @@
 import React from 'react'
-import {Image, Button, Confirm, Transition, Card} from 'semantic-ui-react'
+import {Image, Button, Confirm, Transition, Card, Icon} from 'semantic-ui-react'
 import '../styles/Playlists.css';
 import Album from './Album'
 import PlaylistFormModal from './PlaylistFormModal'
@@ -13,7 +13,9 @@ const spotifyApi = new SpotifyWebApi();
 class PlaylistPage extends React.Component {
     state = {
         showModal: false,
-        confirmMessage: false
+        confirmMessage: false,
+        buttonLoading: false,
+        buttonColor: "grey"
     }
 
     open = () => this.setState({ confirmMessage: true })
@@ -26,19 +28,37 @@ class PlaylistPage extends React.Component {
         this.props.deletePlaylist(this.props.playlist)
     }
 
-    addToSpotify = (token, user, playlist) => {
+    addToSpotify = (token, user, playlist, playlistAlbums) => {
+        this.setState({
+            buttonLoading: true
+        }, () => {
         spotifyApi.setAccessToken(token)
         let playlistInfo = {
             name: playlist.name, 
             description: playlist.description
         }
+        //first create the playlist
         spotifyApi.createPlaylist(user.id,playlistInfo)
-        alert("Check your spotify!")
+        .then(res => {
+            //for each album in the playlist, get the tracks
+            playlistAlbums.forEach(album => {
+                spotifyApi.getAlbumTracks(album.spotify_id)
+                .then(tracks => {
+                    //then add the tracks to the playlist
+                    let trackIRIs = tracks.items.map(track => track.uri)
+                    spotifyApi.addTracksToPlaylist(res.id, trackIRIs)
+                    .then(res => {
+                        this.setState({buttonLoading: false, buttonColor: "green"})
+                    })
+                })
+            })
+        })})
     }
+
 
     render() {
         const {playlist, token, user, updatePlaylist, playlistAlbums, userAlbums, deletePlaylistAlbum, updateUserAlbum} = this.props 
-        const {showModal, confirmMessage} = this.state
+        const {showModal, confirmMessage, buttonLoading, buttonColor} = this.state
         return (
             <React.Fragment>
                 <Card.Group centered itemsPerRow="2" id="playlist-container">
@@ -50,7 +70,7 @@ class PlaylistPage extends React.Component {
                             <Card.Header id="playlist-description-header"><b><u>Description:</u></b><br/>{playlist.description}</Card.Header>
                         </Card.Content>
                         <Card.Content extra>
-                            <Button className="playlist-info-button" id="add-to-spotify" onClick={() => this.addToSpotify(token,user, playlist)}>Add to Spotify</Button>
+                            <Button className="playlist-info-button" color={buttonColor} icon={buttonColor === "green" ? "check" : false} content={buttonColor === "green" ? "Success!" : "Add to Spotify"} loading={buttonLoading} onClick={() => this.addToSpotify(token,user, playlist, playlistAlbums)} />
                             <Button className="playlist-info-button" color='blue' onClick={() => this.setState({showModal:true})}>Update Playlist</Button>
                             <Button className="playlist-info-button" color='red' onClick={this.open}>Delete Playlist</Button>
                             <Confirm open={confirmMessage} onCancel={this.close} onConfirm={this.handleDelete} />
