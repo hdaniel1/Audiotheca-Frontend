@@ -2,6 +2,7 @@ import React from 'react'
 import _ from "lodash";
 import {Dropdown} from 'semantic-ui-react'
 import { Pie } from 'react-chartjs-2';
+import '../styles/App.css';
 
 export default class GenrePie extends React.Component {
     constructor(props) {

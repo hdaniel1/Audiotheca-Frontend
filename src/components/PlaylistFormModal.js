@@ -1,5 +1,6 @@
 import React from 'react'
 import {Image, Modal, Button, Form} from 'semantic-ui-react'
+import '../styles/Navbar.css';
 
 export default class PlaylistFormModal extends React.Component { 
 
@@ -94,7 +95,7 @@ export default class PlaylistFormModal extends React.Component {
         const {open, closeModal} = this.props
         return (
             <Modal onMount={this.checkUpdate} onUnmount = {this.resetState} open = {open}>
-                <Modal.Header>{header}<Button onClick={() => closeModal()} floated="right">Close</Button></Modal.Header>
+                <Modal.Header id="modal-header">{header}<Button id="close-button" onClick={() => closeModal()} floated="right">Close</Button></Modal.Header>
                 <Modal.Content image>
                     {previewImage ? <Image wrapped size='medium' src={previewImage}/> 
                     :
@@ -102,13 +103,13 @@ export default class PlaylistFormModal extends React.Component {
                 <Modal.Description>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Field required><label>Name</label> <input placeholder='Name' value={name} name="name" onChange={(event) => this.handleChange(event)}/></Form.Field>
-                        <Form.TextArea label='Description' value={description}placeholder='Description' name="description" onChange={(event) => this.handleChange(event)}/>
+                        <Form.TextArea label='Description' value={description} placeholder='Description' name="description" onChange={(event) => this.handleChange(event)}/>
                         <Form.Field >
                             <label>Image</label>
                             {/* <Button onClick={() => this.openWidget()}>Upload Photo</Button> */}
                             <input id="upload" type="file" name="image" onChange={(event) => this.handleChange(event)}/>
                         </Form.Field>
-                        <Button type='submit'>Submit</Button>
+                        <Button type='submit' id="submit-button">Submit</Button>
                     </Form>
                 </Modal.Description>
                 </Modal.Content>

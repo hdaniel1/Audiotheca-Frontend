@@ -7,3 +7,41 @@ ui.avatar.image img{
     height:50px;
     object-fit: cover;
 } 
+
+.ui.massive.menu .item {
+    color:#FFFFFF;
+    flex-direction: inherit;
+}
+#menu-item:hover{
+    background-color:#1DB954;
+    color:#FFFFFF;
+  }
+
+.ui.massive.menu {
+    background-color:#191414;
+    border-radius:0;
+}
+
+#login-button {
+    color:#FFFFFF;
+}
+
+#logout-button:hover {
+    background-color:#1DB954;
+    color:#FFFFFF
+}
+
+#login-button:hover {
+    background-color:#1DB954;
+    color:#FFFFFF
+}
+
+#modal-header {
+    background-color:#191414;
+    color:#FFFFFF;
+}
+
+#submit-button{
+    background-color:#1DB954;
+    color:#FFFFFF
+}

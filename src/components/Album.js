@@ -50,7 +50,7 @@ export default class Album extends React.Component {
                     <Card.Description>Release Date: {`${monthNames[releaseDate.getMonth()]} ${releaseDate.getDate()}, ${releaseDate.getFullYear()}`}</Card.Description>
                     {deletePlaylistAlbum || deleteUserAlbum ? 
                     <Card.Content extra><br />
-                        <Button color="green" onClick={() => this.playAlbum(albumInfo)}>{this.state.albumPlaying ? "Album Art" : "Listen"}</Button>
+                        <Button style={{background: "#29a84f", color: "#FFFFFF"}} onClick={() => this.playAlbum(albumInfo)}>{this.state.albumPlaying ? "Album Art" : "Listen"}</Button>
                         <Modal trigger={<Button color="orange">Done Listening?</Button>} onClose={() => this.handleListen(albumInfo)}>
                         <Modal.Content image>
                             <Header>Rate this Album?</Header>

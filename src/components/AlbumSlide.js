@@ -35,7 +35,7 @@ const AlbumSlide = ({ key, albumInfo, token, showAlbum, playlist, addAlbum, play
                                 <Button color="orange" disabled >Listened!</Button>
                                 : 
                             /*Otherwise, check if in playlist*/
-                                _.some(playlistAlbums, {"spotify_id": albumInfo.id, playlist_id: playlist.id}) ? <Button icon="check" disabled></Button> :  <Button color="green" icon="check" onClick={handleAdd} ></Button>}
+                                _.some(playlistAlbums, {"spotify_id": albumInfo.id, playlist_id: playlist.id}) ? <Button icon="check" disabled></Button> :  <Button style={{background: "#29a84f", color: "#FFFFFF"}} icon="check" onClick={handleAdd} ></Button>}
                             <Modal id="preview-modal" trigger={<Button color='blue'> Info</Button>}>
                                 <AlbumPreview key={albumInfo.id} 
                                             userAlbums={userAlbums} 

@@ -38,7 +38,7 @@ export default class AlbumPreview extends React.Component {
                                 <Button color="orange" disabled >Listened!</Button>
                                 : 
                             /*Otherwise, check if in playlist*/
-                                _.some(playlistAlbums, {"spotify_id": albumInfo.id, playlist_id: playlist.id}) ? <Button color="green" disabled>Already in Playlist</Button> :  <Button color="green" onClick={this.handleAdd} >Add to Playlist</Button>}                  
+                                _.some(playlistAlbums, {"spotify_id": albumInfo.id, playlist_id: playlist.id}) ? <Button style={{background: "#29a84f", color: "#FFFFFF"}} disabled>Already in Playlist</Button> :  <Button style={{background: "#29a84f", color: "#FFFFFF"}} onClick={this.handleAdd} >Add to Playlist</Button>}                  
                     </Card.Content>
                 </Card>
         )}

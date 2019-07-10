@@ -6,6 +6,7 @@ import '../styles/App.css';
 export default class AlbumFilters extends React.Component {
     render() {
         const {handleSort, showRatingSort, handleFilter, artistOptions} = this.props
+        //artist filter options
         let artistDropDown = artistOptions.map(artist => {
             return ({
                 key: artist,
@@ -14,11 +15,11 @@ export default class AlbumFilters extends React.Component {
             })
         })
         artistDropDown.push({key: "All", text: "All", value: ""})
-
+       
         return (
             <div id="album-filters">
-                <h1>Filters:</h1>
-                 <Dropdown text='Sort By:' pointing className='link item'>
+                <h1 id="filter-header"><u>Filters/Sorting</u>:</h1>
+                 <Dropdown id="sort-dropdown" text='Sort By:' pointing className='link item'>
                     <Dropdown.Menu>
                         <Dropdown.Item id="artist-name" onClick={handleSort}>Artist Name</Dropdown.Item>
                         <Dropdown.Item id="album-name" onClick={handleSort}>Album Name</Dropdown.Item>
@@ -27,6 +28,7 @@ export default class AlbumFilters extends React.Component {
                     </Dropdown.Menu>
                 </Dropdown>
                 <Dropdown
+                    id="artist-filter"
                     placeholder='Filter by Artist'
                     selection
                     options={_.sortBy(_.uniqBy(artistDropDown, "text"), "text")}

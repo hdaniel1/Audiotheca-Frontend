@@ -1,16 +1,17 @@
 import React from 'react'
 import '../styles/App.css';
-import {Grid, Image} from 'semantic-ui-react'
+import {Image} from 'semantic-ui-react'
 
 export default class Banner extends React.Component {
     render() {
         return (
-            this.props.bannerAlbums ? 
-                <Grid columns="10" id="banner" >
-                    {this.props.bannerAlbums.sort(() => 0.5 - Math.random()).slice(0, 32).map(album => album.images ?  <Grid.Column key={album.id} width="1"><Image size="small" src={album.images[1].url} /></Grid.Column> : null)}
-                </Grid>
+            <div id="banner">
+            {this.props.bannerAlbums.length > 0 ? 
+                    this.props.bannerAlbums.sort(() => 0.5 - Math.random()).slice(0, 20).map(album => album.images ? <Image id="banner-image" size="small" src={album.images[1].url} alt="banner-album"/> : null)
                 :
                 null
+            }
+            </div>
         )
     }
 }

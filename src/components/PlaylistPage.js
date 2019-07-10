@@ -15,7 +15,7 @@ class PlaylistPage extends React.Component {
         showModal: false,
         confirmMessage: false,
         buttonLoading: false,
-        buttonColor: "grey"
+        buttonColor: "#29a84f"
     }
 
     open = () => this.setState({ confirmMessage: true })
@@ -71,7 +71,7 @@ class PlaylistPage extends React.Component {
                             <Card.Header id="playlist-description-header"><b><u>Description:</u></b><br/>{playlist.description}</Card.Header>
                         </Card.Content>
                         <Card.Content extra>
-                            {playlistAlbums.length  > 0 ? <Button className="playlist-info-button" color={buttonColor} disabled={playlist.spotify_id ? true : false} icon={buttonColor === "green" ? "check" : false} content={buttonColor === "green" ? "Success!" : "Add to Spotify"} loading={buttonLoading} onClick={() => this.addToSpotify(token,user, playlist, playlistAlbums)} /> : null}
+                            {playlistAlbums.length  > 0 ? <Button className="playlist-info-button" color={buttonColor} disabled={playlist.spotify_id ? true : false} icon={playlist.spotify_id ? "check" : false} content={playlist.spotify_id ? "Added!" : "Add to Spotify"} loading={buttonLoading} onClick={() => this.addToSpotify(token,user, playlist, playlistAlbums)} /> : null}
                             <Button className="playlist-info-button" color='blue' onClick={() => this.setState({showModal:true})}>Update Playlist</Button>
                             <Button className="playlist-info-button" color='red' onClick={this.open}>Delete Playlist</Button>
                             <Confirm open={confirmMessage} onCancel={this.close} onConfirm={this.handleDelete} />
@@ -79,9 +79,12 @@ class PlaylistPage extends React.Component {
                     </Card>
                         <PlaylistFormModal closeModal={this.closeModal} open={showModal} playlist={playlist} user={user} updatePlaylist={updatePlaylist}/>
                     </Card.Group>
+                    {playlistAlbums.length > 0 ?
                         <div id="playlist-album-container">
                             {playlistAlbums.map(playlistAlbum => <Album key={playlistAlbum.id} info={playlistAlbum} updateUserAlbum={updateUserAlbum} albumInfo={userAlbums.find(userAlbum => userAlbum.spotify_id === playlistAlbum.spotify_id)} deletePlaylistAlbum={deletePlaylistAlbum}/>)}
                         </div>
+                        :
+                        null}
                 </React.Fragment>      
         )
     }
