@@ -17,6 +17,7 @@ function createPlaylist(playlist){
 }
 
 function updatePlaylist(playlist) {
+    debugger
     return (dispatch) => {
         fetch(`http://localhost:3000/api/v1/playlists/${playlist.id}`, {
         method: "PATCH", 
@@ -28,6 +29,7 @@ function updatePlaylist(playlist) {
     })
     .then(res => res.json())
     .then(playlist => {
+        debugger
         dispatch({type:"UPDATE_PLAYLIST", playlist: playlist})
         dispatch({type:"SELECT_PLAYLIST", playlist: playlist})
         })
@@ -50,15 +52,18 @@ function selectPlaylist(playlist) {
     return {type: "SELECT_PLAYLIST", playlist: playlist}
 }
 
-function deletePlaylistAlbum(playlistAlbumId) {
+function deletePlaylistAlbum(playlistAlbum) {
     return (dispatch) => {
-        fetch(`http://localhost:3000/api/v1/playlist_albums/${playlistAlbumId}`, {
+        fetch(`http://localhost:3000/api/v1/playlist_albums/${playlistAlbum}`, {
             method: "DELETE",
             headers: {
                 "content-type": "application/json"
             }
         })
-        .then(() => dispatch({type:"DELETE_PLAYLIST_ALBUM", playlistAlbumId: playlistAlbumId}))
+        .then(() => {
+            dispatch({type: "DELETE_UA_PLAYLIST_ALBUM", playlistAlbum: playlistAlbum})
+            dispatch({type:"DELETE_PLAYLIST_ALBUM", playlistAlbumId: playlistAlbum.id})
+        })
     }
 }
 export {

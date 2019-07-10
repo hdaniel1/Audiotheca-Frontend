@@ -16,7 +16,7 @@ export default class Album extends React.Component {
 
     handleDelete = () => {
         if (this.props.deletePlaylistAlbum) {
-            this.props.deletePlaylistAlbum(this.props.id) 
+            this.props.deletePlaylistAlbum(this.props.info) 
         }
         else if (this.props.deleteUserAlbum) {
             this.props.deleteUserAlbum(this.props.albumInfo)

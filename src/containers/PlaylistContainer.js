@@ -14,10 +14,11 @@ class PlaylistContainer extends React.Component {
     }
 
     render() {
-        const {currentUser, playlists} = this.props
+        const {currentUser, playlists, userAlbums} = this.props
         return (
             <Card.Group centered itemsPerRow="2" id="playlist-container">
                 {playlists.map(playlist => <PlaylistCard 
+                                                        playlistAlbums={userAlbums.filter(album => album.playlist_albums.find(playlistAlbum => playlistAlbum.playlist_id === playlist.id) ? album : null)}
                                                         key={playlist.id} 
                                                         playlist={playlist} 
                                                         currentUser={currentUser}

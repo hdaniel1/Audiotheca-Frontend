@@ -39,15 +39,16 @@ class PlaylistPage extends React.Component {
         }
         //first create the playlist
         spotifyApi.createPlaylist(user.id,playlistInfo)
-        .then(res => {
+        .then(spotifyPlaylist => {
             //for each album in the playlist, get the tracks
             playlistAlbums.forEach(album => {
                 spotifyApi.getAlbumTracks(album.spotify_id)
                 .then(tracks => {
                     //then add the tracks to the playlist
                     let trackIRIs = tracks.items.map(track => track.uri)
-                    spotifyApi.addTracksToPlaylist(res.id, trackIRIs)
-                    .then(res => {
+                    spotifyApi.addTracksToPlaylist(spotifyPlaylist.id, trackIRIs)
+                    .then(spotifyResponse => {
+                        this.props.updatePlaylist({...playlist, spotify_id: spotifyPlaylist.id})
                         this.setState({buttonLoading: false, buttonColor: "green"})
                     })
                 })
@@ -70,7 +71,7 @@ class PlaylistPage extends React.Component {
                             <Card.Header id="playlist-description-header"><b><u>Description:</u></b><br/>{playlist.description}</Card.Header>
                         </Card.Content>
                         <Card.Content extra>
-                            <Button className="playlist-info-button" color={buttonColor} icon={buttonColor === "green" ? "check" : false} content={buttonColor === "green" ? "Success!" : "Add to Spotify"} loading={buttonLoading} onClick={() => this.addToSpotify(token,user, playlist, playlistAlbums)} />
+                            {playlistAlbums.length  > 0 ? <Button className="playlist-info-button" color={buttonColor} disabled={playlist.spotify_id ? true : false} icon={buttonColor === "green" ? "check" : false} content={buttonColor === "green" ? "Success!" : "Add to Spotify"} loading={buttonLoading} onClick={() => this.addToSpotify(token,user, playlist, playlistAlbums)} /> : null}
                             <Button className="playlist-info-button" color='blue' onClick={() => this.setState({showModal:true})}>Update Playlist</Button>
                             <Button className="playlist-info-button" color='red' onClick={this.open}>Delete Playlist</Button>
                             <Confirm open={confirmMessage} onCancel={this.close} onConfirm={this.handleDelete} />
@@ -79,7 +80,7 @@ class PlaylistPage extends React.Component {
                         <PlaylistFormModal closeModal={this.closeModal} open={showModal} playlist={playlist} user={user} updatePlaylist={updatePlaylist}/>
                     </Card.Group>
                         <div id="playlist-album-container">
-                            {playlistAlbums.map(playlistAlbum => <Album key={playlistAlbum.id} id={playlistAlbum.id} updateUserAlbum={updateUserAlbum} albumInfo={userAlbums.find(userAlbum => userAlbum.spotify_id === playlistAlbum.spotify_id)} deletePlaylistAlbum={deletePlaylistAlbum}/>)}
+                            {playlistAlbums.map(playlistAlbum => <Album key={playlistAlbum.id} info={playlistAlbum} updateUserAlbum={updateUserAlbum} albumInfo={userAlbums.find(userAlbum => userAlbum.spotify_id === playlistAlbum.spotify_id)} deletePlaylistAlbum={deletePlaylistAlbum}/>)}
                         </div>
                 </React.Fragment>      
         )

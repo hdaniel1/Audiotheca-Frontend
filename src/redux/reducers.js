@@ -62,6 +62,18 @@ const userAlbumReducer = (state = [], action) => {
       return state.map(album => {
         return _.extend(album, _.omit(_.find(action.spotifyAlbums, {id: album.spotify_id}), "id"))
       })
+    case "DELETE_UA_PLAYLIST_ALBUM":
+      return state.map(album => {
+        if (album.id === action.playlistAlbum.user_album_id) {
+          return {
+            ...album,
+            playlist_albums: album.playlist_albums.filter(playlistAlbum => playlistAlbum.id !== action.playlistAlbum.id)
+          }
+        }
+        else {
+          return album
+        }
+      })
     default:
       return state;
   }
@@ -74,13 +86,12 @@ const playlistReducer = (state = [], action) => {
     case "ADD_PLAYLIST":
       return [...state, action.playlist];
     case "UPDATE_PLAYLIST":
+      debugger
       return state.map(playlist => {
         if (playlist.id === action.playlist.id) {
           return {
             ...playlist,
-            name: action.playlist.name,
-            description: action.playlist.description, 
-            playlist_image: action.playlist.playlist_image
+            ...action.playlist
           }
         }
         else {
