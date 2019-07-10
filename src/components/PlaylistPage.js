@@ -37,27 +37,29 @@ class PlaylistPage extends React.Component {
     }
 
     render() {
+        const {playlist, token, user, updatePlaylist, playlistAlbums, userAlbums, deletePlaylistAlbum, updateUserAlbum} = this.props 
+        const {showModal, confirmMessage} = this.state
         return (
             <React.Fragment>
                 <Card.Group centered itemsPerRow="2" id="playlist-container">
                     <Card>
                         <Card.Content>
-                            <Image floated='left' size='small' src={this.props.playlist.playlist_image ? this.props.playlist.playlist_image : 'https://react.semantic-ui.com/images/wireframe/short-paragraph.png'} />
-                            <Card.Header>{this.props.playlist.name}</Card.Header>
+                            <Image floated='left' size='small' src={playlist.playlist_image ? playlist.playlist_image : 'https://react.semantic-ui.com/images/wireframe/short-paragraph.png'} />
+                            <Card.Header>{playlist.name}</Card.Header>
                             <Card.Meta>Playlist</Card.Meta><br/>
-                            <Card.Header id="playlist-description-header"><b><u>Description:</u></b><br/>{this.props.playlist.description}</Card.Header>
+                            <Card.Header id="playlist-description-header"><b><u>Description:</u></b><br/>{playlist.description}</Card.Header>
                         </Card.Content>
                         <Card.Content extra>
-                            <Button className="playlist-info-button" id="add-to-spotify" onClick={() => this.addToSpotify(this.props.token,this.props.user, this.props.playlist)}>Add to Spotify</Button>
+                            <Button className="playlist-info-button" id="add-to-spotify" onClick={() => this.addToSpotify(token,user, playlist)}>Add to Spotify</Button>
                             <Button className="playlist-info-button" color='blue' onClick={() => this.setState({showModal:true})}>Update Playlist</Button>
                             <Button className="playlist-info-button" color='red' onClick={this.open}>Delete Playlist</Button>
-                            <Confirm open={this.state.confirmMessage} onCancel={this.close} onConfirm={this.handleDelete} />
+                            <Confirm open={confirmMessage} onCancel={this.close} onConfirm={this.handleDelete} />
                         </Card.Content>
                     </Card>
-                        <PlaylistFormModal closeModal={this.closeModal} open={this.state.showModal} playlist={this.props.playlist} user={this.props.user} updatePlaylist={this.props.updatePlaylist}/>
+                        <PlaylistFormModal closeModal={this.closeModal} open={showModal} playlist={playlist} user={user} updatePlaylist={updatePlaylist}/>
                     </Card.Group>
                         <div id="playlist-album-container">
-                            {this.props.playlistAlbums.map(playlistAlbum => <Album key={playlistAlbum.id} id={playlistAlbum.id} updateUserAlbum={this.props.updateUserAlbum} albumInfo={this.props.userAlbums.find(userAlbum => userAlbum.spotify_id === playlistAlbum.spotify_id)} deletePlaylistAlbum={this.props.deletePlaylistAlbum}/>)}
+                            {playlistAlbums.map(playlistAlbum => <Album key={playlistAlbum.id} id={playlistAlbum.id} updateUserAlbum={updateUserAlbum} albumInfo={userAlbums.find(userAlbum => userAlbum.spotify_id === playlistAlbum.spotify_id)} deletePlaylistAlbum={deletePlaylistAlbum}/>)}
                         </div>
                 </React.Fragment>      
         )

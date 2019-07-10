@@ -14,12 +14,13 @@ class PlaylistContainer extends React.Component {
     }
 
     render() {
+        const {currentUser, playlists} = this.props
         return (
             <Card.Group centered itemsPerRow="2" id="playlist-container">
-                {this.props.playlists.map(playlist => <PlaylistCard 
+                {playlists.map(playlist => <PlaylistCard 
                                                         key={playlist.id} 
                                                         playlist={playlist} 
-                                                        currentUser={this.props.currentUser}
+                                                        currentUser={currentUser}
                                                         selectPlaylist={this.takeToPlaylistPage}/>)}
             </Card.Group>
         )

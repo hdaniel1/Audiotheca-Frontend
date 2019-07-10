@@ -77,18 +77,20 @@ export default class Searchbar extends React.Component {
 
 
     render() {
-        spotifyApi.setAccessToken(this.props.token)
+        const {token} = this.props 
+        const {results, value} = this.state
+        spotifyApi.setAccessToken(token)
         return (
             <React.Fragment>
             <Search 
                 onSearchChange={_.debounce(this.handleSearchChange, 200, {
                     leading: true,
                   })}
-                value={this.state.value}
+                value={value}
                 id="artist-search"
                 placeholder="Search Artist..."
                 showNoResults={false}
-                results={this.state.results}
+                results={results}
                 resultRenderer={this.resultRenderer}
                 onResultSelect={this.handleResultSelect}
             />
