@@ -17,7 +17,6 @@ function createPlaylist(playlist){
 }
 
 function updatePlaylist(playlist) {
-    debugger
     return (dispatch) => {
         fetch(`http://localhost:3000/api/v1/playlists/${playlist.id}`, {
         method: "PATCH", 
@@ -29,7 +28,6 @@ function updatePlaylist(playlist) {
     })
     .then(res => res.json())
     .then(playlist => {
-        debugger
         dispatch({type:"UPDATE_PLAYLIST", playlist: playlist})
         dispatch({type:"SELECT_PLAYLIST", playlist: playlist})
         })

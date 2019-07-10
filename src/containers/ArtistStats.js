@@ -6,16 +6,16 @@ export default class ArtistsStats extends React.Component {
   
     render() {
         const {artists, albums} = this.props
-        debugger
         return (
             artists.length > 0 && albums.length > 0 ? 
             <Card.Group centered itemsPerRow="1">
                 {artists.map(artist => {
                 if (artist.items) { 
+                    //find the listened to / not listened to albums for that artist
                     let listenedAlbums = albums.filter(album => album.artists[0].id === artist.id)
                     let unlistenedAlbums = artist.items.filter(album => !listenedAlbums.map(listenedAlbum => listenedAlbum.spotify_id).includes(album.id))
                     return (
-                        <Card>
+                        <Card key={artist.id}>
                             <Card.Content >
                                 <Image floated='left' size='massive' avatar src={artist.images[1].url}/>
                                 <Card.Header><u>{artist.name}</u></Card.Header>
@@ -23,10 +23,10 @@ export default class ArtistsStats extends React.Component {
                                 <Card.Header>
                                     {listenedAlbums.map(album => {
                                         return (
-                                        <Popup content={album.name} key={album.id} trigger={<Image size="tiny" src={album.images[1].url} />}>
+                                        <Popup key={album.id} trigger={<Image size="tiny" src={album.images[1].url} />}>
                                             <Popup.Content>
-                                                <Popup.Header>Rating</Popup.Header>
-                                                <Rating icon='star' defaultRating={album.rating} maxRating={5} />
+                                                <Popup.Header>{album.name}</Popup.Header>
+                                                <Popup.Header>Rating: <Rating icon='star' defaultRating={album.rating} maxRating={5} /></Popup.Header>
                                             </Popup.Content>
                                         </Popup>
                                         )

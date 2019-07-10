@@ -86,7 +86,6 @@ const playlistReducer = (state = [], action) => {
     case "ADD_PLAYLIST":
       return [...state, action.playlist];
     case "UPDATE_PLAYLIST":
-      debugger
       return state.map(playlist => {
         if (playlist.id === action.playlist.id) {
           return {
