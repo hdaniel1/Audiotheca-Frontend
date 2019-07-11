@@ -1,7 +1,8 @@
 import React from 'react'
-import {Menu, Image, Dropdown, Icon} from 'semantic-ui-react'
+import {Menu, Image, Dropdown, Icon, Modal} from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import PlaylistFormModal from './PlaylistFormModal'
+import AboutModal from './AboutModal'
 import '../styles/Navbar.css';
 import {NavLink} from 'react-router-dom'
 import {withRouter} from 'react-router-dom'
@@ -32,7 +33,7 @@ class Navbar extends React.Component {
                 :
                 //normal menu
                 <Menu size="massive" >
-                    {location.pathname.match("/playlist") ? <Menu.Item  id="menu-item" position="left" name='Search' onClick={showSideBar}>Search Albums</Menu.Item> : null}
+                    {location.pathname.match("/playlist") ? <Menu.Item  id="menu-item" position="left" name='Search' onClick={showSideBar}>Search Albums</Menu.Item> : <Modal trigger={<Menu.Item id="menu-item" position="left" name="About"/>}><AboutModal/></Modal>}
                     <Menu.Item id="menu-item"  onClick={() => this.setState({showModal: true})} name='add-playlist' position="right"><Icon style={{color: "#29a84f"}} name='plus'></Icon> Add New Playlist</Menu.Item>
                     <PlaylistFormModal closeModal={this.closeModal} open={showModal} createPlaylist={createPlaylist} user={currentUser} currentPlaylist={currentPlaylist}/>
                     <Menu.Item id="menu-item" as={Link} to="/history" name='history' >History</Menu.Item>
