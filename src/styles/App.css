@@ -97,17 +97,30 @@
 }
 
 #login-text {
-  margin-left:5%
+  background-color:#191414;
+  color:#FFFFFF;
 }
 
 #playlist-placeholder {
   position: absolute;
   top: 50%;
   left: 36%;
-  height: 5%;
+  height: 7%;
   width: 32%;
-  background-color:#29a84f;
+  background-color:grey;
   color:#FFFFFF;
-  opacity:0.8;
+  opacity:0.3;
   border-radius:2%;
+}
+
+#login-button {
+  margin-top:8px;
+}
+
+#about-icon {
+  display:inline-block;
+}
+
+#listening-header {
+  display:inline-block;
 }

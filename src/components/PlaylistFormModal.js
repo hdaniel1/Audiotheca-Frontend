@@ -1,7 +1,6 @@
 import React from 'react'
 import {Image, Modal, Button, Form} from 'semantic-ui-react'
 import '../styles/Navbar.css';
-import Fade from 'react-reveal/Fade';
 
 export default class PlaylistFormModal extends React.Component { 
 

@@ -71,10 +71,10 @@
   position: absolute;
   top: 40%;
   left: 37%;
-  height: 5%;
+  height: 7%;
   width: 25%;
-  background-color:#29a84f;
+  background-color:grey;
   color:#FFFFFF;
-  opacity:0.8;
+  opacity:0.3;
   border-radius:2%;
 }
