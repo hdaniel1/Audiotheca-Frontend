@@ -66,3 +66,15 @@
 #playlist-description-header {
   font-weight:normal;
 }
+
+#playlist-album-placeholder {
+  position: absolute;
+  top: 40%;
+  left: 37%;
+  height: 5%;
+  width: 25%;
+  background-color:#29a84f;
+  color:#FFFFFF;
+  opacity:0.8;
+  border-radius:2%;
+}

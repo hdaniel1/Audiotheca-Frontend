@@ -82,3 +82,32 @@
   margin-top:2px;
   margin-left:0px;
 }
+
+#login {
+  position: absolute;
+  top: 25%;
+  left: 30%;
+  height: 50%;
+  width: 43%;
+  background-image:url("https://cdn.aarp.net/content/dam/aarp/entertainment/music/2018/02/1140-swedish-clean-your-record-collection-02.imgcache.revc25e47d51060d89f4f39a70b158f10aa.jpg");
+  background-repeat:no-repeat;
+  border-radius:1%;
+  opacity:0.8;
+  color:#FFFFFF
+}
+
+#login-text {
+  margin-left:5%
+}
+
+#playlist-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 36%;
+  height: 5%;
+  width: 32%;
+  background-color:#29a84f;
+  color:#FFFFFF;
+  opacity:0.8;
+  border-radius:2%;
+}

@@ -84,7 +84,9 @@ class PlaylistPage extends React.Component {
                             {playlistAlbums.map(playlistAlbum => <Album key={playlistAlbum.id} info={playlistAlbum} updateUserAlbum={updateUserAlbum} albumInfo={userAlbums.find(userAlbum => userAlbum.spotify_id === playlistAlbum.spotify_id)} deletePlaylistAlbum={deletePlaylistAlbum}/>)}
                         </div>
                         :
-                        null}
+                        <div id="playlist-album-placeholder">
+                            <h2><i>Click the "Search" button to start adding albums to this playlist!</i></h2>
+                        </div>}
                 </React.Fragment>      
         )
     }

@@ -1,13 +1,13 @@
 import React from 'react'
 import '../styles/App.css';
-import {Image} from 'semantic-ui-react'
+import Roll from 'react-reveal/Roll';
 
 export default class Banner extends React.Component {
     render() {
         return (
             <div id="banner">
             {this.props.bannerAlbums.length > 0 ? 
-                    this.props.bannerAlbums.sort(() => 0.5 - Math.random()).slice(0, 20).map(album => album.images ? <Image id="banner-image" size="small" src={album.images[1].url} alt="banner-album"/> : null)
+                    this.props.bannerAlbums.sort(() => 0.5 - Math.random()).slice(0, 20).map(album => album.images ? <img id="banner-image" src={album.images[1].url} alt="banner-album"/> : null)
                 :
                 null
             }

@@ -18,7 +18,7 @@ export default class ArtistsStats extends React.Component {
                         <Card key={artist.id}>
                             <Card.Content >
                                 <Image floated='left' size='massive' avatar src={artist.images[1].url}/>
-                                <Card.Header><u>{artist.name}</u></Card.Header>
+                                <Card.Header href={artist.uri}><u>{artist.name}</u></Card.Header>
                                 <br/>
                                 <Card.Header>
                                     {listenedAlbums.map(album => {
@@ -43,7 +43,9 @@ export default class ArtistsStats extends React.Component {
                 })}
             </Card.Group>
             :
-            null
+            <div>
+                <h3>Listen to some albums to unlock this feature!</h3>
+            </div>
         )
     }
 }
