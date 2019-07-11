@@ -27,6 +27,7 @@ class Navbar extends React.Component {
                 {!currentUser ? 
                 //login page menu
                 <Menu icon='labeled' size="massive" >
+                    <Modal trigger={<Menu.Item id="menu-item-about" position="left" name="About"/>}><AboutModal/></Modal>
                     <Menu.Item  id="login-button" href='http://localhost:3000/api/v1/login'name='Login'position="right" >Login</Menu.Item>
                     <Menu.Item><img src="/Images/spotify-icons-logos/icons/02_CMYK/02_PNG/Spotify_Icon_CMYK_Green.png" alt="spotify-logo"/></Menu.Item>
                 </Menu>

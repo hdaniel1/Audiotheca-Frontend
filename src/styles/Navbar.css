@@ -22,6 +22,16 @@ ui.avatar.image img{
     border-radius:0;
 }
 
+#menu-item-about {
+    color:#FFFFFF;
+    flex-direction: inherit;
+}
+
+#menu-item-about:hover{
+    background-color:#1DB954;
+    color:#FFFFFF;
+}
+
 #login-button {
     color:#FFFFFF;
 }
