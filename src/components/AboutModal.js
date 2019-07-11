@@ -7,8 +7,7 @@ export default class AboutModal extends React.Component {
             <h1>Welcome to Audiotheca!</h1>
             <h3>Audiotheca's primary purposes is to keep track of music (specifically albums) you would like to listen to in the future.</h3>
             <h3>However, there's a twist - once you listen to an album once, you it is archived and can no longer be listened to again. The idea is to keep your ear out for new music rather than listen to the same old same old.</h3>
-            <br/>
-            <h3>By integrating with your Spotify account, you can do the following through this app:</h3><br/>
+            <h3>By integrating with your Spotify account, you can do the following through this app:</h3>
             <ul>
                 <li><b>Create and manage playlists</b></li>
                 <li><b>Search across the Spotify database for artists and add their albums to your playlists</b></li>
