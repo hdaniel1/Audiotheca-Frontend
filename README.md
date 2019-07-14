@@ -4,6 +4,10 @@ Auditheca is an app that lets you manage playlists of albums you would like to l
 
 Using the Spotify API (https://developer.spotify.com/documentation/web-api/), users can search albums by artist, get album recommendations based on their recent listening history, manage their backlog of playlists, export a playlist to spotify, and listen to albums directly via spotify in the application. You can also track your listening stats over time, such as your most listened to artist / genres. 
 
+Try it here:
+
+https://audiotecha-frontend.herokuapp.com/
+
 Audiotheca uses a Ruby on Rails backend API with active storage to keep track of your playlist and user information, as well as albums in your backlog / playlists. See it here:
 
 https://github.com/hdaniel1/Audiotheca-Backend
