@@ -8,6 +8,10 @@ Try it here:
 
 https://audiotecha-frontend.herokuapp.com/
 
+Demo:
+
+https://www.youtube.com/watch?v=dDKCkAlhjts&t=2s
+
 Audiotheca uses a Ruby on Rails backend API with active storage to keep track of your playlist and user information, as well as albums in your backlog / playlists. See it here:
 
 https://github.com/hdaniel1/Audiotheca-Backend
