@@ -8,6 +8,7 @@ Try it here:
 
 https://audiotecha-frontend.herokuapp.com/
 
+(Note: it may take a while for the app to start, and it may error out the first time - just refresh!)
 Demo:
 
 https://www.youtube.com/watch?v=dDKCkAlhjts&t=2s
