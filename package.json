@@ -6,7 +6,7 @@
     "@app-masters/react-cloudinary-uploader": "^0.1.41",
     "@weknow/react-bubble-chart-d3": "^1.0.12",
     "blueimp-file-upload": "^9.32.0",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "cloudinary-jquery-file-upload": "^2.6.3",
     "jquery": "^3.4.1",
     "react": "^16.8.6",
